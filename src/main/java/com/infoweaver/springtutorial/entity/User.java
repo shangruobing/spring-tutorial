@@ -6,15 +6,17 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /**
- * @author Ruobing Shang 2022-08-31
+ * @author Ruobing Shang 2022-09-01
  */
+
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Greeting {
-    private long id;
-    private String content;
-
+public class User {
+    private Long id;
+    private String name;
+    private Integer age;
+    private String email;
 }
