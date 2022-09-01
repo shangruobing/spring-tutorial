@@ -1,14 +1,13 @@
 package com.infoweaver.springtutorial.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.ToString;
 
 /**
  * @author Ruobing Shang 2022-09-01
  */
-
 
 @Data
 @NoArgsConstructor

@@ -1,8 +1,8 @@
 package com.infoweaver.springtutorial.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.ToString;
 
 /**
@@ -16,5 +16,4 @@ import lombok.ToString;
 public class Greeting {
     private long id;
     private String content;
-
 }
