@@ -2,7 +2,9 @@ package com.infoweaver.springtutorial.controller;
 
 import java.util.List;
 
+import com.infoweaver.springtutorial.entity.Blog;
 import com.infoweaver.springtutorial.entity.User;
+import com.infoweaver.springtutorial.entity.vo.UserVo;
 import com.infoweaver.springtutorial.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +32,6 @@ public class UserController {
         return userService.getUserById(id);
     }
 
-
     @PostMapping("/user")
     public int add(@RequestBody User user) {
         return userService.addUser(user);
@@ -44,6 +45,21 @@ public class UserController {
     @DeleteMapping("/user/{id}")
     public int delete(@PathVariable("id") long id) {
         return userService.removeUser(id);
+    }
+
+    @GetMapping("/user_detail/{id}")
+    public UserVo getUserDetailById(@PathVariable("id") long id) {
+        return userService.getUserInfoById(id);
+    }
+
+    @GetMapping("/user_detail")
+    public List<UserVo> selectAllUserDetails() {
+        return userService.getUserDetailsList();
+    }
+
+    @GetMapping("/sql")
+    public List<Blog> selectBySql() {
+        return userService.getUserDetailBySQL();
     }
 }
 
