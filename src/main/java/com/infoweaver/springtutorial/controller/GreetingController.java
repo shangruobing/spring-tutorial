@@ -1,7 +1,7 @@
 package com.infoweaver.springtutorial.controller;
 
 /**
-  @author Ruobing Shang 2022-08-31
+ * @author Ruobing Shang 2022-08-31
  */
 
 import java.util.concurrent.atomic.AtomicLong;
@@ -20,5 +20,10 @@ public class GreetingController {
     @GetMapping("/greeting")
     public Greeting greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
         return new Greeting(counter.incrementAndGet(), String.format(TEMPLATE, name));
+    }
+
+    @GetMapping("error")
+    public void empty() {
+        throw new RuntimeException("自定义异常");
     }
 }
