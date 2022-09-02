@@ -19,11 +19,9 @@ public class User extends Model<User> {
     private String email;
 
     public User(User user) {
-        if (user != null) {
-            this.id = user.getId();
-            this.name = user.getName();
-            this.age = user.getAge();
-            this.email = user.getEmail();
-        }
+        this.id = user.getId();
+        this.name = user.getName();
+        this.age = user.getAge();
+        this.email = user.getEmail();
     }
 }

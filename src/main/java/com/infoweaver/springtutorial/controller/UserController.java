@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.infoweaver.springtutorial.entity.Blog;
 import com.infoweaver.springtutorial.entity.User;
-import com.infoweaver.springtutorial.entity.vo.UserVo;
+import com.infoweaver.springtutorial.vo.UserVo;
 import com.infoweaver.springtutorial.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

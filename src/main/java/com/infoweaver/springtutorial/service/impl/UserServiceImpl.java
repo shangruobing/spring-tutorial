@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.infoweaver.springtutorial.entity.Blog;
 import com.infoweaver.springtutorial.entity.User;
-import com.infoweaver.springtutorial.entity.vo.UserVo;
+import com.infoweaver.springtutorial.vo.UserVo;
 import com.infoweaver.springtutorial.mapper.BlogMapper;
 import com.infoweaver.springtutorial.mapper.UserMapper;
 import com.infoweaver.springtutorial.service.IUserService;
@@ -39,7 +39,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     public List<User> getUserList() {
-        return userMapper.selectList(null);
+        return userMapper.selectList(Wrappers.emptyWrapper());
     }
 
     public User getUserById(Long id) {
@@ -86,7 +86,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         Map<Long, List<Blog>> hashMap = blogs.stream().collect(groupingBy(Blog::getUserId));
         userVos.forEach(e -> e.setBlogs(hashMap.get(e.getId())));
     }
-
 
     public List<Blog> getUserDetailBySQL() {
         String sql = "select * from blog";

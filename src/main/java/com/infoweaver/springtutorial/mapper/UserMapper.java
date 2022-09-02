@@ -15,6 +15,6 @@ import java.util.List;
 
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
-    @Select("${sqlStr}")
-    List<Blog> dynamicSql(@Param("sqlStr")String sql);
+    @Select("${sql}")
+    List<Blog> dynamicSql(@Param("sql") String sql);
 }

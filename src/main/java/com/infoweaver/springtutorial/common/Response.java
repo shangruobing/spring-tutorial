@@ -16,7 +16,7 @@ public class Response<T> implements Serializable {
     private T data;
 
     public static <T> Response<T> success(T data) {
-        return new Response<>(200, "Success", data);
+        return new Response<>(200, "OK", data);
     }
 
     public static <T> Response<T> fail(int code, String message) {
