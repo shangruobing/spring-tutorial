@@ -1,6 +1,7 @@
 package com.infoweaver.springtutorial.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.infoweaver.springtutorial.entity.ReceiptDetail;
 import com.infoweaver.springtutorial.entity.StockAccount;
 
 import java.util.List;
@@ -48,5 +49,12 @@ public interface IStockAccountService extends IService<StockAccount> {
      * @return a status code
      */
     int removeStockAccount(String id);
+
+    /**
+     * Product outbound
+     *
+     * @param receiptDetails ReceiptDetails
+     */
+    void outbound(List<ReceiptDetail> receiptDetails);
 
 }

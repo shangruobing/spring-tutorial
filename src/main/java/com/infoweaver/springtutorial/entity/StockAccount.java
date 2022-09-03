@@ -16,11 +16,19 @@ import java.sql.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@TableName(value = "tb_money_account")
+@TableName(value = "tb_stock_account")
 public class StockAccount extends Model<StockAccount> {
     private String id;
     private String productId;
     private String employeeId;
     private Date date;
     private Integer quantity;
+
+    public StockAccount(StockAccount stockAccount) {
+        this.id = stockAccount.getId();
+        this.productId = stockAccount.getProductId();
+        this.employeeId = stockAccount.getEmployeeId();
+        this.date = stockAccount.getDate();
+        this.quantity = stockAccount.getQuantity();
+    }
 }

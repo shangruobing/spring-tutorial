@@ -1,5 +1,7 @@
 package com.infoweaver.springtutorial.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.infoweaver.springtutorial.entity.ReceiptDetail;
 import com.infoweaver.springtutorial.mapper.ReceiptDetailMapper;
@@ -45,6 +47,13 @@ public class ReceiptDetailServiceImpl extends ServiceImpl<ReceiptDetailMapper, R
     @Override
     public int removeReceiptDetail(String id) {
         return receiptDetailMapper.deleteById(id);
+    }
+
+    @Override
+    public List<ReceiptDetail> listReceiptDetailsByReceiptId(String receiptId) {
+        LambdaQueryWrapper<ReceiptDetail> wrapper = Wrappers.lambdaQuery(ReceiptDetail.class)
+                .eq(ReceiptDetail::getReceiptId, receiptId);
+        return receiptDetailMapper.selectList(wrapper);
     }
 
 }

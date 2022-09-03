@@ -57,7 +57,18 @@ public class ReceiptController {
     }
 
     @PostMapping("/receipt_with_details")
-    public int addReceiptInformation(@RequestBody ReceiptVo receiptvo) {
-        return receiptService.saveReceiptVo(receiptvo);
+    public String addReceiptInformation(@RequestBody ReceiptVo receiptVo) {
+        return receiptService.saveReceiptVo(receiptVo);
+    }
+
+    @PostMapping("/payment")
+    public int paymentReceipt(@RequestBody Receipt receipt) {
+        return receiptService.payment(receipt.getId());
+    }
+
+    @PostMapping("/outbound")
+    public int outbound(@RequestBody Receipt receipt) {
+        System.out.println(receipt);
+        return receiptService.outbound(receipt.getId());
     }
 }

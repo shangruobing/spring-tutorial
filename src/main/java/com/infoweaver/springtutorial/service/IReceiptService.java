@@ -69,7 +69,23 @@ public interface IReceiptService extends IService<Receipt> {
      * Create a Receipt instance include receipt details.
      *
      * @param receiptVo receipt object include receipt details.
+     * @return Receipt Id
+     */
+    String saveReceiptVo(ReceiptVo receiptVo);
+
+    /**
+     * Payment with ReceiptId.
+     *
+     * @param receiptId Receipt Id
      * @return a status
      */
-    int saveReceiptVo(ReceiptVo receiptVo);
+    int payment(String receiptId);
+
+    /**
+     * Product out bound.
+     *
+     * @param receiptId Receipt Id
+     * @return a status
+     */
+    int outbound(String receiptId);
 }

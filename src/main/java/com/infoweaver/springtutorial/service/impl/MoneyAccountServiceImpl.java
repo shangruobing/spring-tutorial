@@ -2,11 +2,13 @@ package com.infoweaver.springtutorial.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.infoweaver.springtutorial.entity.MoneyAccount;
+import com.infoweaver.springtutorial.entity.Receipt;
 import com.infoweaver.springtutorial.mapper.MoneyAccountMapper;
 import com.infoweaver.springtutorial.service.IMoneyAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -45,5 +47,15 @@ public class MoneyAccountServiceImpl extends ServiceImpl<MoneyAccountMapper, Mon
     @Override
     public int removeMoneyAccount(String id) {
         return moneyAccountMapper.deleteById(id);
+    }
+
+    @Override
+    public int saveMoneyAccountByReceipt(Receipt receipt) {
+        MoneyAccount moneyAccount = new MoneyAccount();
+        moneyAccount.setReceiptId(receipt.getId());
+        moneyAccount.setEmployeeId(receipt.getCashier());
+        moneyAccount.setDate(new Date(System.currentTimeMillis()));
+        moneyAccount.setTotal(receipt.getTotalPrice());
+        return moneyAccountMapper.insert(moneyAccount);
     }
 }

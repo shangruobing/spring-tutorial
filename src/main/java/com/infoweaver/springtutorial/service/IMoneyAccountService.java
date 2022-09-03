@@ -2,6 +2,7 @@ package com.infoweaver.springtutorial.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.infoweaver.springtutorial.entity.MoneyAccount;
+import com.infoweaver.springtutorial.entity.Receipt;
 
 import java.util.List;
 
@@ -48,5 +49,13 @@ public interface IMoneyAccountService extends IService<MoneyAccount> {
      * @return a status code
      */
     int removeMoneyAccount(String id);
+
+    /**
+     * Create a moneyAccount instance with Receipt.
+     *
+     * @param receipt Receipt object
+     * @return a status code
+     */
+    int saveMoneyAccountByReceipt(Receipt receipt);
 
 }

@@ -49,4 +49,11 @@ public interface IReceiptDetailService extends IService<ReceiptDetail> {
      */
     int removeReceiptDetail(String id);
 
+    /**
+     * Retrieve a ReceiptDetail by id.
+     *
+     * @param receiptId Receipt Id
+     * @return a ReceiptDetail list
+     */
+    List<ReceiptDetail> listReceiptDetailsByReceiptId(String receiptId);
 }

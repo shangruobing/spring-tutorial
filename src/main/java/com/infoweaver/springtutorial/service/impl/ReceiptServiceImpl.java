@@ -32,6 +32,9 @@ public class ReceiptServiceImpl extends ServiceImpl<ReceiptMapper, Receipt> impl
     private ReceiptMapper receiptMapper;
     private ReceiptDetailMapper receiptDetailMapper;
     private ProductServiceImpl productService;
+    private ReceiptDetailServiceImpl receiptDetailService;
+    private MoneyAccountServiceImpl moneyAccountService;
+    private StockAccountServiceImpl stockAccountService;
 
     @Autowired
     public void setReceiptMapper(ReceiptMapper receiptMapper) {
@@ -46,6 +49,21 @@ public class ReceiptServiceImpl extends ServiceImpl<ReceiptMapper, Receipt> impl
     @Autowired
     public void setProductService(ProductServiceImpl productService) {
         this.productService = productService;
+    }
+
+    @Autowired
+    public void setMoneyAccountService(MoneyAccountServiceImpl moneyAccountService) {
+        this.moneyAccountService = moneyAccountService;
+    }
+
+    @Autowired
+    public void setStockAccountService(StockAccountServiceImpl stockAccountService) {
+        this.stockAccountService = stockAccountService;
+    }
+
+    @Autowired
+    public void setReceiptDetailService(ReceiptDetailServiceImpl receiptDetailService) {
+        this.receiptDetailService = receiptDetailService;
     }
 
     @Override
@@ -106,7 +124,7 @@ public class ReceiptServiceImpl extends ServiceImpl<ReceiptMapper, Receipt> impl
     }
 
     @Override
-    public int saveReceiptVo(ReceiptVo receiptVo) {
+    public String saveReceiptVo(ReceiptVo receiptVo) {
         receiptVo.setId(RandomGenerator.getNumberString(20));
         receiptVo.setStatus(ReceiptStatus.NEW_ORDER.getCode());
         receiptVo.setDate(new Date(System.currentTimeMillis()));
@@ -120,11 +138,28 @@ public class ReceiptServiceImpl extends ServiceImpl<ReceiptMapper, Receipt> impl
         receiptMapper.insert(receiptVo);
         receiptVo.getReceiptDetails().forEach(e -> receiptDetailMapper.insert(e));
 
-        return 1;
+        return receiptVo.getId();
     }
 
     private BigDecimal calculateAmount(ReceiptDetail receiptDetail) {
         BigDecimal price = productService.getProductById(receiptDetail.getProductId()).getPrice();
         return price.multiply(new BigDecimal(receiptDetail.getQuantity()));
+    }
+
+    @Override
+    public int payment(String receiptId) {
+        Receipt receipt = receiptMapper.selectById(receiptId);
+        receipt.setStatus(ReceiptStatus.PAID.getCode());
+        receiptMapper.updateById(receipt);
+        return moneyAccountService.saveMoneyAccountByReceipt(receipt);
+    }
+
+    @Override
+    public int outbound(String receiptId) {
+        Receipt receipt = receiptMapper.selectById(receiptId);
+        receipt.setStatus(ReceiptStatus.DELIVERED.getCode());
+        receiptMapper.updateById(receipt);
+        stockAccountService.outbound(receiptDetailService.listReceiptDetailsByReceiptId(receipt.getId()));
+        return 1;
     }
 }
