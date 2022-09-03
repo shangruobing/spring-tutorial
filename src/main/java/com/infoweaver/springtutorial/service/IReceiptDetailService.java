@@ -15,7 +15,7 @@ public interface IReceiptDetailService extends IService<ReceiptDetail> {
      *
      * @return ReceiptDetail List
      */
-    List<ReceiptDetail> getReceiptDetailList();
+    List<ReceiptDetail> listReceiptDetails();
 
     /**
      * Retrieve a ReceiptDetail by id.
@@ -23,7 +23,7 @@ public interface IReceiptDetailService extends IService<ReceiptDetail> {
      * @param id receiptDetail id
      * @return a ReceiptDetail instance
      */
-    ReceiptDetail getReceiptDetailById(Long id);
+    ReceiptDetail getReceiptDetailById(String id);
 
     /**
      * Create a ReceiptDetail instance.
@@ -31,7 +31,7 @@ public interface IReceiptDetailService extends IService<ReceiptDetail> {
      * @param receiptDetail receiptDetail object
      * @return a status code
      */
-    int addReceiptDetail(ReceiptDetail receiptDetail);
+    int saveReceiptDetail(ReceiptDetail receiptDetail);
 
     /**
      * Update a receiptDetail instance.
@@ -39,7 +39,7 @@ public interface IReceiptDetailService extends IService<ReceiptDetail> {
      * @param receiptDetail receiptDetail object
      * @return a status code
      */
-    int editReceiptDetail(ReceiptDetail receiptDetail);
+    int updateReceiptDetail(ReceiptDetail receiptDetail);
 
     /**
      * Delete a receiptDetail instance.
@@ -47,6 +47,6 @@ public interface IReceiptDetailService extends IService<ReceiptDetail> {
      * @param id receiptDetail id
      * @return a status code
      */
-    int removeReceiptDetail(Long id);
+    int removeReceiptDetail(String id);
 
 }

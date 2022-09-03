@@ -13,37 +13,37 @@ import java.util.List;
 
 @RestController
 public class ProductController {
-    private ProductServiceImpl ProductService;
+    private ProductServiceImpl productService;
 
     @Autowired
-    public void setProductService(ProductServiceImpl ProductService) {
-        this.ProductService = ProductService;
+    public void setProductService(ProductServiceImpl productService) {
+        this.productService = productService;
     }
 
     @GetMapping("/product")
     public List<Product> selectAllProduct() {
-        return ProductService.getProductList();
+        return productService.listProducts();
     }
 
     @GetMapping("/product/{id}")
-    public Product getProductById(@PathVariable("id") long id) {
-        return ProductService.getProductById(id);
+    public Product getProductById(@PathVariable("id") String id) {
+        return productService.getProductById(id);
     }
 
 
     @PostMapping("/product")
-    public int add(@RequestBody Product Product) {
-        return ProductService.addProduct(Product);
+    public int add(@RequestBody Product product) {
+        return productService.saveProduct(product);
     }
 
     @PutMapping("/product")
-    public int update(@RequestBody Product Product) {
-        return ProductService.editProduct(Product);
+    public int update(@RequestBody Product product) {
+        return productService.updateProduct(product);
     }
 
     @DeleteMapping("/product/{id}")
-    public int delete(@PathVariable("id") long id) {
-        return ProductService.removeProduct(id);
+    public int delete(@PathVariable("id") String id) {
+        return productService.removeProduct(id);
     }
 }
 

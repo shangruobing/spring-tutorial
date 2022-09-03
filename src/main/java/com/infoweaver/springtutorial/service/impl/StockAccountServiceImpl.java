@@ -22,23 +22,28 @@ public class StockAccountServiceImpl extends ServiceImpl<StockAccountMapper, Sto
         this.stockAccountMapper = stockAccountMapper;
     }
 
-    public List<StockAccount> getStockAccountList() {
+    @Override
+    public List<StockAccount> listStockAccounts() {
         return stockAccountMapper.selectList(null);
     }
 
-    public StockAccount getStockAccountById(Long id) {
+    @Override
+    public StockAccount getStockAccountById(String id) {
         return stockAccountMapper.selectById(id);
     }
 
-    public int addStockAccount(StockAccount stockAccount) {
+    @Override
+    public int saveStockAccount(StockAccount stockAccount) {
         return stockAccountMapper.insert(stockAccount);
     }
 
-    public int editStockAccount(StockAccount stockAccount) {
+    @Override
+    public int updateStockAccount(StockAccount stockAccount) {
         return stockAccountMapper.updateById(stockAccount);
     }
 
-    public int removeStockAccount(Long id) {
+    @Override
+    public int removeStockAccount(String id) {
         return stockAccountMapper.deleteById(id);
     }
 }

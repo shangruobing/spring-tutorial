@@ -6,6 +6,7 @@ import java.util.Random;
  * @author Ruobing Shang 2022-09-02 15:42
  */
 public class RandomGenerator {
+
     public static String getNumberString(int length) {
         String str = "0123456789";
         Random random = new Random();

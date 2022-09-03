@@ -15,7 +15,7 @@ public interface IMoneyAccountService extends IService<MoneyAccount> {
      *
      * @return MoneyAccount List
      */
-    List<MoneyAccount> getMoneyAccountList();
+    List<MoneyAccount> listMoneyAccounts();
 
     /**
      * Retrieve a MoneyAccount by id.
@@ -23,7 +23,7 @@ public interface IMoneyAccountService extends IService<MoneyAccount> {
      * @param id moneyAccount id
      * @return a MoneyAccount instance
      */
-    MoneyAccount getMoneyAccountById(Long id);
+    MoneyAccount getMoneyAccountById(String id);
 
     /**
      * Create a MoneyAccount instance.
@@ -31,7 +31,7 @@ public interface IMoneyAccountService extends IService<MoneyAccount> {
      * @param moneyAccount moneyAccount object
      * @return a status code
      */
-    int addMoneyAccount(MoneyAccount moneyAccount);
+    int saveMoneyAccount(MoneyAccount moneyAccount);
 
     /**
      * Update a moneyAccount instance.
@@ -39,7 +39,7 @@ public interface IMoneyAccountService extends IService<MoneyAccount> {
      * @param moneyAccount moneyAccount object
      * @return a status code
      */
-    int editMoneyAccount(MoneyAccount moneyAccount);
+    int updateMoneyAccount(MoneyAccount moneyAccount);
 
     /**
      * Delete a moneyAccount instance.
@@ -47,6 +47,6 @@ public interface IMoneyAccountService extends IService<MoneyAccount> {
      * @param id moneyAccount id
      * @return a status code
      */
-    int removeMoneyAccount(Long id);
+    int removeMoneyAccount(String id);
 
 }

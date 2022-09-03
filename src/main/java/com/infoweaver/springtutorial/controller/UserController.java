@@ -2,9 +2,7 @@ package com.infoweaver.springtutorial.controller;
 
 import java.util.List;
 
-import com.infoweaver.springtutorial.entity.Blog;
 import com.infoweaver.springtutorial.entity.User;
-import com.infoweaver.springtutorial.vo.UserVo;
 import com.infoweaver.springtutorial.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +22,7 @@ public class UserController {
 
     @GetMapping("/user")
     public List<User> selectAllUser() {
-        return userService.getUserList();
+        return userService.listUsers();
     }
 
     @GetMapping("/user/{id}")
@@ -34,12 +32,12 @@ public class UserController {
 
     @PostMapping("/user")
     public int add(@RequestBody User user) {
-        return userService.addUser(user);
+        return userService.saveUser(user);
     }
 
     @PutMapping("/user")
     public int update(@RequestBody User user) {
-        return userService.editUser(user);
+        return userService.updateUser(user);
     }
 
     @DeleteMapping("/user/{id}")
@@ -47,20 +45,6 @@ public class UserController {
         return userService.removeUser(id);
     }
 
-    @GetMapping("/user_detail/{id}")
-    public UserVo getUserDetailById(@PathVariable("id") long id) {
-        return userService.getUserInfoById(id);
-    }
-
-    @GetMapping("/user_detail")
-    public List<UserVo> selectAllUserDetails() {
-        return userService.getUserDetailsList();
-    }
-
-    @GetMapping("/sql")
-    public List<Blog> selectBySql() {
-        return userService.getUserDetailBySQL();
-    }
 }
 
 

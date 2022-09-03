@@ -1,5 +1,6 @@
 package com.infoweaver.springtutorial.common;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
@@ -30,7 +31,7 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
     }
 
     @Override
-    @SneakyThrows
+    @SneakyThrows(JsonProcessingException.class)
     public Object beforeBodyWrite(Object body, @NotNull MethodParameter returnType, @NotNull MediaType selectedContentType, @NotNull Class<? extends HttpMessageConverter<?>> selectedConverterType, @NotNull ServerHttpRequest request, @NotNull ServerHttpResponse response) {
         if (body instanceof String) {
             return objectMapper.writeValueAsString(Response.success(body));

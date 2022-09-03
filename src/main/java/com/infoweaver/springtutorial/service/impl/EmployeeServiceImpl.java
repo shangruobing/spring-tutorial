@@ -22,23 +22,28 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
         this.employeeMapper = employeeMapper;
     }
 
-    public List<Employee> getEmployeeList() {
+    @Override
+    public List<Employee> listEmployees() {
         return employeeMapper.selectList(null);
     }
 
-    public Employee getEmployeeById(Long id) {
+    @Override
+    public Employee getEmployeeById(String id) {
         return employeeMapper.selectById(id);
     }
 
-    public int addEmployee(Employee employee) {
+    @Override
+    public int saveEmployee(Employee employee) {
         return employeeMapper.insert(employee);
     }
 
-    public int editEmployee(Employee employee) {
+    @Override
+    public int updateEmployee(Employee employee) {
         return employeeMapper.updateById(employee);
     }
 
-    public int removeEmployee(Long id) {
+    @Override
+    public int removeEmployee(String id) {
         return employeeMapper.deleteById(id);
     }
 }

@@ -17,6 +17,7 @@ public class RestExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Response<String> exception(Exception e) {
+        System.out.println(Status.HTTP_500_INTERNAL_SERVER_ERROR.getMessage());
         return Response.fail(Status.HTTP_500_INTERNAL_SERVER_ERROR.getCode(), e.getMessage());
     }
 

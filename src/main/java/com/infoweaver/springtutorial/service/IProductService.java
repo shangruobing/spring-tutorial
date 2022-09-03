@@ -15,7 +15,7 @@ public interface IProductService extends IService<Product> {
      *
      * @return Product List
      */
-    List<Product> getProductList();
+    List<Product> listProducts();
 
     /**
      * Retrieve a Product by id.
@@ -23,7 +23,7 @@ public interface IProductService extends IService<Product> {
      * @param id product id
      * @return a Product instance
      */
-    Product getProductById(Long id);
+    Product getProductById(String id);
 
     /**
      * Create a Product instance.
@@ -31,7 +31,7 @@ public interface IProductService extends IService<Product> {
      * @param product product object
      * @return a status code
      */
-    int addProduct(Product product);
+    int saveProduct(Product product);
 
     /**
      * Update a product instance.
@@ -39,7 +39,7 @@ public interface IProductService extends IService<Product> {
      * @param product product object
      * @return a status code
      */
-    int editProduct(Product product);
+    int updateProduct(Product product);
 
     /**
      * Delete a product instance.
@@ -47,6 +47,6 @@ public interface IProductService extends IService<Product> {
      * @param id product id
      * @return a status code
      */
-    int removeProduct(Long id);
+    int removeProduct(String id);
 
 }

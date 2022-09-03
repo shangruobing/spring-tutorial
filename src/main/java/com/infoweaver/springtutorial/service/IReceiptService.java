@@ -16,7 +16,7 @@ public interface IReceiptService extends IService<Receipt> {
      *
      * @return Receipt List
      */
-    List<Receipt> getReceiptList();
+    List<Receipt> listReceipts();
 
     /**
      * Retrieve a Receipt by id.
@@ -24,52 +24,52 @@ public interface IReceiptService extends IService<Receipt> {
      * @param id receipt id
      * @return a Receipt instance
      */
-    Receipt getReceiptById(Long id);
+    Receipt getReceiptById(String id);
 
     /**
      * Create a Receipt instance.
      *
      * @param receipt receipt object
-     * @return a status code
+     * @return a status
      */
-    int addReceipt(Receipt receipt);
-
-    /**
-     * Update a receipt instance.
-     *
-     * @param receipt receipt object
-     * @return a status code
-     */
-    int editReceipt(Receipt receipt);
+    int saveReceipt(Receipt receipt);
 
     /**
      * Delete a receipt instance.
      *
      * @param id receipt id
-     * @return a status code
+     * @return a status
      */
-    int removeReceipt(Long id);
+    int removeReceipt(String id);
+
+    /**
+     * Update a receipt instance.
+     *
+     * @param receipt receipt object
+     * @return a status
+     */
+    int updateReceipt(Receipt receipt);
 
     /**
      * Get a receipt instance include receipt details.
      *
      * @param id receipt id
-     * @return a status code
+     * @return a status
      */
-    ReceiptVo getReceiptInformationById(Long id);
+    ReceiptVo getReceiptVoById(String id);
 
     /**
      * Get all receipt instances include receipt details.
      *
-     * @return a status code
+     * @return all ReceiptVo
      */
-    List<ReceiptVo> getAllReceiptInformation();
+    List<ReceiptVo> listReceiptVos();
 
     /**
      * Create a Receipt instance include receipt details.
      *
      * @param receiptVo receipt object include receipt details.
-     * @return a status code
+     * @return a status
      */
-    int addReceiptVo(ReceiptVo receiptVo);
+    int saveReceiptVo(ReceiptVo receiptVo);
 }

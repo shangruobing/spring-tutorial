@@ -17,49 +17,47 @@ public class ReceiptController {
     private ReceiptServiceImpl receiptService;
 
     @Autowired
-    public void setReceiptService(ReceiptServiceImpl ReceiptService) {
-        this.receiptService = ReceiptService;
+    public void setReceiptService(ReceiptServiceImpl receiptService) {
+        this.receiptService = receiptService;
     }
 
     @GetMapping("/receipt")
     public List<Receipt> selectAllReceipt() {
-        return receiptService.getReceiptList();
+        return receiptService.listReceipts();
     }
 
     @GetMapping("/receipt/{id}")
-    public Receipt getReceiptById(@PathVariable("id") long id) {
+    public Receipt getReceiptById(@PathVariable("id") String id) {
         return receiptService.getReceiptById(id);
     }
 
-
     @PostMapping("/receipt")
-    public int add(@RequestBody Receipt Receipt) {
-        return receiptService.addReceipt(Receipt);
+    public int add(@RequestBody Receipt receipt) {
+        return receiptService.saveReceipt(receipt);
     }
 
     @PutMapping("/receipt")
-    public int update(@RequestBody Receipt Receipt) {
-        return receiptService.editReceipt(Receipt);
+    public int update(@RequestBody Receipt receipt) {
+        return receiptService.updateReceipt(receipt);
     }
 
     @DeleteMapping("/receipt/{id}")
-    public int delete(@PathVariable("id") long id) {
+    public int remove(@PathVariable("id") String id) {
         return receiptService.removeReceipt(id);
     }
 
     @GetMapping("/receipt_list/{id}")
-    public ReceiptVo getReceiptListById(@PathVariable("id") long id) {
-        return receiptService.getReceiptInformationById(id);
+    public ReceiptVo getReceiptVoById(@PathVariable("id") String id) {
+        return receiptService.getReceiptVoById(id);
     }
 
     @GetMapping("/receipt_list")
-    public List<ReceiptVo> selectAllReceiptDetails() {
-        return receiptService.getAllReceiptInformation();
+    public List<ReceiptVo> selectAllReceiptInformation() {
+        return receiptService.listReceiptVos();
     }
 
     @PostMapping("/receipt_with_details")
-    public int addReceiptWithDetails(@RequestBody ReceiptVo receiptvo) {
-        return receiptService.addReceiptVo(receiptvo);
+    public int addReceiptInformation(@RequestBody ReceiptVo receiptvo) {
+        return receiptService.saveReceiptVo(receiptvo);
     }
-
 }

@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.infoweaver.springtutorial.constant.ReceiptStatus;
 import com.infoweaver.springtutorial.entity.ReceiptDetail;
 import com.infoweaver.springtutorial.entity.Receipt;
-import com.infoweaver.springtutorial.mapper.ProductMapper;
 import com.infoweaver.springtutorial.mapper.ReceiptDetailMapper;
 import com.infoweaver.springtutorial.mapper.ReceiptMapper;
 import com.infoweaver.springtutorial.service.IReceiptService;
@@ -16,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -31,7 +31,7 @@ import static java.util.stream.Collectors.*;
 public class ReceiptServiceImpl extends ServiceImpl<ReceiptMapper, Receipt> implements IReceiptService {
     private ReceiptMapper receiptMapper;
     private ReceiptDetailMapper receiptDetailMapper;
-    private ProductMapper productMapper;
+    private ProductServiceImpl productService;
 
     @Autowired
     public void setReceiptMapper(ReceiptMapper receiptMapper) {
@@ -44,32 +44,38 @@ public class ReceiptServiceImpl extends ServiceImpl<ReceiptMapper, Receipt> impl
     }
 
     @Autowired
-    public void setProductMapper(ProductMapper productMapper) {
-        this.productMapper = productMapper;
+    public void setProductService(ProductServiceImpl productService) {
+        this.productService = productService;
     }
 
-    public List<Receipt> getReceiptList() {
+    @Override
+    public List<Receipt> listReceipts() {
         return receiptMapper.selectList(Wrappers.emptyWrapper());
     }
 
-    public Receipt getReceiptById(Long id) {
+    @Override
+    public Receipt getReceiptById(String id) {
         return receiptMapper.selectById(id);
     }
 
-    public int addReceipt(Receipt receipt) {
+    @Override
+    public int saveReceipt(Receipt receipt) {
         receipt.setStatus(ReceiptStatus.NEW_ORDER.getCode());
         return receiptMapper.insert(receipt);
     }
 
-    public int editReceipt(Receipt receipt) {
+    @Override
+    public int updateReceipt(Receipt receipt) {
         return receiptMapper.updateById(receipt);
     }
 
-    public int removeReceipt(Long id) {
+    @Override
+    public int removeReceipt(String id) {
         return receiptMapper.deleteById(id);
     }
 
-    public ReceiptVo getReceiptInformationById(Long id) {
+    @Override
+    public ReceiptVo getReceiptVoById(String id) {
         LambdaQueryWrapper<Receipt> wrapper = Wrappers.lambdaQuery(Receipt.class).eq(Receipt::getId, id);
         ReceiptVo receiptVo = Optional.ofNullable(receiptMapper.selectOne(wrapper)).map(ReceiptVo::new).orElse(null);
         Optional.ofNullable(receiptVo).ifPresent(this::addReceiptDetails);
@@ -82,7 +88,8 @@ public class ReceiptServiceImpl extends ServiceImpl<ReceiptMapper, Receipt> impl
         receiptVo.setReceiptDetails(receiptDetails);
     }
 
-    public List<ReceiptVo> getAllReceiptInformation() {
+    @Override
+    public List<ReceiptVo> listReceiptVos() {
         List<Receipt> receiptList = receiptMapper.selectList(Wrappers.emptyWrapper());
         List<ReceiptVo> receiptVos = receiptList.stream().map(ReceiptVo::new).collect(toList());
         if (receiptVos.size() > 0) {
@@ -98,9 +105,11 @@ public class ReceiptServiceImpl extends ServiceImpl<ReceiptMapper, Receipt> impl
         receiptVos.forEach(e -> e.setReceiptDetails(hashMap.get(e.getId())));
     }
 
-    public int addReceiptVo(ReceiptVo receiptVo) {
+    @Override
+    public int saveReceiptVo(ReceiptVo receiptVo) {
         receiptVo.setId(RandomGenerator.getNumberString(20));
         receiptVo.setStatus(ReceiptStatus.NEW_ORDER.getCode());
+        receiptVo.setDate(new Date(System.currentTimeMillis()));
         receiptVo.getReceiptDetails().forEach(e -> {
                     e.setReceiptId(receiptVo.getId());
                     e.setAmount(calculateAmount(e));
@@ -115,7 +124,7 @@ public class ReceiptServiceImpl extends ServiceImpl<ReceiptMapper, Receipt> impl
     }
 
     private BigDecimal calculateAmount(ReceiptDetail receiptDetail) {
-        BigDecimal price = productMapper.selectById(receiptDetail.getProductId()).getPrice();
+        BigDecimal price = productService.getProductById(receiptDetail.getProductId()).getPrice();
         return price.multiply(new BigDecimal(receiptDetail.getQuantity()));
     }
 }

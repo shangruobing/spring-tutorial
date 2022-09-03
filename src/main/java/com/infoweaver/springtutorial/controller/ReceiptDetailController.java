@@ -13,43 +13,43 @@ import java.util.List;
 
 @RestController
 public class ReceiptDetailController {
-    private ReceiptDetailServiceImpl ReceiptDetailService;
+    private ReceiptDetailServiceImpl receiptDetailService;
 
     @Autowired
-    public void setReceiptDetailService(ReceiptDetailServiceImpl ReceiptDetailService) {
-        this.ReceiptDetailService = ReceiptDetailService;
+    public void setReceiptDetailService(ReceiptDetailServiceImpl receiptDetailService) {
+        this.receiptDetailService = receiptDetailService;
     }
 
     @GetMapping("/receiptDetail")
     public List<ReceiptDetail> selectAllReceiptDetail() {
-        return ReceiptDetailService.getReceiptDetailList();
+        return receiptDetailService.listReceiptDetails();
     }
 
     @GetMapping("/receiptDetail/{id}")
-    public ReceiptDetail getReceiptDetailById(@PathVariable("id") long id) {
-        return ReceiptDetailService.getReceiptDetailById(id);
+    public ReceiptDetail getReceiptDetailById(@PathVariable("id") String id) {
+        return receiptDetailService.getReceiptDetailById(id);
     }
 
 
     @PostMapping("/receiptDetail")
-    public int add(@RequestBody ReceiptDetail ReceiptDetail) {
-        return ReceiptDetailService.addReceiptDetail(ReceiptDetail);
+    public int add(@RequestBody ReceiptDetail receiptDetail) {
+        return receiptDetailService.saveReceiptDetail(receiptDetail);
     }
 
     @PutMapping("/receiptDetail")
-    public int update(@RequestBody ReceiptDetail ReceiptDetail) {
-        return ReceiptDetailService.editReceiptDetail(ReceiptDetail);
+    public int update(@RequestBody ReceiptDetail receiptDetail) {
+        return receiptDetailService.updateReceiptDetail(receiptDetail);
     }
 
     @DeleteMapping("/receiptDetail/{id}")
-    public int delete(@PathVariable("id") long id) {
-        return ReceiptDetailService.removeReceiptDetail(id);
+    public int delete(@PathVariable("id") String id) {
+        return receiptDetailService.removeReceiptDetail(id);
     }
 
     @PostMapping("/receiptDetailList/")
     public boolean addList(@RequestBody List<ReceiptDetail> receiptDetailList) {
         System.out.println(receiptDetailList);
-        return ReceiptDetailService.saveBatch(receiptDetailList);
+        return receiptDetailService.saveBatch(receiptDetailList);
     }
 }
 

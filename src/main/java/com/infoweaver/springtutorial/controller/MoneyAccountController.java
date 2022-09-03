@@ -13,37 +13,37 @@ import java.util.List;
 
 @RestController
 public class MoneyAccountController {
-    private MoneyAccountServiceImpl MoneyAccountService;
+    private MoneyAccountServiceImpl moneyAccountService;
 
     @Autowired
-    public void setMoneyAccountService(MoneyAccountServiceImpl MoneyAccountService) {
-        this.MoneyAccountService = MoneyAccountService;
+    public void setMoneyAccountService(MoneyAccountServiceImpl moneyAccountService) {
+        this.moneyAccountService = moneyAccountService;
     }
 
     @GetMapping("/moneyAccount")
     public List<MoneyAccount> selectAllMoneyAccount() {
-        return MoneyAccountService.getMoneyAccountList();
+        return moneyAccountService.listMoneyAccounts();
     }
 
     @GetMapping("/moneyAccount/{id}")
-    public MoneyAccount getMoneyAccountById(@PathVariable("id") long id) {
-        return MoneyAccountService.getMoneyAccountById(id);
+    public MoneyAccount getMoneyAccountById(@PathVariable("id") String id) {
+        return moneyAccountService.getMoneyAccountById(id);
     }
 
 
     @PostMapping("/moneyAccount")
-    public int add(@RequestBody MoneyAccount MoneyAccount) {
-        return MoneyAccountService.addMoneyAccount(MoneyAccount);
+    public int add(@RequestBody MoneyAccount moneyAccount) {
+        return moneyAccountService.saveMoneyAccount(moneyAccount);
     }
 
     @PutMapping("/moneyAccount")
-    public int update(@RequestBody MoneyAccount MoneyAccount) {
-        return MoneyAccountService.editMoneyAccount(MoneyAccount);
+    public int update(@RequestBody MoneyAccount moneyAccount) {
+        return moneyAccountService.updateMoneyAccount(moneyAccount);
     }
 
     @DeleteMapping("/moneyAccount/{id}")
-    public int delete(@PathVariable("id") long id) {
-        return MoneyAccountService.removeMoneyAccount(id);
+    public int delete(@PathVariable("id") String id) {
+        return moneyAccountService.removeMoneyAccount(id);
     }
 }
 

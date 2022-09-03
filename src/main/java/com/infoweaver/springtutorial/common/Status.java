@@ -6,6 +6,9 @@ package com.infoweaver.springtutorial.common;
  */
 
 public enum Status {
+    /**
+     * HTTP Status Code
+     */
     HTTP_100_CONTINUE(100, "CONTINUE"),
     HTTP_200_OK(200, "OK"),
     HTTP_201_CREATED(201, "CREATED"),

@@ -1,5 +1,6 @@
 package com.infoweaver.springtutorial.config;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -11,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class ConfigurerAdapter implements WebMvcConfigurer {
     @Override
-    public void addCorsMappings(CorsRegistry registry) {
+    public void addCorsMappings(@NotNull CorsRegistry registry) {
         WebMvcConfigurer.super.addCorsMappings(registry);
         registry.addMapping("/**")
                 .allowCredentials(false)

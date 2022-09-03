@@ -5,6 +5,9 @@ package com.infoweaver.springtutorial.constant;
  */
 
 public enum ReceiptStatus {
+    /**
+     * Receipt Custom Status
+     */
     NEW_ORDER(1, "New Order"),
     PAID(2, "Paid"),
     DELIVERED(3, "Delivered"),

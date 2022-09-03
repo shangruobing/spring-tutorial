@@ -22,23 +22,28 @@ public class MoneyAccountServiceImpl extends ServiceImpl<MoneyAccountMapper, Mon
         this.moneyAccountMapper = moneyAccountMapper;
     }
 
-    public List<MoneyAccount> getMoneyAccountList() {
+    @Override
+    public List<MoneyAccount> listMoneyAccounts() {
         return moneyAccountMapper.selectList(null);
     }
 
-    public MoneyAccount getMoneyAccountById(Long id) {
+    @Override
+    public MoneyAccount getMoneyAccountById(String id) {
         return moneyAccountMapper.selectById(id);
     }
 
-    public int addMoneyAccount(MoneyAccount moneyAccount) {
+    @Override
+    public int saveMoneyAccount(MoneyAccount moneyAccount) {
         return moneyAccountMapper.insert(moneyAccount);
     }
 
-    public int editMoneyAccount(MoneyAccount moneyAccount) {
+    @Override
+    public int updateMoneyAccount(MoneyAccount moneyAccount) {
         return moneyAccountMapper.updateById(moneyAccount);
     }
 
-    public int removeMoneyAccount(Long id) {
+    @Override
+    public int removeMoneyAccount(String id) {
         return moneyAccountMapper.deleteById(id);
     }
 }

@@ -22,23 +22,28 @@ public class ReceiptDetailServiceImpl extends ServiceImpl<ReceiptDetailMapper, R
         this.receiptDetailMapper = receiptDetailMapper;
     }
 
-    public List<ReceiptDetail> getReceiptDetailList() {
+    @Override
+    public List<ReceiptDetail> listReceiptDetails() {
         return receiptDetailMapper.selectList(null);
     }
 
-    public ReceiptDetail getReceiptDetailById(Long id) {
+    @Override
+    public ReceiptDetail getReceiptDetailById(String id) {
         return receiptDetailMapper.selectById(id);
     }
 
-    public int addReceiptDetail(ReceiptDetail receiptDetail) {
+    @Override
+    public int saveReceiptDetail(ReceiptDetail receiptDetail) {
         return receiptDetailMapper.insert(receiptDetail);
     }
 
-    public int editReceiptDetail(ReceiptDetail receiptDetail) {
+    @Override
+    public int updateReceiptDetail(ReceiptDetail receiptDetail) {
         return receiptDetailMapper.updateById(receiptDetail);
     }
 
-    public int removeReceiptDetail(Long id) {
+    @Override
+    public int removeReceiptDetail(String id) {
         return receiptDetailMapper.deleteById(id);
     }
 

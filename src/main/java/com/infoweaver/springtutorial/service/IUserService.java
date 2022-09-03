@@ -15,7 +15,7 @@ public interface IUserService extends IService<User> {
      *
      * @return User List
      */
-    List<User> getUserList();
+    List<User> listUsers();
 
     /**
      * Retrieve a User by id.
@@ -31,7 +31,7 @@ public interface IUserService extends IService<User> {
      * @param user user object
      * @return a status code
      */
-    int addUser(User user);
+    int saveUser(User user);
 
     /**
      * Update a user instance.
@@ -39,7 +39,7 @@ public interface IUserService extends IService<User> {
      * @param user user object
      * @return a status code
      */
-    int editUser(User user);
+    int updateUser(User user);
 
     /**
      * Delete a user instance.

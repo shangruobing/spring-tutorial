@@ -22,23 +22,28 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
         this.productMapper = productMapper;
     }
 
-    public List<Product> getProductList() {
+    @Override
+    public List<Product> listProducts() {
         return productMapper.selectList(null);
     }
 
-    public Product getProductById(Long id) {
+    @Override
+    public Product getProductById(String id) {
         return productMapper.selectById(id);
     }
 
-    public int addProduct(Product product) {
+    @Override
+    public int saveProduct(Product product) {
         return productMapper.insert(product);
     }
 
-    public int editProduct(Product product) {
+    @Override
+    public int updateProduct(Product product) {
         return productMapper.updateById(product);
     }
 
-    public int removeProduct(Long id) {
+    @Override
+    public int removeProduct(String id) {
         return productMapper.deleteById(id);
     }
 }

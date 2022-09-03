@@ -15,7 +15,7 @@ public interface IStockAccountService extends IService<StockAccount> {
      *
      * @return StockAccount List
      */
-    List<StockAccount> getStockAccountList();
+    List<StockAccount> listStockAccounts();
 
     /**
      * Retrieve a StockAccount by id.
@@ -23,7 +23,7 @@ public interface IStockAccountService extends IService<StockAccount> {
      * @param id stockAccount id
      * @return a StockAccount instance
      */
-    StockAccount getStockAccountById(Long id);
+    StockAccount getStockAccountById(String id);
 
     /**
      * Create a StockAccount instance.
@@ -31,7 +31,7 @@ public interface IStockAccountService extends IService<StockAccount> {
      * @param stockAccount stockAccount object
      * @return a status code
      */
-    int addStockAccount(StockAccount stockAccount);
+    int saveStockAccount(StockAccount stockAccount);
 
     /**
      * Update a stockAccount instance.
@@ -39,7 +39,7 @@ public interface IStockAccountService extends IService<StockAccount> {
      * @param stockAccount stockAccount object
      * @return a status code
      */
-    int editStockAccount(StockAccount stockAccount);
+    int updateStockAccount(StockAccount stockAccount);
 
     /**
      * Delete a stockAccount instance.
@@ -47,6 +47,6 @@ public interface IStockAccountService extends IService<StockAccount> {
      * @param id stockAccount id
      * @return a status code
      */
-    int removeStockAccount(Long id);
+    int removeStockAccount(String id);
 
 }

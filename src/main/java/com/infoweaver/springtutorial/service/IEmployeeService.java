@@ -15,31 +15,31 @@ public interface IEmployeeService extends IService<Employee> {
      *
      * @return Employee List
      */
-    List<Employee> getEmployeeList();
+    List<Employee> listEmployees();
 
     /**
-     * Retrieve a Employee by id.
+     * Retrieve an Employee by id.
      *
      * @param id employee id
-     * @return a Employee instance
+     * @return an Employee instance
      */
-    Employee getEmployeeById(Long id);
+    Employee getEmployeeById(String id);
 
     /**
-     * Create a Employee instance.
+     * Create an Employee instance.
      *
      * @param employee employee object
      * @return a status code
      */
-    int addEmployee(Employee employee);
+    int saveEmployee(Employee employee);
 
     /**
-     * Update a employee instance.
+     * Update an employee instance.
      *
      * @param employee employee object
      * @return a status code
      */
-    int editEmployee(Employee employee);
+    int updateEmployee(Employee employee);
 
     /**
      * Delete a employee instance.
@@ -47,6 +47,6 @@ public interface IEmployeeService extends IService<Employee> {
      * @param id employee id
      * @return a status code
      */
-    int removeEmployee(Long id);
+    int removeEmployee(String id);
 
 }

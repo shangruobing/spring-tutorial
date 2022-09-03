@@ -13,37 +13,37 @@ import java.util.List;
 
 @RestController
 public class StockController {
-    private StockAccountServiceImpl StockAccountService;
+    private StockAccountServiceImpl stockAccountService;
 
     @Autowired
-    public void setStockAccountService(StockAccountServiceImpl StockAccountService) {
-        this.StockAccountService = StockAccountService;
+    public void setStockAccountService(StockAccountServiceImpl stockAccountService) {
+        this.stockAccountService = stockAccountService;
     }
 
     @GetMapping("/stockAccount")
     public List<StockAccount> selectAllStockAccount() {
-        return StockAccountService.getStockAccountList();
+        return stockAccountService.listStockAccounts();
     }
 
     @GetMapping("/stockAccount/{id}")
-    public StockAccount getStockAccountById(@PathVariable("id") long id) {
-        return StockAccountService.getStockAccountById(id);
+    public StockAccount getStockAccountById(@PathVariable("id") String id) {
+        return stockAccountService.getStockAccountById(id);
     }
 
 
     @PostMapping("/stockAccount")
-    public int add(@RequestBody StockAccount StockAccount) {
-        return StockAccountService.addStockAccount(StockAccount);
+    public int add(@RequestBody StockAccount stockAccount) {
+        return stockAccountService.saveStockAccount(stockAccount);
     }
 
     @PutMapping("/stockAccount")
-    public int update(@RequestBody StockAccount StockAccount) {
-        return StockAccountService.editStockAccount(StockAccount);
+    public int update(@RequestBody StockAccount stockAccount) {
+        return stockAccountService.updateStockAccount(stockAccount);
     }
 
     @DeleteMapping("/stockAccount/{id}")
-    public int delete(@PathVariable("id") long id) {
-        return StockAccountService.removeStockAccount(id);
+    public int delete(@PathVariable("id") String id) {
+        return stockAccountService.removeStockAccount(id);
     }
 }
 
