@@ -1,6 +1,8 @@
 package com.infoweaver.springtutorial.controller;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.Map;
 
 import com.infoweaver.springtutorial.entity.User;
 import com.infoweaver.springtutorial.service.impl.UserServiceImpl;
@@ -26,12 +28,12 @@ public class UserController {
     }
 
     @GetMapping("/user/{id}")
-    public User getUserById(@PathVariable("id") long id) {
+    public User getUserById(@PathVariable("id") String id) {
         return userService.getUserById(id);
     }
 
     @PostMapping("/user")
-    public int add(@RequestBody User user) {
+    public int add(@RequestBody User user) throws NoSuchAlgorithmException {
         return userService.saveUser(user);
     }
 
@@ -41,8 +43,13 @@ public class UserController {
     }
 
     @DeleteMapping("/user/{id}")
-    public int delete(@PathVariable("id") long id) {
+    public int delete(@PathVariable("id") String id) {
         return userService.removeUser(id);
+    }
+
+    @PostMapping("/user/login")
+    public Map<String, String> login(@RequestBody User user) throws NoSuchAlgorithmException {
+        return userService.login(user.getName(), user.getPassword());
     }
 
 }

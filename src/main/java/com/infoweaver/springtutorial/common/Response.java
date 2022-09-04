@@ -24,8 +24,8 @@ public class Response<T> implements Serializable {
         return new Response<>(200, "OK", data);
     }
 
-    public static <T> Response<T> fail(int code, String message) {
-        return new Response<>(code, message);
+    public static <T> Response<T> fail(int code, String message, T data) {
+        return new Response<>(code, message, data);
     }
 
     private Response(int code, String message) {

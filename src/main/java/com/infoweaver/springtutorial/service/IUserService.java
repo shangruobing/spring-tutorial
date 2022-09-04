@@ -1,6 +1,8 @@
 package com.infoweaver.springtutorial.service;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.Map;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.infoweaver.springtutorial.entity.User;
@@ -23,15 +25,16 @@ public interface IUserService extends IService<User> {
      * @param id user id
      * @return a User instance
      */
-    User getUserById(Long id);
+    User getUserById(String id);
 
     /**
      * Create a User instance.
      *
      * @param user user object
      * @return a status code
+     * @throws NoSuchAlgorithmException No Algorithm
      */
-    int saveUser(User user);
+    int saveUser(User user) throws NoSuchAlgorithmException;
 
     /**
      * Update a user instance.
@@ -47,6 +50,15 @@ public interface IUserService extends IService<User> {
      * @param id user id
      * @return a status code
      */
-    int removeUser(Long id);
+    int removeUser(String id);
 
+    /**
+     * User login
+     *
+     * @param username username
+     * @param password password
+     * @throws NoSuchAlgorithmException No Algorithm
+     * @return auth
+     */
+    Map<String, String> login(String username, String password) throws NoSuchAlgorithmException;
 }

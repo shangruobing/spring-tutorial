@@ -19,7 +19,7 @@ public class RestExceptionHandler {
     public Response<String> exception(Exception e) {
         System.out.println(e.getMessage());
         Status status = Status.HTTP_400_BAD_REQUEST;
-        return Response.fail(status.getCode(), status.getMessage());
+        return Response.fail(status.getCode(), status.getMessage(), e.getMessage());
     }
 
 }

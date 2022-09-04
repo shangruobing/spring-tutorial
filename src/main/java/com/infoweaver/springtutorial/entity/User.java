@@ -1,5 +1,6 @@
 package com.infoweaver.springtutorial.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.*;
 
@@ -12,16 +13,11 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode(callSuper = true)
+@TableName(value = "tb_user")
 public class User extends Model<User> {
-    private Long id;
+    private String id;
     private String name;
     private Integer age;
     private String email;
-
-    public User(User user) {
-        this.id = user.getId();
-        this.name = user.getName();
-        this.age = user.getAge();
-        this.email = user.getEmail();
-    }
+    private String password;
 }
