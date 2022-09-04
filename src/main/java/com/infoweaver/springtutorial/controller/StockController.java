@@ -45,6 +45,12 @@ public class StockController {
     public int delete(@PathVariable("id") String id) {
         return stockAccountService.removeStockAccount(id);
     }
+
+
+    @PostMapping("/enter_stock")
+    public int productsEnterStock(@RequestBody List<StockAccount> stockAccounts) {
+        return stockAccountService.saveOrUpdateStockAccountBatch(stockAccounts);
+    }
 }
 
 

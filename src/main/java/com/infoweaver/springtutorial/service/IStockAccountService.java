@@ -54,7 +54,15 @@ public interface IStockAccountService extends IService<StockAccount> {
      * Product outbound
      *
      * @param receiptDetails ReceiptDetails
+     * @return a status code
      */
-    void outbound(List<ReceiptDetail> receiptDetails);
+    int outbound(List<ReceiptDetail> receiptDetails);
 
+    /**
+     * Save or update StockAccount Batch.
+     *
+     * @param stockAccounts StockAccount
+     * @return a status code
+     */
+    int saveOrUpdateStockAccountBatch(List<StockAccount> stockAccounts);
 }

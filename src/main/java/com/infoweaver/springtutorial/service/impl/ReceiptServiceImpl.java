@@ -143,15 +143,13 @@ public class ReceiptServiceImpl extends ServiceImpl<ReceiptMapper, Receipt> impl
         Receipt receipt = receiptMapper.selectById(receiptId);
         receipt.setStatus(ReceiptStatus.DELIVERED.getCode());
         receiptMapper.updateById(receipt);
-        stockAccountService.outbound(receiptDetailService.listReceiptDetailsByReceiptId(receipt.getId()));
-        return 1;
+        return stockAccountService.outbound(receiptDetailService.listReceiptDetailsByReceiptId(receipt.getId()));
     }
 
     @Override
     public int customerTakeDelivery(String receiptId) {
         Receipt receipt = receiptMapper.selectById(receiptId);
         receipt.setStatus(ReceiptStatus.FINISHED.getCode());
-        receiptMapper.updateById(receipt);
-        return 1;
+        return receiptMapper.updateById(receipt);
     }
 }

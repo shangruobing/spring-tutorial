@@ -16,6 +16,11 @@ public class Response<T> implements Serializable {
     private T data;
 
     public static <T> Response<T> success(T data) {
+        String successStatus = "1";
+        if (successStatus.equals(data.toString())) {
+            return new Response<>(200, "OK");
+        }
+
         return new Response<>(200, "OK", data);
     }
 
@@ -33,5 +38,4 @@ public class Response<T> implements Serializable {
         this.message = message;
         this.data = data;
     }
-
 }

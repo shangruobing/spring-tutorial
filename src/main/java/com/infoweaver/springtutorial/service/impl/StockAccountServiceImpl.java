@@ -10,6 +10,7 @@ import com.infoweaver.springtutorial.service.IStockAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,7 +53,7 @@ public class StockAccountServiceImpl extends ServiceImpl<StockAccountMapper, Sto
     }
 
     @Override
-    public void outbound(List<ReceiptDetail> receiptDetails) {
+    public int outbound(List<ReceiptDetail> receiptDetails) {
         receiptDetails.forEach(e -> {
             LambdaQueryWrapper<StockAccount> wrapper = Wrappers.lambdaQuery(StockAccount.class).eq(StockAccount::getProductId, e.getProductId());
             StockAccount stockAccount = Optional.ofNullable(stockAccountMapper.selectOne(wrapper)).map(StockAccount::new).orElse(null);
@@ -60,5 +61,22 @@ public class StockAccountServiceImpl extends ServiceImpl<StockAccountMapper, Sto
             stockAccount.setQuantity(stockAccount.getQuantity() - e.getQuantity());
             stockAccountMapper.updateById(stockAccount);
         });
+        return 1;
+    }
+
+    @Override
+    public int saveOrUpdateStockAccountBatch(List<StockAccount> stockAccounts) {
+        stockAccounts.forEach(e -> {
+            LambdaQueryWrapper<StockAccount> wrapper = Wrappers.lambdaQuery(StockAccount.class).eq(StockAccount::getProductId, e.getProductId());
+            StockAccount stockAccount = Optional.ofNullable(stockAccountMapper.selectOne(wrapper)).map(StockAccount::new).orElse(null);
+            if (stockAccount != null) {
+                stockAccount.setQuantity(stockAccount.getQuantity() + e.getQuantity());
+                stockAccountMapper.updateById(stockAccount);
+            } else {
+                e.setDate(new Date(System.currentTimeMillis()));
+                stockAccountMapper.insert(e);
+            }
+        });
+        return 1;
     }
 }
