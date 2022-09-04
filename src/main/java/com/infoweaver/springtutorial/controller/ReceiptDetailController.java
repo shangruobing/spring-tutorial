@@ -13,10 +13,10 @@ import java.util.List;
 
 @RestController
 public class ReceiptDetailController {
-    private ReceiptDetailServiceImpl receiptDetailService;
+    private final ReceiptDetailServiceImpl receiptDetailService;
 
     @Autowired
-    public void setReceiptDetailService(ReceiptDetailServiceImpl receiptDetailService) {
+    public ReceiptDetailController(ReceiptDetailServiceImpl receiptDetailService) {
         this.receiptDetailService = receiptDetailService;
     }
 

@@ -13,10 +13,10 @@ import java.util.List;
 
 @RestController
 public class StockController {
-    private StockAccountServiceImpl stockAccountService;
+    private final StockAccountServiceImpl stockAccountService;
 
     @Autowired
-    public void setStockAccountService(StockAccountServiceImpl stockAccountService) {
+    public StockController(StockAccountServiceImpl stockAccountService) {
         this.stockAccountService = stockAccountService;
     }
 

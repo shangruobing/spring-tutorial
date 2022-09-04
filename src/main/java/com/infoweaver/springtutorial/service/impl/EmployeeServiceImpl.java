@@ -15,10 +15,10 @@ import java.util.List;
 
 @Service
 public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> implements IEmployeeService {
-    private EmployeeMapper employeeMapper;
+    private final EmployeeMapper employeeMapper;
 
     @Autowired
-    public void setEmployeeMapper(EmployeeMapper employeeMapper) {
+    public EmployeeServiceImpl(EmployeeMapper employeeMapper) {
         this.employeeMapper = employeeMapper;
     }
 

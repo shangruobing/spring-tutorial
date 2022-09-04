@@ -17,10 +17,10 @@ import java.util.List;
 
 @Service
 public class MoneyAccountServiceImpl extends ServiceImpl<MoneyAccountMapper, MoneyAccount> implements IMoneyAccountService {
-    private MoneyAccountMapper moneyAccountMapper;
+    private final MoneyAccountMapper moneyAccountMapper;
 
     @Autowired
-    public void setMoneyAccountMapper(MoneyAccountMapper moneyAccountMapper) {
+    public MoneyAccountServiceImpl(MoneyAccountMapper moneyAccountMapper) {
         this.moneyAccountMapper = moneyAccountMapper;
     }
 

@@ -15,10 +15,10 @@ import java.util.List;
 
 @Service
 public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> implements IProductService {
-    private ProductMapper productMapper;
+    private final ProductMapper productMapper;
 
     @Autowired
-    public void setProductMapper(ProductMapper productMapper) {
+    public ProductServiceImpl(ProductMapper productMapper) {
         this.productMapper = productMapper;
     }
 

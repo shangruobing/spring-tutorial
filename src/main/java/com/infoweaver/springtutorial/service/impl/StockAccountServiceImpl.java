@@ -19,10 +19,10 @@ import java.util.Optional;
 
 @Service
 public class StockAccountServiceImpl extends ServiceImpl<StockAccountMapper, StockAccount> implements IStockAccountService {
-    private StockAccountMapper stockAccountMapper;
+    private final StockAccountMapper stockAccountMapper;
 
     @Autowired
-    public void setStockAccountMapper(StockAccountMapper stockAccountMapper) {
+    public StockAccountServiceImpl(StockAccountMapper stockAccountMapper) {
         this.stockAccountMapper = stockAccountMapper;
     }
 
@@ -54,10 +54,8 @@ public class StockAccountServiceImpl extends ServiceImpl<StockAccountMapper, Sto
     @Override
     public void outbound(List<ReceiptDetail> receiptDetails) {
         receiptDetails.forEach(e -> {
-            LambdaQueryWrapper<StockAccount> wrapper = Wrappers.lambdaQuery(StockAccount.class)
-                    .eq(StockAccount::getProductId, e.getProductId());
-            StockAccount stockAccount = Optional.ofNullable(stockAccountMapper.selectOne(wrapper))
-                    .map(StockAccount::new).orElse(null);
+            LambdaQueryWrapper<StockAccount> wrapper = Wrappers.lambdaQuery(StockAccount.class).eq(StockAccount::getProductId, e.getProductId());
+            StockAccount stockAccount = Optional.ofNullable(stockAccountMapper.selectOne(wrapper)).map(StockAccount::new).orElse(null);
             assert stockAccount != null;
             stockAccount.setQuantity(stockAccount.getQuantity() - e.getQuantity());
             stockAccountMapper.updateById(stockAccount);

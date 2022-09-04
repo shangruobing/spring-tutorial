@@ -13,10 +13,10 @@ import java.util.List;
 
 @RestController
 public class ProductController {
-    private ProductServiceImpl productService;
+    private final ProductServiceImpl productService;
 
     @Autowired
-    public void setProductService(ProductServiceImpl productService) {
+    public ProductController(ProductServiceImpl productService) {
         this.productService = productService;
     }
 

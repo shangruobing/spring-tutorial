@@ -13,12 +13,13 @@ import java.util.List;
 
 @RestController
 public class EmployeeController {
-    private EmployeeServiceImpl employeeService;
+    private final EmployeeServiceImpl employeeService;
 
     @Autowired
-    public void setEmployeeService(EmployeeServiceImpl employeeService) {
+    public EmployeeController(EmployeeServiceImpl employeeService) {
         this.employeeService = employeeService;
     }
+
 
     @GetMapping("/employee")
     public List<Employee> selectAllEmployee() {

@@ -16,10 +16,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
-    private UserMapper userMapper;
+    private final UserMapper userMapper;
 
     @Autowired
-    public void setUserMapper(UserMapper userMapper) {
+    public UserServiceImpl(UserMapper userMapper) {
         this.userMapper = userMapper;
     }
 

@@ -88,4 +88,12 @@ public interface IReceiptService extends IService<Receipt> {
      * @return a status
      */
     int outbound(String receiptId);
+
+    /**
+     * Customer take delivery.
+     *
+     * @param receiptId Receipt Id
+     * @return a status
+     */
+    int customerTakeDelivery(String receiptId);
 }

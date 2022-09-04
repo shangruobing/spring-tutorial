@@ -14,10 +14,10 @@ import java.util.List;
 
 @RestController
 public class ReceiptController {
-    private ReceiptServiceImpl receiptService;
+    private final ReceiptServiceImpl receiptService;
 
     @Autowired
-    public void setReceiptService(ReceiptServiceImpl receiptService) {
+    public ReceiptController(ReceiptServiceImpl receiptService) {
         this.receiptService = receiptService;
     }
 
@@ -68,7 +68,11 @@ public class ReceiptController {
 
     @PostMapping("/outbound")
     public int outbound(@RequestBody Receipt receipt) {
-        System.out.println(receipt);
         return receiptService.outbound(receipt.getId());
+    }
+
+    @PostMapping("/take_delivery")
+    public int customerTakeDelivery(@RequestBody Receipt receipt) {
+        return receiptService.customerTakeDelivery(receipt.getId());
     }
 }

@@ -17,10 +17,10 @@ import java.util.List;
 
 @Service
 public class ReceiptDetailServiceImpl extends ServiceImpl<ReceiptDetailMapper, ReceiptDetail> implements IReceiptDetailService {
-    private ReceiptDetailMapper receiptDetailMapper;
+    private final ReceiptDetailMapper receiptDetailMapper;
 
     @Autowired
-    public void setReceiptDetailMapper(ReceiptDetailMapper receiptDetailMapper) {
+    public ReceiptDetailServiceImpl(ReceiptDetailMapper receiptDetailMapper) {
         this.receiptDetailMapper = receiptDetailMapper;
     }
 

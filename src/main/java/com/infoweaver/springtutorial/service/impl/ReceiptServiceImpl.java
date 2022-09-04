@@ -29,41 +29,26 @@ import static java.util.stream.Collectors.*;
 
 @Service
 public class ReceiptServiceImpl extends ServiceImpl<ReceiptMapper, Receipt> implements IReceiptService {
-    private ReceiptMapper receiptMapper;
-    private ReceiptDetailMapper receiptDetailMapper;
-    private ProductServiceImpl productService;
-    private ReceiptDetailServiceImpl receiptDetailService;
-    private MoneyAccountServiceImpl moneyAccountService;
-    private StockAccountServiceImpl stockAccountService;
+    private final ReceiptMapper receiptMapper;
+    private final ReceiptDetailMapper receiptDetailMapper;
+    private final ProductServiceImpl productService;
+    private final ReceiptDetailServiceImpl receiptDetailService;
+    private final MoneyAccountServiceImpl moneyAccountService;
+    private final StockAccountServiceImpl stockAccountService;
 
     @Autowired
-    public void setReceiptMapper(ReceiptMapper receiptMapper) {
+    public ReceiptServiceImpl(ReceiptMapper receiptMapper,
+                              ReceiptDetailMapper receiptDetailMapper,
+                              ProductServiceImpl productService,
+                              ReceiptDetailServiceImpl receiptDetailService,
+                              MoneyAccountServiceImpl moneyAccountService,
+                              StockAccountServiceImpl stockAccountService) {
         this.receiptMapper = receiptMapper;
-    }
-
-    @Autowired
-    public void setReceiptDetailMapper(ReceiptDetailMapper receiptDetailMapper) {
         this.receiptDetailMapper = receiptDetailMapper;
-    }
-
-    @Autowired
-    public void setProductService(ProductServiceImpl productService) {
         this.productService = productService;
-    }
-
-    @Autowired
-    public void setMoneyAccountService(MoneyAccountServiceImpl moneyAccountService) {
-        this.moneyAccountService = moneyAccountService;
-    }
-
-    @Autowired
-    public void setStockAccountService(StockAccountServiceImpl stockAccountService) {
-        this.stockAccountService = stockAccountService;
-    }
-
-    @Autowired
-    public void setReceiptDetailService(ReceiptDetailServiceImpl receiptDetailService) {
         this.receiptDetailService = receiptDetailService;
+        this.moneyAccountService = moneyAccountService;
+        this.stockAccountService = stockAccountService;
     }
 
     @Override
@@ -118,7 +103,8 @@ public class ReceiptServiceImpl extends ServiceImpl<ReceiptMapper, Receipt> impl
 
     private void addReceiptInfoList(List<ReceiptVo> receiptVos) {
         Set<String> receiptIds = receiptVos.stream().map(Receipt::getId).collect(toSet());
-        List<ReceiptDetail> receiptDetails = receiptDetailMapper.selectList(Wrappers.lambdaQuery(ReceiptDetail.class).in(ReceiptDetail::getReceiptId, receiptIds));
+        LambdaQueryWrapper<ReceiptDetail> wrapper = Wrappers.lambdaQuery(ReceiptDetail.class).in(ReceiptDetail::getReceiptId, receiptIds);
+        List<ReceiptDetail> receiptDetails = receiptDetailMapper.selectList(wrapper);
         Map<String, List<ReceiptDetail>> hashMap = receiptDetails.stream().collect(groupingBy(ReceiptDetail::getReceiptId));
         receiptVos.forEach(e -> e.setReceiptDetails(hashMap.get(e.getId())));
     }
@@ -129,14 +115,12 @@ public class ReceiptServiceImpl extends ServiceImpl<ReceiptMapper, Receipt> impl
         receiptVo.setStatus(ReceiptStatus.NEW_ORDER.getCode());
         receiptVo.setDate(new Date(System.currentTimeMillis()));
         receiptVo.getReceiptDetails().forEach(e -> {
-                    e.setReceiptId(receiptVo.getId());
-                    e.setAmount(calculateAmount(e));
-                }
-        );
-        receiptVo.setTotalPrice(receiptVo.getReceiptDetails().stream().map(ReceiptDetail::getAmount)
-                .reduce(BigDecimal::add).orElse(null));
+            e.setReceiptId(receiptVo.getId());
+            e.setAmount(calculateAmount(e));
+        });
+        receiptVo.setTotalPrice(receiptVo.getReceiptDetails().stream().map(ReceiptDetail::getAmount).reduce(BigDecimal::add).orElse(null));
         receiptMapper.insert(receiptVo);
-        receiptVo.getReceiptDetails().forEach(e -> receiptDetailMapper.insert(e));
+        receiptVo.getReceiptDetails().forEach(receiptDetailMapper::insert);
 
         return receiptVo.getId();
     }
@@ -160,6 +144,14 @@ public class ReceiptServiceImpl extends ServiceImpl<ReceiptMapper, Receipt> impl
         receipt.setStatus(ReceiptStatus.DELIVERED.getCode());
         receiptMapper.updateById(receipt);
         stockAccountService.outbound(receiptDetailService.listReceiptDetailsByReceiptId(receipt.getId()));
+        return 1;
+    }
+
+    @Override
+    public int customerTakeDelivery(String receiptId) {
+        Receipt receipt = receiptMapper.selectById(receiptId);
+        receipt.setStatus(ReceiptStatus.FINISHED.getCode());
+        receiptMapper.updateById(receipt);
         return 1;
     }
 }

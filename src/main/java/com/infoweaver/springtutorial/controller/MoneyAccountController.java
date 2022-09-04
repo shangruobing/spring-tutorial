@@ -13,10 +13,10 @@ import java.util.List;
 
 @RestController
 public class MoneyAccountController {
-    private MoneyAccountServiceImpl moneyAccountService;
+    private final MoneyAccountServiceImpl moneyAccountService;
 
     @Autowired
-    public void setMoneyAccountService(MoneyAccountServiceImpl moneyAccountService) {
+    public MoneyAccountController(MoneyAccountServiceImpl moneyAccountService) {
         this.moneyAccountService = moneyAccountService;
     }
 
