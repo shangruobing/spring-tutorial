@@ -55,8 +55,10 @@ public class StockAccountServiceImpl extends ServiceImpl<StockAccountMapper, Sto
     @Override
     public int outbound(List<ReceiptDetail> receiptDetails) {
         receiptDetails.forEach(e -> {
-            LambdaQueryWrapper<StockAccount> wrapper = Wrappers.lambdaQuery(StockAccount.class).eq(StockAccount::getProductId, e.getProductId());
-            StockAccount stockAccount = Optional.ofNullable(stockAccountMapper.selectOne(wrapper)).map(StockAccount::new).orElse(null);
+            LambdaQueryWrapper<StockAccount> wrapper;
+            wrapper = Wrappers.lambdaQuery(StockAccount.class).eq(StockAccount::getProductId, e.getProductId());
+            StockAccount stockAccount = Optional.ofNullable(stockAccountMapper.selectOne(wrapper))
+                    .map(StockAccount::new).orElse(null);
             assert stockAccount != null;
             stockAccount.setQuantity(stockAccount.getQuantity() - e.getQuantity());
             stockAccountMapper.updateById(stockAccount);
@@ -67,8 +69,10 @@ public class StockAccountServiceImpl extends ServiceImpl<StockAccountMapper, Sto
     @Override
     public int saveOrUpdateStockAccountBatch(List<StockAccount> stockAccounts) {
         stockAccounts.forEach(e -> {
-            LambdaQueryWrapper<StockAccount> wrapper = Wrappers.lambdaQuery(StockAccount.class).eq(StockAccount::getProductId, e.getProductId());
-            StockAccount stockAccount = Optional.ofNullable(stockAccountMapper.selectOne(wrapper)).map(StockAccount::new).orElse(null);
+            LambdaQueryWrapper<StockAccount> wrapper;
+            wrapper = Wrappers.lambdaQuery(StockAccount.class).eq(StockAccount::getProductId, e.getProductId());
+            StockAccount stockAccount = Optional.ofNullable(stockAccountMapper.selectOne(wrapper))
+                    .map(StockAccount::new).orElse(null);
             if (stockAccount != null) {
                 stockAccount.setQuantity(stockAccount.getQuantity() + e.getQuantity());
                 stockAccountMapper.updateById(stockAccount);

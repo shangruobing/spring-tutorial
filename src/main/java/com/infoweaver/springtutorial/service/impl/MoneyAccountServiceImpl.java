@@ -8,6 +8,7 @@ import com.infoweaver.springtutorial.service.IMoneyAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 
@@ -57,5 +58,13 @@ public class MoneyAccountServiceImpl extends ServiceImpl<MoneyAccountMapper, Mon
         moneyAccount.setDate(new Date(System.currentTimeMillis()));
         moneyAccount.setTotal(receipt.getTotalPrice());
         return moneyAccountMapper.insert(moneyAccount);
+    }
+
+    @Override
+    public BigDecimal sumAllMoneyAccounts() {
+        return moneyAccountMapper.selectList(null).stream()
+                .map(MoneyAccount::getTotal)
+                .reduce(BigDecimal::add)
+                .orElse(BigDecimal.ZERO);
     }
 }

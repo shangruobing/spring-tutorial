@@ -5,6 +5,7 @@ import com.infoweaver.springtutorial.service.impl.MoneyAccountServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -44,6 +45,11 @@ public class MoneyAccountController {
     @DeleteMapping("/moneyAccount/{id}")
     public int delete(@PathVariable("id") String id) {
         return moneyAccountService.removeMoneyAccount(id);
+    }
+
+    @GetMapping("/sum_money_account")
+    public BigDecimal sumAllMoneyAccounts() {
+        return moneyAccountService.sumAllMoneyAccounts();
     }
 }
 

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.infoweaver.springtutorial.entity.MoneyAccount;
 import com.infoweaver.springtutorial.entity.Receipt;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -58,4 +59,10 @@ public interface IMoneyAccountService extends IService<MoneyAccount> {
      */
     int saveMoneyAccountByReceipt(Receipt receipt);
 
+    /**
+     * Sum the all moneyAccounts.
+     *
+     * @return sum value
+     */
+    BigDecimal sumAllMoneyAccounts();
 }

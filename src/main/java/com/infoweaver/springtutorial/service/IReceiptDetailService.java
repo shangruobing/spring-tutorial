@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.infoweaver.springtutorial.entity.ReceiptDetail;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Ruobing Shang 2022-09-02 10:36
@@ -56,4 +57,12 @@ public interface IReceiptDetailService extends IService<ReceiptDetail> {
      * @return a ReceiptDetail list
      */
     List<ReceiptDetail> listReceiptDetailsByReceiptId(String receiptId);
+
+    /**
+     * Retrieve a ReceiptDetail by id set.
+     *
+     * @param receiptIds Receipt Id Set
+     * @return a ReceiptDetail list
+     */
+    List<ReceiptDetail> listReceiptDetailsByReceiptIdSet(Set<String> receiptIds);
 }

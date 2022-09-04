@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.infoweaver.springtutorial.constant.ReceiptStatus;
 import com.infoweaver.springtutorial.entity.ReceiptDetail;
 import com.infoweaver.springtutorial.entity.Receipt;
-import com.infoweaver.springtutorial.mapper.ReceiptDetailMapper;
 import com.infoweaver.springtutorial.mapper.ReceiptMapper;
 import com.infoweaver.springtutorial.service.IReceiptService;
 import com.infoweaver.springtutorial.utils.RandomGenerator;
@@ -30,23 +29,20 @@ import static java.util.stream.Collectors.*;
 @Service
 public class ReceiptServiceImpl extends ServiceImpl<ReceiptMapper, Receipt> implements IReceiptService {
     private final ReceiptMapper receiptMapper;
-    private final ReceiptDetailMapper receiptDetailMapper;
-    private final ProductServiceImpl productService;
     private final ReceiptDetailServiceImpl receiptDetailService;
+    private final ProductServiceImpl productService;
     private final MoneyAccountServiceImpl moneyAccountService;
     private final StockAccountServiceImpl stockAccountService;
 
     @Autowired
     public ReceiptServiceImpl(ReceiptMapper receiptMapper,
-                              ReceiptDetailMapper receiptDetailMapper,
-                              ProductServiceImpl productService,
                               ReceiptDetailServiceImpl receiptDetailService,
+                              ProductServiceImpl productService,
                               MoneyAccountServiceImpl moneyAccountService,
                               StockAccountServiceImpl stockAccountService) {
         this.receiptMapper = receiptMapper;
-        this.receiptDetailMapper = receiptDetailMapper;
-        this.productService = productService;
         this.receiptDetailService = receiptDetailService;
+        this.productService = productService;
         this.moneyAccountService = moneyAccountService;
         this.stockAccountService = stockAccountService;
     }
@@ -80,14 +76,14 @@ public class ReceiptServiceImpl extends ServiceImpl<ReceiptMapper, Receipt> impl
     @Override
     public ReceiptVo getReceiptVoById(String id) {
         LambdaQueryWrapper<Receipt> wrapper = Wrappers.lambdaQuery(Receipt.class).eq(Receipt::getId, id);
-        ReceiptVo receiptVo = Optional.ofNullable(receiptMapper.selectOne(wrapper)).map(ReceiptVo::new).orElse(null);
+        ReceiptVo receiptVo = Optional.ofNullable(receiptMapper.selectOne(wrapper))
+                .map(ReceiptVo::new).orElse(null);
         Optional.ofNullable(receiptVo).ifPresent(this::addReceiptDetails);
         return receiptVo;
     }
 
     private void addReceiptDetails(ReceiptVo receiptVo) {
-        LambdaQueryWrapper<ReceiptDetail> wrapper = Wrappers.lambdaQuery(ReceiptDetail.class).eq(ReceiptDetail::getReceiptId, receiptVo.getId());
-        List<ReceiptDetail> receiptDetails = receiptDetailMapper.selectList(wrapper);
+        List<ReceiptDetail> receiptDetails = receiptDetailService.listReceiptDetailsByReceiptId(receiptVo.getId());
         receiptVo.setReceiptDetails(receiptDetails);
     }
 
@@ -103,9 +99,9 @@ public class ReceiptServiceImpl extends ServiceImpl<ReceiptMapper, Receipt> impl
 
     private void addReceiptInfoList(List<ReceiptVo> receiptVos) {
         Set<String> receiptIds = receiptVos.stream().map(Receipt::getId).collect(toSet());
-        LambdaQueryWrapper<ReceiptDetail> wrapper = Wrappers.lambdaQuery(ReceiptDetail.class).in(ReceiptDetail::getReceiptId, receiptIds);
-        List<ReceiptDetail> receiptDetails = receiptDetailMapper.selectList(wrapper);
-        Map<String, List<ReceiptDetail>> hashMap = receiptDetails.stream().collect(groupingBy(ReceiptDetail::getReceiptId));
+        List<ReceiptDetail> receiptDetails = receiptDetailService.listReceiptDetailsByReceiptIdSet(receiptIds);
+        Map<String, List<ReceiptDetail>> hashMap = receiptDetails.stream()
+                .collect(groupingBy(ReceiptDetail::getReceiptId));
         receiptVos.forEach(e -> e.setReceiptDetails(hashMap.get(e.getId())));
     }
 
@@ -118,10 +114,12 @@ public class ReceiptServiceImpl extends ServiceImpl<ReceiptMapper, Receipt> impl
             e.setReceiptId(receiptVo.getId());
             e.setAmount(calculateAmount(e));
         });
-        receiptVo.setTotalPrice(receiptVo.getReceiptDetails().stream().map(ReceiptDetail::getAmount).reduce(BigDecimal::add).orElse(null));
+        receiptVo.setTotalPrice(receiptVo.getReceiptDetails().stream()
+                .map(ReceiptDetail::getAmount)
+                .reduce(BigDecimal::add)
+                .orElse(null));
         receiptMapper.insert(receiptVo);
-        receiptVo.getReceiptDetails().forEach(receiptDetailMapper::insert);
-
+        receiptVo.getReceiptDetails().forEach(receiptDetailService::save);
         return receiptVo.getId();
     }
 

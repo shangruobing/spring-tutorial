@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Ruobing Shang 2022-09-01
@@ -51,9 +52,15 @@ public class ReceiptDetailServiceImpl extends ServiceImpl<ReceiptDetailMapper, R
 
     @Override
     public List<ReceiptDetail> listReceiptDetailsByReceiptId(String receiptId) {
-        LambdaQueryWrapper<ReceiptDetail> wrapper = Wrappers.lambdaQuery(ReceiptDetail.class)
-                .eq(ReceiptDetail::getReceiptId, receiptId);
+        LambdaQueryWrapper<ReceiptDetail> wrapper;
+        wrapper = Wrappers.lambdaQuery(ReceiptDetail.class).eq(ReceiptDetail::getReceiptId, receiptId);
         return receiptDetailMapper.selectList(wrapper);
     }
 
+    @Override
+    public List<ReceiptDetail> listReceiptDetailsByReceiptIdSet(Set<String> receiptIds) {
+        LambdaQueryWrapper<ReceiptDetail> wrapper;
+        wrapper = Wrappers.lambdaQuery(ReceiptDetail.class).in(ReceiptDetail::getReceiptId, receiptIds);
+        return receiptDetailMapper.selectList(wrapper);
+    }
 }
