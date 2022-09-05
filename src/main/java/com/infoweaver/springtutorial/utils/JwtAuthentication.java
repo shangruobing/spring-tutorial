@@ -13,7 +13,7 @@ import java.util.Map;
  * @author Ruobing Shang 2022-09-04 20:12
  */
 public class JwtAuthentication {
-    private final static long TOKEN_EXPIRATION_TIME = 24 * 60 * 60 * 1000;
+    private final static long TOKEN_EXPIRATION_TIME = 24 * 60 * 60 * 1000L;
     private final static Key SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS512);
 
 

@@ -60,7 +60,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         wrapper = Wrappers.lambdaQuery(User.class)
                 .eq(User::getName, username).eq(User::getPassword, KeyGenerator.encryption(password));
         User user = userMapper.selectOne(wrapper);
-        System.out.println(user);
         return JwtAuthentication.createToken(user.getId(), username);
     }
 }

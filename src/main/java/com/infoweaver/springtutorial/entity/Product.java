@@ -22,4 +22,8 @@ public class Product extends Model<Product> {
     private String type;
     private String model;
     private BigDecimal price;
+
+    public String getProductName() {
+        return this.brand.trim() + " " + this.type.trim() + " " + this.model.trim();
+    }
 }

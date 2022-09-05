@@ -3,16 +3,22 @@ package com.infoweaver.springtutorial.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.infoweaver.springtutorial.entity.Product;
 import com.infoweaver.springtutorial.entity.ReceiptDetail;
 import com.infoweaver.springtutorial.entity.StockAccount;
 import com.infoweaver.springtutorial.mapper.StockAccountMapper;
 import com.infoweaver.springtutorial.service.IStockAccountService;
+import com.infoweaver.springtutorial.vo.StockAccountVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+
+import static java.util.stream.Collectors.*;
 
 /**
  * @author Ruobing Shang 2022-09-01
@@ -21,20 +27,43 @@ import java.util.Optional;
 @Service
 public class StockAccountServiceImpl extends ServiceImpl<StockAccountMapper, StockAccount> implements IStockAccountService {
     private final StockAccountMapper stockAccountMapper;
+    private final ProductServiceImpl productService;
 
     @Autowired
-    public StockAccountServiceImpl(StockAccountMapper stockAccountMapper) {
+    public StockAccountServiceImpl(StockAccountMapper stockAccountMapper, ProductServiceImpl productService) {
         this.stockAccountMapper = stockAccountMapper;
+        this.productService = productService;
     }
 
     @Override
-    public List<StockAccount> listStockAccounts() {
-        return stockAccountMapper.selectList(null);
+    public List<StockAccountVo> listStockAccounts(String brand, String type) {
+        List<StockAccount> stockAccounts = stockAccountMapper.selectList(Wrappers.emptyWrapper());
+        List<StockAccountVo> stockAccountVos = stockAccounts.stream().map(StockAccountVo::new).collect(toList());
+        stockAccountVos = addProductName(stockAccountVos, brand, type);
+        return stockAccountVos;
+    }
+
+    private List<StockAccountVo> addProductName(List<StockAccountVo> stockAccountVos, String brand, String type) {
+        Set<String> stockAccountIds = stockAccountVos.stream().map(StockAccountVo::getProductId).collect(toSet());
+        List<Product> products = productService.listProductByFilter(stockAccountIds, brand, type);
+        Set<String> productIds = products.stream().map(Product::getId).collect(toSet());
+        Map<String, String> hashMap = products.stream().collect(toMap(Product::getId, Product::getProductName));
+        stockAccountVos = stockAccountVos.stream()
+                .filter(stockAccountVo -> productIds.contains(stockAccountVo.getProductId()))
+                .collect(toList());
+        stockAccountVos.forEach(e -> e.setProductName(hashMap.get(e.getProductId())));
+        return stockAccountVos;
     }
 
     @Override
-    public StockAccount getStockAccountById(String id) {
-        return stockAccountMapper.selectById(id);
+    public StockAccountVo getStockAccountById(String id) {
+        StockAccount stockAccount = stockAccountMapper.selectById(id);
+        StockAccountVo stockAccountVo = Optional.ofNullable(stockAccount).map(StockAccountVo::new).orElse(null);
+        Optional.ofNullable(stockAccountVo).ifPresent(e -> {
+            String productName = productService.getProductById(stockAccountVo.getProductId()).getProductName();
+            stockAccountVo.setProductName(productName);
+        });
+        return stockAccountVo;
     }
 
     @Override
