@@ -11,8 +11,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 // Disable JWT Auth
 
-//@Configuration
-//public class InterceptorConfigurer implements WebMvcConfigurer {
+@Configuration
+public class InterceptorConfigurer implements WebMvcConfigurer {
 //    @Override
 //    public void addInterceptors(InterceptorRegistry registry) {
 //        registry.addInterceptor(new JwtInterceptor())
@@ -20,4 +20,4 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 //                .excludePathPatterns("/user")
 //                .excludePathPatterns("/user/login");
 //    }
-//}
+}

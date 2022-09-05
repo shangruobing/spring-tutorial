@@ -1,4 +1,4 @@
-package com.infoweaver.springtutorial.common;
+package com.infoweaver.springtutorial.constant;
 
 
 /**

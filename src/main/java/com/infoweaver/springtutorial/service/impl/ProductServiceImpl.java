@@ -28,7 +28,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
     }
 
     @Override
-    public Page<Map<String, Object>> listProducts(int currentPage, int size) {
+    public Page<Map<String, Object>> listProducts(Integer currentPage, Integer size) {
         Page<Map<String, Object>> page = new Page<>(currentPage, size);
         return productMapper.selectMapsPage(page, null);
     }

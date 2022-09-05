@@ -18,7 +18,7 @@ public interface IProductService extends IService<Product> {
      * @param size        size
      * @return Product List
      */
-    Page<Map<String, Object>> listProducts(int currentPage, int size);
+    Page<Map<String, Object>> listProducts(Integer currentPage, Integer size);
 
     /**
      * Retrieve a Product by id.

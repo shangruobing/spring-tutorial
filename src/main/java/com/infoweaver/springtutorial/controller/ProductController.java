@@ -6,7 +6,6 @@ import com.infoweaver.springtutorial.service.impl.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,8 +23,8 @@ public class ProductController {
 
     @GetMapping("/product")
     public Page<Map<String, Object>> selectAllProduct(
-            @RequestParam(value = "page", defaultValue = "1", required = false) int page,
-            @RequestParam(value = "size", defaultValue = "5", required = false) int size
+            @RequestParam(value = "page", defaultValue = "1", required = false) Integer page,
+            @RequestParam(value = "size", defaultValue = "5", required = false) Integer size
     ) {
         return productService.listProducts(page, size);
     }
