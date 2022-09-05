@@ -47,11 +47,11 @@ public class StockAccountServiceImpl extends ServiceImpl<StockAccountMapper, Sto
         Set<String> stockAccountIds = stockAccountVos.stream().map(StockAccountVo::getProductId).collect(toSet());
         List<Product> products = productService.listProductByFilter(stockAccountIds, brand, type);
         Set<String> productIds = products.stream().map(Product::getId).collect(toSet());
-        Map<String, String> hashMap = products.stream().collect(toMap(Product::getId, Product::getProductName));
+        Map<String, Product> hashMap = products.stream().collect(toMap(Product::getId, Product::new));
         stockAccountVos = stockAccountVos.stream()
                 .filter(stockAccountVo -> productIds.contains(stockAccountVo.getProductId()))
                 .collect(toList());
-        stockAccountVos.forEach(e -> e.setProductName(hashMap.get(e.getProductId())));
+        stockAccountVos.forEach(e -> e.setProduct(hashMap.get(e.getProductId())));
         return stockAccountVos;
     }
 
@@ -59,10 +59,8 @@ public class StockAccountServiceImpl extends ServiceImpl<StockAccountMapper, Sto
     public StockAccountVo getStockAccountById(String id) {
         StockAccount stockAccount = stockAccountMapper.selectById(id);
         StockAccountVo stockAccountVo = Optional.ofNullable(stockAccount).map(StockAccountVo::new).orElse(null);
-        Optional.ofNullable(stockAccountVo).ifPresent(e -> {
-            String productName = productService.getProductById(stockAccountVo.getProductId()).getProductName();
-            stockAccountVo.setProductName(productName);
-        });
+        Optional.ofNullable(stockAccountVo).ifPresent(e ->
+                stockAccountVo.setProduct(productService.getProductById(stockAccountVo.getProductId())));
         return stockAccountVo;
     }
 

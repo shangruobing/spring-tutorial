@@ -1,9 +1,10 @@
 package com.infoweaver.springtutorial.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.infoweaver.springtutorial.entity.Product;
 
-import java.util.List;
+import java.util.Map;
 
 /**
  * @author Ruobing Shang 2022-09-02 10:36
@@ -13,9 +14,11 @@ public interface IProductService extends IService<Product> {
     /**
      * Retrieve All Product.
      *
+     * @param currentPage current page
+     * @param size        size
      * @return Product List
      */
-    List<Product> listProducts();
+    Page<Map<String, Object>> listProducts(int currentPage, int size);
 
     /**
      * Retrieve a Product by id.

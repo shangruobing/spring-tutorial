@@ -2,6 +2,7 @@ package com.infoweaver.springtutorial.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.infoweaver.springtutorial.entity.Product;
 import com.infoweaver.springtutorial.mapper.ProductMapper;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -26,8 +28,9 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
     }
 
     @Override
-    public List<Product> listProducts() {
-        return productMapper.selectList(null);
+    public Page<Map<String, Object>> listProducts(int currentPage, int size) {
+        Page<Map<String, Object>> page = new Page<>(currentPage, size);
+        return productMapper.selectMapsPage(page, null);
     }
 
     @Override

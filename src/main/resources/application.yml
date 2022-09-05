@@ -6,6 +6,12 @@ spring:
     username: root
     password: 010209
 
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
 server:
   servlet:
     context-path: /api
+  address: 0.0.0.0
+  port: 8080

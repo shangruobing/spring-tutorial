@@ -23,7 +23,15 @@ public class Product extends Model<Product> {
     private String model;
     private BigDecimal price;
 
-    public String getProductName() {
+    public Product(Product product) {
+        this.id = product.getId();
+        this.brand = product.getBrand();
+        this.type = product.getType();
+        this.model = product.getModel();
+        this.price = product.getPrice();
+    }
+
+    public String getName() {
         return this.brand.trim() + " " + this.type.trim() + " " + this.model.trim();
     }
 }

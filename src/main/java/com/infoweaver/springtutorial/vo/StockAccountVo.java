@@ -1,5 +1,6 @@
 package com.infoweaver.springtutorial.vo;
 
+import com.infoweaver.springtutorial.entity.Product;
 import com.infoweaver.springtutorial.entity.StockAccount;
 import lombok.*;
 import lombok.experimental.Accessors;
@@ -15,7 +16,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StockAccountVo extends StockAccount {
-    private String productName;
+    private Product product;
 
     public StockAccountVo(StockAccount stockAccount) {
         super(stockAccount);

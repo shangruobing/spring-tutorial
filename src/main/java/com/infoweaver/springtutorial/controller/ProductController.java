@@ -1,11 +1,13 @@
 package com.infoweaver.springtutorial.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.infoweaver.springtutorial.entity.Product;
 import com.infoweaver.springtutorial.service.impl.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Ruobing Shang 2022-09-01
@@ -21,8 +23,11 @@ public class ProductController {
     }
 
     @GetMapping("/product")
-    public List<Product> selectAllProduct() {
-        return productService.listProducts();
+    public Page<Map<String, Object>> selectAllProduct(
+            @RequestParam(value = "page", defaultValue = "1", required = false) int page,
+            @RequestParam(value = "size", defaultValue = "5", required = false) int size
+    ) {
+        return productService.listProducts(page, size);
     }
 
     @GetMapping("/product/{id}")
