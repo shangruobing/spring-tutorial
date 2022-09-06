@@ -8,9 +8,8 @@ import com.infoweaver.springtutorial.entity.ReceiptDetail;
 import com.infoweaver.springtutorial.entity.Receipt;
 import com.infoweaver.springtutorial.mapper.ReceiptMapper;
 import com.infoweaver.springtutorial.service.IReceiptService;
-import com.infoweaver.springtutorial.utils.Pagination;
 import com.infoweaver.springtutorial.utils.RandomGenerator;
-import com.infoweaver.springtutorial.vo.ReceiptVo;
+import com.infoweaver.springtutorial.entity.vo.ReceiptVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -86,6 +85,16 @@ public class ReceiptServiceImpl extends ServiceImpl<ReceiptMapper, Receipt> impl
     private void addReceiptDetails(ReceiptVo receiptVo) {
         List<ReceiptDetail> receiptDetails = receiptDetailService.listReceiptDetailsByReceiptId(receiptVo.getId());
         receiptVo.setReceiptDetails(receiptDetails);
+    }
+
+    public List<ReceiptVo> getReceiptVoByStatus(Integer status) {
+        LambdaQueryWrapper<Receipt> wrapper = Wrappers.lambdaQuery(Receipt.class).eq(Receipt::getStatus, status);
+        List<Receipt> receiptList = receiptMapper.selectList(wrapper);
+        List<ReceiptVo> receiptVos = receiptList.stream().map(ReceiptVo::new).collect(toList());
+        if (receiptVos.size() > 0) {
+            addReceiptInfoList(receiptVos);
+        }
+        return receiptVos;
     }
 
     @Override

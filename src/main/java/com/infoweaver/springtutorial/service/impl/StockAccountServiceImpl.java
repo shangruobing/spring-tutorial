@@ -8,7 +8,7 @@ import com.infoweaver.springtutorial.entity.ReceiptDetail;
 import com.infoweaver.springtutorial.entity.StockAccount;
 import com.infoweaver.springtutorial.mapper.StockAccountMapper;
 import com.infoweaver.springtutorial.service.IStockAccountService;
-import com.infoweaver.springtutorial.vo.StockAccountVo;
+import com.infoweaver.springtutorial.entity.vo.StockAccountVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -82,8 +82,8 @@ public class StockAccountServiceImpl extends ServiceImpl<StockAccountMapper, Sto
     @Override
     public int outbound(List<ReceiptDetail> receiptDetails) {
         receiptDetails.forEach(e -> {
-            LambdaQueryWrapper<StockAccount> wrapper;
-            wrapper = Wrappers.lambdaQuery(StockAccount.class).eq(StockAccount::getProductId, e.getProductId());
+            LambdaQueryWrapper<StockAccount> wrapper = Wrappers.lambdaQuery(StockAccount.class);
+            wrapper.eq(StockAccount::getProductId, e.getProductId());
             StockAccount stockAccount = Optional.ofNullable(stockAccountMapper.selectOne(wrapper))
                     .map(StockAccount::new).orElse(null);
             assert stockAccount != null;
@@ -96,8 +96,8 @@ public class StockAccountServiceImpl extends ServiceImpl<StockAccountMapper, Sto
     @Override
     public int saveOrUpdateStockAccountBatch(List<StockAccount> stockAccounts) {
         stockAccounts.forEach(e -> {
-            LambdaQueryWrapper<StockAccount> wrapper;
-            wrapper = Wrappers.lambdaQuery(StockAccount.class).eq(StockAccount::getProductId, e.getProductId());
+            LambdaQueryWrapper<StockAccount> wrapper = Wrappers.lambdaQuery(StockAccount.class);
+            wrapper.eq(StockAccount::getProductId, e.getProductId());
             StockAccount stockAccount = Optional.ofNullable(stockAccountMapper.selectOne(wrapper))
                     .map(StockAccount::new).orElse(null);
             if (stockAccount != null) {

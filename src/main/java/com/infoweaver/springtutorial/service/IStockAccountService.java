@@ -3,7 +3,7 @@ package com.infoweaver.springtutorial.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.infoweaver.springtutorial.entity.ReceiptDetail;
 import com.infoweaver.springtutorial.entity.StockAccount;
-import com.infoweaver.springtutorial.vo.StockAccountVo;
+import com.infoweaver.springtutorial.entity.vo.StockAccountVo;
 
 import java.util.List;
 

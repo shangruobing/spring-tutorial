@@ -62,7 +62,8 @@ public class MoneyAccountServiceImpl extends ServiceImpl<MoneyAccountMapper, Mon
 
     @Override
     public BigDecimal sumAllMoneyAccounts() {
-        return moneyAccountMapper.selectList(null).stream()
+        return moneyAccountMapper.selectList(null)
+                .stream()
                 .map(MoneyAccount::getTotal)
                 .reduce(BigDecimal::add)
                 .orElse(BigDecimal.ZERO);

@@ -56,9 +56,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Override
     public Map<String, String> login(String username, String password) throws NoSuchAlgorithmException {
-        LambdaQueryWrapper<User> wrapper;
-        wrapper = Wrappers.lambdaQuery(User.class)
-                .eq(User::getName, username).eq(User::getPassword, KeyGenerator.encryption(password));
+        LambdaQueryWrapper<User> wrapper = Wrappers.lambdaQuery(User.class);
+        wrapper.eq(User::getName, username).eq(User::getPassword, KeyGenerator.encryption(password));
         User user = userMapper.selectOne(wrapper);
         return JwtAuthentication.createToken(user.getId(), username);
     }

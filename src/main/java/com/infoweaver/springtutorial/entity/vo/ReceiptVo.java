@@ -1,4 +1,4 @@
-package com.infoweaver.springtutorial.vo;
+package com.infoweaver.springtutorial.entity.vo;
 
 /**
  * @author Ruobing Shang 2022-09-01 20:53

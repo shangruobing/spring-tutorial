@@ -3,7 +3,7 @@ package com.infoweaver.springtutorial.config;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -25,12 +25,12 @@ public class AdapterConfigurer implements WebMvcConfigurer {
     }
 
     /**
-     * Use HttpMessageConverter, which handles the Object type,
-     * as the preferred converter to avoid Jackson parsing String errors.
+     * Delete StringHttpMessageConverter, to avoid Jackson parsing String errors.
+     *
      * @param converters initially an empty list of converters
      */
     @Override
-    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        converters.add(0, new MappingJackson2HttpMessageConverter());
+    public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+        converters.removeIf(x -> x instanceof StringHttpMessageConverter);
     }
 }

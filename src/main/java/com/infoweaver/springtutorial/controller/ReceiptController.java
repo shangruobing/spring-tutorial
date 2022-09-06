@@ -2,7 +2,7 @@ package com.infoweaver.springtutorial.controller;
 
 import com.infoweaver.springtutorial.entity.Receipt;
 import com.infoweaver.springtutorial.service.impl.ReceiptServiceImpl;
-import com.infoweaver.springtutorial.vo.ReceiptVo;
+import com.infoweaver.springtutorial.entity.vo.ReceiptVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,6 +49,11 @@ public class ReceiptController {
     @GetMapping("/receipt_list/{id}")
     public ReceiptVo getReceiptVoById(@PathVariable("id") String id) {
         return receiptService.getReceiptVoById(id);
+    }
+
+    @GetMapping("/receiptList/{status}")
+    public List<ReceiptVo> getReceiptVoByStatus(@PathVariable("status") Integer status) {
+        return receiptService.getReceiptVoByStatus(status);
     }
 
     @GetMapping("/receipt_list")

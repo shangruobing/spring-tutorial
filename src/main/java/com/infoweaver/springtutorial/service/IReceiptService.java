@@ -2,7 +2,7 @@ package com.infoweaver.springtutorial.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.infoweaver.springtutorial.entity.Receipt;
-import com.infoweaver.springtutorial.vo.ReceiptVo;
+import com.infoweaver.springtutorial.entity.vo.ReceiptVo;
 
 import java.util.List;
 

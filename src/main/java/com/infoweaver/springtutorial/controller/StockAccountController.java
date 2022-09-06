@@ -2,7 +2,7 @@ package com.infoweaver.springtutorial.controller;
 
 import com.infoweaver.springtutorial.entity.StockAccount;
 import com.infoweaver.springtutorial.service.impl.StockAccountServiceImpl;
-import com.infoweaver.springtutorial.vo.StockAccountVo;
+import com.infoweaver.springtutorial.entity.vo.StockAccountVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

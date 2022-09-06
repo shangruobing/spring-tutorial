@@ -1,4 +1,4 @@
-package com.infoweaver.springtutorial.vo;
+package com.infoweaver.springtutorial.entity.vo;
 
 import com.infoweaver.springtutorial.entity.Product;
 import com.infoweaver.springtutorial.entity.StockAccount;

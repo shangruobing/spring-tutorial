@@ -54,20 +54,15 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
     }
 
     public List<Product> listProductByFilter(Set<String> productIds, String brand, String model) {
-        LambdaQueryWrapper<Product> wrapper;
-        wrapper = Wrappers.lambdaQuery(Product.class).in(Product::getId, productIds);
+        LambdaQueryWrapper<Product> wrapper = Wrappers.lambdaQuery(Product.class).in(Product::getId, productIds);
         if (brand.isEmpty() && !model.isEmpty()) {
-            wrapper = Wrappers.lambdaQuery(Product.class).in(Product::getId, productIds)
-                    .eq(Product::getModel, model);
+            wrapper.eq(Product::getModel, model);
         }
         if (!brand.isEmpty() && model.isEmpty()) {
-            wrapper = Wrappers.lambdaQuery(Product.class).in(Product::getId, productIds)
-                    .eq(Product::getBrand, brand);
+            wrapper.eq(Product::getBrand, brand);
         }
         if (!brand.isEmpty() && !model.isEmpty()) {
-            wrapper = Wrappers.lambdaQuery(Product.class).in(Product::getId, productIds)
-                    .eq(Product::getBrand, brand)
-                    .eq(Product::getModel, model);
+            wrapper.eq(Product::getBrand, brand).eq(Product::getModel, model);
         }
         return productMapper.selectList(wrapper);
     }
