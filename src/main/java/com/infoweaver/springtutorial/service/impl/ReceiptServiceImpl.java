@@ -160,4 +160,5 @@ public class ReceiptServiceImpl extends ServiceImpl<ReceiptMapper, Receipt> impl
         receipt.setStatus(ReceiptStatus.FINISHED.getCode());
         return receiptMapper.updateById(receipt);
     }
+
 }
