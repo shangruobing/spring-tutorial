@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * @author Ruobing Shang 2022-09-02 10:25

@@ -11,18 +11,22 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * @author Ruobing Shang 2022-09-02 10:23
+ * @author Ruobing Shang 2022-09-07 9:26
  */
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@TableName(value = "tb_money_account")
-public class MoneyAccount extends Model<MoneyAccount> {
+@TableName(value = "tb_money_taking")
+public class MoneyTaking extends Model<MoneyTaking> {
     private String id;
-    private String receiptId;
-    private String employeeId;
     private Date date;
-    private BigDecimal total;
+    private String employeeId;
+    private BigDecimal beginningBalance;
+    private BigDecimal endingBalance;
+    private BigDecimal totalPrice;
+    private BigDecimal balance;
+    private String note;
+
 }

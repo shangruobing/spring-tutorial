@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * @author Ruobing Shang 2022-09-02 10:11

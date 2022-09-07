@@ -51,6 +51,11 @@ public class MoneyAccountController {
     public BigDecimal sumAllMoneyAccounts() {
         return moneyAccountService.sumAllMoneyAccounts();
     }
+
+    @GetMapping("/sum_money_account/{month}")
+    public BigDecimal sumMoneyAccountsByMonth(@PathVariable("month") Integer month) {
+        return moneyAccountService.sumMoneyAccountsByMonth(month);
+    }
 }
 
 

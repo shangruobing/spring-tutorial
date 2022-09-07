@@ -1,5 +1,7 @@
 package com.infoweaver.springtutorial.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.infoweaver.springtutorial.entity.MoneyAccount;
 import com.infoweaver.springtutorial.entity.Receipt;
@@ -9,7 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -63,6 +66,22 @@ public class MoneyAccountServiceImpl extends ServiceImpl<MoneyAccountMapper, Mon
     @Override
     public BigDecimal sumAllMoneyAccounts() {
         return moneyAccountMapper.selectList(null)
+                .stream()
+                .map(MoneyAccount::getTotal)
+                .reduce(BigDecimal::add)
+                .orElse(BigDecimal.ZERO);
+    }
+
+    public BigDecimal sumMoneyAccountsByMonth(int month) {
+        LambdaQueryWrapper<MoneyAccount> wrapper = Wrappers.lambdaQuery(MoneyAccount.class);
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        calendar.set(year, month, 0, 23, 59, 59);
+        Date endDate = calendar.getTime();
+        calendar.set(year, calendar.get(Calendar.MONTH), 1, 0, 0, 0);
+        Date startDate = calendar.getTime();
+        wrapper.between(MoneyAccount::getDate, startDate, endDate);
+        return moneyAccountMapper.selectList(wrapper)
                 .stream()
                 .map(MoneyAccount::getTotal)
                 .reduce(BigDecimal::add)

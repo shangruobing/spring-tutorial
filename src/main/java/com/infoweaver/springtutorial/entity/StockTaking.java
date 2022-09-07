@@ -7,22 +7,25 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * @author Ruobing Shang 2022-09-02 10:23
+ * @author Ruobing Shang 2022-09-07 9:26
  */
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@TableName(value = "tb_money_account")
-public class MoneyAccount extends Model<MoneyAccount> {
+@TableName(value = "tb_stock_taking")
+public class StockTaking extends Model<StockTaking> {
     private String id;
-    private String receiptId;
+    private String productId;
     private String employeeId;
     private Date date;
-    private BigDecimal total;
+    private Integer quantity;
+    private Integer kept;
+    private Integer balance;
+    private String note;
+
 }

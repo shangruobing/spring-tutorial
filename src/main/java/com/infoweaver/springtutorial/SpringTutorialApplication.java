@@ -8,7 +8,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author Ruobing Shang 2022-09-01
  */
 
-
 @SpringBootApplication
 @MapperScan
 public class SpringTutorialApplication {

@@ -12,7 +12,7 @@
 
     <groupId>com.infoweaver</groupId>
     <artifactId>SpringTutorial</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1.1-SNAPSHOT</version>
     <name>SpringTutorial</name>
     <description>SpringTutorial</description>
     <properties>
