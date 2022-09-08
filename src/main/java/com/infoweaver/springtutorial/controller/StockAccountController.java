@@ -21,7 +21,7 @@ public class StockAccountController {
         this.stockAccountService = stockAccountService;
     }
 
-    @GetMapping("/stockAccount")
+    @GetMapping("/stock-account")
     public List<StockAccountVo> selectAllStockAccount(
             @RequestParam(value = "brand", defaultValue = "", required = false) String brand,
             @RequestParam(value = "model", defaultValue = "", required = false) String model
@@ -29,30 +29,35 @@ public class StockAccountController {
         return stockAccountService.listStockAccounts(brand, model);
     }
 
-    @GetMapping("/stockAccount/{id}")
+    @GetMapping("/stock-account/{id}")
     public StockAccountVo getStockAccountById(@PathVariable("id") String id) {
         return stockAccountService.getStockAccountById(id);
     }
 
-    @PostMapping("/stockAccount")
+    @PostMapping("/stock-account")
     public int add(@RequestBody StockAccount stockAccount) {
         return stockAccountService.saveStockAccount(stockAccount);
     }
 
-    @PutMapping("/stockAccount")
+    @PutMapping("/stock-account")
     public int update(@RequestBody StockAccount stockAccount) {
         return stockAccountService.updateStockAccount(stockAccount);
     }
 
-    @DeleteMapping("/stockAccount/{id}")
+    @DeleteMapping("/stock-account/{id}")
     public int delete(@PathVariable("id") String id) {
         return stockAccountService.removeStockAccount(id);
     }
 
 
-    @PostMapping("/enter_stock")
+    @PostMapping("/enter-stock")
     public int productsEnterStock(@RequestBody List<StockAccount> stockAccounts) {
         return stockAccountService.saveOrUpdateStockAccountBatch(stockAccounts);
+    }
+
+    @PostMapping("/stock-taking")
+    public int saveStockTaking(@RequestBody List<StockAccount> stockAccounts) {
+        return stockAccountService.saveStockTakings(stockAccounts);
     }
 
 }

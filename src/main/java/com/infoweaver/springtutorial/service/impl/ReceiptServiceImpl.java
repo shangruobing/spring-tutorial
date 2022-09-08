@@ -8,7 +8,7 @@ import com.infoweaver.springtutorial.entity.ReceiptDetail;
 import com.infoweaver.springtutorial.entity.Receipt;
 import com.infoweaver.springtutorial.mapper.ReceiptMapper;
 import com.infoweaver.springtutorial.service.IReceiptService;
-import com.infoweaver.springtutorial.utils.RandomGenerator;
+import com.infoweaver.springtutorial.util.RandomGenerator;
 import com.infoweaver.springtutorial.entity.vo.ReceiptVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

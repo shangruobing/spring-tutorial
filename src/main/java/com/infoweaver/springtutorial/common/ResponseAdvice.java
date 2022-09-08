@@ -18,7 +18,7 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
     @Override
     public boolean supports(@NotNull MethodParameter returnType, @NotNull Class<? extends HttpMessageConverter<?>> converterType) {
         /**
-         * Avoid intercepting Swagger, making it unusable.
+         * Avoid intercepting Swagger, making it unavailable.
          */
         return !returnType.getDeclaringClass().getName().contains("springfox");
     }

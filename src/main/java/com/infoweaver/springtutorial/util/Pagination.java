@@ -1,4 +1,4 @@
-package com.infoweaver.springtutorial.utils;
+package com.infoweaver.springtutorial.util;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 

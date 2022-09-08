@@ -1,4 +1,4 @@
-package com.infoweaver.springtutorial.utils;
+package com.infoweaver.springtutorial.util;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;

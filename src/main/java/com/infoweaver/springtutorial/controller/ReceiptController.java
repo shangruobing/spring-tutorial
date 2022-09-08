@@ -46,22 +46,22 @@ public class ReceiptController {
         return receiptService.removeReceipt(id);
     }
 
-    @GetMapping("/receipt_list/{id}")
+    @GetMapping("/receipt-with-details/{id}")
     public ReceiptVo getReceiptVoById(@PathVariable("id") String id) {
         return receiptService.getReceiptVoById(id);
     }
 
-    @GetMapping("/receiptList/{status}")
+    @GetMapping("/receipt-with-details-list/{status}")
     public List<ReceiptVo> getReceiptVoByStatus(@PathVariable("status") Integer status) {
         return receiptService.getReceiptVoByStatus(status);
     }
 
-    @GetMapping("/receipt_list")
+    @GetMapping("/receipt-with-details-list")
     public List<ReceiptVo> selectAllReceiptInformation() {
         return receiptService.listReceiptVos();
     }
 
-    @PostMapping("/receipt_with_details")
+    @PostMapping("/receipt-with-details")
     public String addReceiptInformation(@RequestBody ReceiptVo receiptVo) {
         return receiptService.saveReceiptVo(receiptVo);
     }
@@ -76,7 +76,7 @@ public class ReceiptController {
         return receiptService.outbound(receipt.getId());
     }
 
-    @PostMapping("/take_delivery")
+    @PostMapping("/take-delivery")
     public int customerTakeDelivery(@RequestBody Receipt receipt) {
         return receiptService.customerTakeDelivery(receipt.getId());
     }

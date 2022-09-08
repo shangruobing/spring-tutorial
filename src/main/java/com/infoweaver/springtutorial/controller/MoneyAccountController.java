@@ -21,38 +21,38 @@ public class MoneyAccountController {
         this.moneyAccountService = moneyAccountService;
     }
 
-    @GetMapping("/moneyAccount")
+    @GetMapping("/money-account")
     public List<MoneyAccount> selectAllMoneyAccount() {
         return moneyAccountService.listMoneyAccounts();
     }
 
-    @GetMapping("/moneyAccount/{id}")
+    @GetMapping("/money-account/{id}")
     public MoneyAccount getMoneyAccountById(@PathVariable("id") String id) {
         return moneyAccountService.getMoneyAccountById(id);
     }
 
 
-    @PostMapping("/moneyAccount")
+    @PostMapping("/money-account")
     public int add(@RequestBody MoneyAccount moneyAccount) {
         return moneyAccountService.saveMoneyAccount(moneyAccount);
     }
 
-    @PutMapping("/moneyAccount")
+    @PutMapping("/money-account")
     public int update(@RequestBody MoneyAccount moneyAccount) {
         return moneyAccountService.updateMoneyAccount(moneyAccount);
     }
 
-    @DeleteMapping("/moneyAccount/{id}")
+    @DeleteMapping("/money-account/{id}")
     public int delete(@PathVariable("id") String id) {
         return moneyAccountService.removeMoneyAccount(id);
     }
 
-    @GetMapping("/sum_money_account")
+    @GetMapping("/sum-money-account")
     public BigDecimal sumAllMoneyAccounts() {
         return moneyAccountService.sumAllMoneyAccounts();
     }
 
-    @GetMapping("/sum_money_account/{month}")
+    @GetMapping("/sum-money-account/{month}")
     public BigDecimal sumMoneyAccountsByMonth(@PathVariable("month") Integer month) {
         return moneyAccountService.sumMoneyAccountsByMonth(month);
     }

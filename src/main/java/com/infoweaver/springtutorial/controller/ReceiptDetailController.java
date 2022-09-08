@@ -20,35 +20,34 @@ public class ReceiptDetailController {
         this.receiptDetailService = receiptDetailService;
     }
 
-    @GetMapping("/receiptDetail")
+    @GetMapping("/receipt-detail")
     public List<ReceiptDetail> selectAllReceiptDetail() {
         return receiptDetailService.listReceiptDetails();
     }
 
-    @GetMapping("/receiptDetail/{id}")
+    @GetMapping("/receipt-detail/{id}")
     public ReceiptDetail getReceiptDetailById(@PathVariable("id") String id) {
         return receiptDetailService.getReceiptDetailById(id);
     }
 
 
-    @PostMapping("/receiptDetail")
+    @PostMapping("/receipt-detail")
     public int add(@RequestBody ReceiptDetail receiptDetail) {
         return receiptDetailService.saveReceiptDetail(receiptDetail);
     }
 
-    @PutMapping("/receiptDetail")
+    @PutMapping("/receipt-detail")
     public int update(@RequestBody ReceiptDetail receiptDetail) {
         return receiptDetailService.updateReceiptDetail(receiptDetail);
     }
 
-    @DeleteMapping("/receiptDetail/{id}")
+    @DeleteMapping("/receipt-detail/{id}")
     public int delete(@PathVariable("id") String id) {
         return receiptDetailService.removeReceiptDetail(id);
     }
 
-    @PostMapping("/receiptDetailList/")
+    @PostMapping("/receipt-details-list/")
     public boolean addList(@RequestBody List<ReceiptDetail> receiptDetailList) {
-        System.out.println(receiptDetailList);
         return receiptDetailService.saveBatch(receiptDetailList);
     }
 }

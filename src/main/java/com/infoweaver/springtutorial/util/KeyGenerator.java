@@ -1,4 +1,4 @@
-package com.infoweaver.springtutorial.utils;
+package com.infoweaver.springtutorial.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

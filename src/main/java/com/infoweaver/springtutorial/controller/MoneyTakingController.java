@@ -21,17 +21,17 @@ public class MoneyTakingController {
         this.moneyTakingService = moneyTakingService;
     }
 
-    @GetMapping("/moneyTaking")
+    @GetMapping("/money-taking")
     public List<MoneyTaking> selectAllMoneyTaking() {
         return moneyTakingService.listMoneyTakings();
     }
 
-    @GetMapping("/moneyTaking/{id}")
+    @GetMapping("/money-taking/{id}")
     public MoneyTaking getMoneyTakingById(@PathVariable("id") String id) {
         return moneyTakingService.getMoneyTakingById(id);
     }
 
-    @PostMapping("/moneyTaking")
+    @PostMapping("/money-taking")
     public BigDecimal add(@RequestBody MoneyTaking moneyTaking) {
         return moneyTakingService.saveMoneyTaking(moneyTaking);
     }

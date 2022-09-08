@@ -23,6 +23,9 @@ public class StockAccount extends Model<StockAccount> {
     private String employeeId;
     private Date date;
     private Integer quantity;
+    private Integer kept;
+    private Integer balance;
+    private String note;
 
     public StockAccount(StockAccount stockAccount) {
         this.id = stockAccount.getId();
@@ -30,5 +33,8 @@ public class StockAccount extends Model<StockAccount> {
         this.employeeId = stockAccount.getEmployeeId();
         this.date = stockAccount.getDate();
         this.quantity = stockAccount.getQuantity();
+        this.kept = stockAccount.getKept();
+        this.balance = stockAccount.getBalance();
+        this.note = stockAccount.getNote();
     }
 }

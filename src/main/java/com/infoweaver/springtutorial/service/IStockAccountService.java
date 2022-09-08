@@ -14,8 +14,9 @@ import java.util.List;
 public interface IStockAccountService extends IService<StockAccount> {
     /**
      * Retrieve All StockAccount.
+     *
      * @param brand brand
-     * @param type type
+     * @param type  type
      * @return StockAccount List
      */
     List<StockAccountVo> listStockAccounts(String brand, String type);
@@ -67,4 +68,12 @@ public interface IStockAccountService extends IService<StockAccount> {
      * @return a status code
      */
     int saveOrUpdateStockAccountBatch(List<StockAccount> stockAccounts);
+
+    /**
+     * Save StockTakings.
+     *
+     * @param stockAccounts StockAccount
+     * @return a status code
+     */
+    int saveStockTakings(List<StockAccount> stockAccounts);
 }

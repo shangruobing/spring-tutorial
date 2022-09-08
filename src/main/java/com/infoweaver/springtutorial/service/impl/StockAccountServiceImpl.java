@@ -110,4 +110,20 @@ public class StockAccountServiceImpl extends ServiceImpl<StockAccountMapper, Sto
         });
         return 1;
     }
+
+
+    @Override
+    public int saveStockTakings(List<StockAccount> stockAccounts) {
+        stockAccounts.forEach(e -> {
+            LambdaQueryWrapper<StockAccount> wrapper = Wrappers.lambdaQuery(StockAccount.class);
+            wrapper.eq(StockAccount::getProductId, e.getProductId());
+            StockAccount stockTaking = stockAccountMapper.selectOne(wrapper);
+            stockTaking.setNote(e.getNote());
+            stockTaking.setDate(new Date(System.currentTimeMillis()));
+            stockTaking.setKept(e.getKept());
+            stockTaking.setBalance(e.getKept() - stockTaking.getQuantity());
+            stockAccountMapper.updateById(stockTaking);
+        });
+        return 1;
+    }
 }

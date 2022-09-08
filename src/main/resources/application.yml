@@ -13,6 +13,7 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+    log-request-details: true
 
 server:
   servlet:

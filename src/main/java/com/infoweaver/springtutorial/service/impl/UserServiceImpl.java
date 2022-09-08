@@ -6,8 +6,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.infoweaver.springtutorial.entity.User;
 import com.infoweaver.springtutorial.mapper.UserMapper;
 import com.infoweaver.springtutorial.service.IUserService;
-import com.infoweaver.springtutorial.utils.JwtAuthentication;
-import com.infoweaver.springtutorial.utils.KeyGenerator;
+import com.infoweaver.springtutorial.util.JwtAuthentication;
+import com.infoweaver.springtutorial.util.KeyGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

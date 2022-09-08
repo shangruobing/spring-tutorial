@@ -1,6 +1,6 @@
 package com.infoweaver.springtutorial.common;
 
-import com.infoweaver.springtutorial.utils.JwtAuthentication;
+import com.infoweaver.springtutorial.util.JwtAuthentication;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.web.servlet.HandlerInterceptor;
 
