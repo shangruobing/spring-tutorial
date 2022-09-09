@@ -15,6 +15,11 @@ spring:
       matching-strategy: ant_path_matcher
     log-request-details: true
 
+  # Console Colorful Output
+  output:
+    ansi:
+      enabled: always
+
 server:
   servlet:
     context-path: /api

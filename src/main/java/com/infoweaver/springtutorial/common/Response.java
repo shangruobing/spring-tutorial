@@ -14,10 +14,13 @@ public class Response<T> implements Serializable {
     private int code;
     private String message;
     private T data;
+    private static final String MYBATIS_PLUS_SUCCESS_STATUS = "1";
 
     public static <T> Response<T> success(T data) {
-        String successStatus = "1";
-        if (successStatus.equals(data.toString())) {
+        /**
+         * Avoid return Mybatis Plus success status code 1.
+         */
+        if (MYBATIS_PLUS_SUCCESS_STATUS.equals(data.toString())) {
             return new Response<>(200, "OK");
         }
 

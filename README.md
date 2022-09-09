@@ -3,6 +3,10 @@
 - This repository records my process of learning Spring in September 2022.
 - **MIS短学期Ⅲ 手机销售管理系统**
 
+## 项目待改进之处
+
+- [ ] 用ResponseEntity替代自己实现的Response(无法更改状态码)详见文档243页
+
 ## 对于Controller、Service、Mapper的思考
 
 - 保证Mapper层方法的单精度特性
