@@ -7,25 +7,24 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 /**
- * @author Ruobing Shang 2022-09-01 17:22
+ * @author Ruobing Shang 2022-09-10 0:26
  */
 
 @RestControllerAdvice
-public class RestExceptionHandler extends ResponseEntityExceptionHandler {
+
+public class RequestExceptionHandle {
     /**
-     * Global default exception handler.
-     * TODO:Refactor with ResponseEntity.
+     * Handler HttpMessageNotReadableException
+     * such as, request body is empty.
      */
-    @ExceptionHandler(Exception.class)
+    @ExceptionHandler(HttpMessageNotReadableException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Response<String> handleControllerException(Throwable ex) {
+    public Response<String> handleRequestException(HttpMessageNotReadableException ex) {
         System.out.println("Error Message:" + ex.getMessage());
-        Status status = (ex.getMessage() == null) ? Status.HTTP_404_NOT_FOUND : Status.HTTP_400_BAD_REQUEST;
+        Status status = Status.HTTP_400_BAD_REQUEST;
         return Response.fail(status.getCode(), status.getMessage(), ex.getMessage());
     }
-
 }
