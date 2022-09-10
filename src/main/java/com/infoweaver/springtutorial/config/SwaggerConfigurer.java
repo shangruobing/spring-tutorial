@@ -16,7 +16,7 @@ import springfox.documentation.spring.web.plugins.Docket;
  */
 @Configuration
 @EnableOpenApi
-public class SwaggerConfig {
+public class SwaggerConfigurer {
 
     @Bean
     public Docket createRestApi() {

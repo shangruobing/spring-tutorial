@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @MapperScan(basePackages = "com.infoweaver.springtutorial.mapper")
-public class MybatisPlusConfig {
+public class MybatisPlusConfigurer {
 
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {

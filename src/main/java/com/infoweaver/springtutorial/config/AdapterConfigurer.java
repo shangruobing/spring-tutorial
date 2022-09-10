@@ -33,4 +33,5 @@ public class AdapterConfigurer implements WebMvcConfigurer {
     public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
         converters.removeIf(x -> x instanceof StringHttpMessageConverter);
     }
+
 }
