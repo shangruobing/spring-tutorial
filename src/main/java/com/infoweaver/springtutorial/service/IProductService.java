@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.infoweaver.springtutorial.entity.Product;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -52,4 +53,11 @@ public interface IProductService extends IService<Product> {
      */
     int removeProduct(String id);
 
+    /**
+     * Save product Batch.
+     *
+     * @param products product List
+     * @return a status code
+     */
+    int saveProductBatch(List<Product> products);
 }

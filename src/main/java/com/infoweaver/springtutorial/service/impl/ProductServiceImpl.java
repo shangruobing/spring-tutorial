@@ -10,9 +10,7 @@ import com.infoweaver.springtutorial.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author Ruobing Shang 2022-09-01
@@ -65,6 +63,16 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
             wrapper.eq(Product::getBrand, brand).eq(Product::getModel, model);
         }
         return productMapper.selectList(wrapper);
+    }
+
+    @Override
+    public int saveProductBatch(List<Product> products) {
+        products.forEach(e -> {
+            if (Optional.ofNullable(productMapper.selectById(e.getId())).isEmpty()) {
+                productMapper.insert(e);
+            }
+        });
+        return 1;
     }
 
 }

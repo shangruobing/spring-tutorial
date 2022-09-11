@@ -6,6 +6,7 @@ import com.infoweaver.springtutorial.service.impl.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -48,6 +49,12 @@ public class ProductController {
     @DeleteMapping("/product/{id}")
     public int delete(@PathVariable("id") String id) {
         return productService.removeProduct(id);
+    }
+
+
+    @PostMapping("/check-product")
+    public int checkProduct(@RequestBody List<Product> products) {
+        return productService.saveProductBatch(products);
     }
 }
 
