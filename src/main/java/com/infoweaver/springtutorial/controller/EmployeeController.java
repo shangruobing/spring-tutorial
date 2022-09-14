@@ -2,10 +2,12 @@ package com.infoweaver.springtutorial.controller;
 
 import com.infoweaver.springtutorial.entity.Employee;
 import com.infoweaver.springtutorial.service.impl.EmployeeServiceImpl;
+import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Ruobing Shang 2022-09-02 9:51
@@ -27,8 +29,14 @@ public class EmployeeController {
     }
 
     @GetMapping("/employee/{id}")
-    public Employee getEmployeeById(@PathVariable("id") String id) {
-        return employeeService.getEmployeeById(id);
+    public Employee getEmployeeById(@PathVariable("id") String id) throws NotFoundException {
+        return Optional.ofNullable(employeeService.getEmployeeById(id)).orElseThrow
+                (() -> new NotFoundException("Employee " + id + " NOT_FOUND"));
+    }
+
+    @GetMapping("/test")
+    public String testResponse() {
+        return "HAHAHA";
     }
 
     @PostMapping("/employee")

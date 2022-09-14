@@ -7,9 +7,13 @@ import java.io.Serializable;
 /**
  * @author Ruobing Shang 2022-09-01 17:02
  */
-@Data
-public class Response<T> implements Serializable {
 
+@Data
+@Deprecated
+public class Response<T> implements Serializable {
+    /**
+     * Don't use this Response Wrapper, please use the Spring default Response.
+     */
     private static final long serialVersionUID = -1220656299702215742L;
     private int code;
     private String message;

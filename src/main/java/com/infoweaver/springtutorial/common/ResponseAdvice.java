@@ -9,6 +9,8 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
+import java.util.Map;
+
 /**
  * @author Ruobing Shang 2022-09-01 17:11
  */
@@ -31,10 +33,10 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
                                   @NotNull Class<? extends HttpMessageConverter<?>> selectedConverterType,
                                   @NotNull ServerHttpRequest request,
                                   @NotNull ServerHttpResponse response) {
-        if (body instanceof Response) {
-            return body;
+        if (body instanceof String) {
+            return Map.of("message", body);
         }
-        return Response.success(body);
+        return body;
     }
 
 }
