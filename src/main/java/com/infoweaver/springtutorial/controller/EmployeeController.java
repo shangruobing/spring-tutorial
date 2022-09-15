@@ -1,12 +1,12 @@
 package com.infoweaver.springtutorial.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.infoweaver.springtutorial.entity.Employee;
 import com.infoweaver.springtutorial.service.impl.EmployeeServiceImpl;
 import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -24,19 +24,18 @@ public class EmployeeController {
 
 
     @GetMapping("/employee")
-    public List<Employee> selectAllEmployee() {
-        return employeeService.listEmployees();
+    public Page<Employee> selectAllEmployee(
+            @RequestParam(value = "page", defaultValue = "1", required = false) Integer currentPage,
+            @RequestParam(value = "size", defaultValue = "10", required = false) Integer size
+    ) {
+        Page<Employee> page = new Page<>(currentPage, size);
+        return employeeService.page(page);
     }
 
     @GetMapping("/employee/{id}")
     public Employee getEmployeeById(@PathVariable("id") String id) throws NotFoundException {
         return Optional.ofNullable(employeeService.getEmployeeById(id)).orElseThrow
                 (() -> new NotFoundException("Employee " + id + " NOT_FOUND"));
-    }
-
-    @GetMapping("/test")
-    public String testResponse() {
-        return "HAHAHA";
     }
 
     @PostMapping("/employee")

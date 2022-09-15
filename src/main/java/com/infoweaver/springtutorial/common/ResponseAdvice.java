@@ -2,6 +2,7 @@ package com.infoweaver.springtutorial.common;
 
 import org.jetbrains.annotations.NotNull;
 import org.springframework.core.MethodParameter;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
@@ -16,6 +17,7 @@ import java.util.Map;
  */
 @RestControllerAdvice
 public class ResponseAdvice implements ResponseBodyAdvice<Object> {
+    private static final String MYBATIS_PLUS_SUCCESS_STATUS = "1";
 
     @Override
     public boolean supports(@NotNull MethodParameter returnType,
@@ -35,6 +37,10 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
                                   @NotNull ServerHttpResponse response) {
         if (body instanceof String) {
             return Map.of("message", body);
+        }
+
+        if (MYBATIS_PLUS_SUCCESS_STATUS.equals(body.toString())) {
+            return Map.of("message", HttpStatus.OK.getReasonPhrase());
         }
         return body;
     }

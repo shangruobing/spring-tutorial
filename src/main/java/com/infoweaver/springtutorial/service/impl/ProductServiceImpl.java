@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.infoweaver.springtutorial.entity.Product;
 import com.infoweaver.springtutorial.mapper.ProductMapper;
 import com.infoweaver.springtutorial.service.IProductService;
+import com.infoweaver.springtutorial.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -53,14 +54,13 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
 
     public List<Product> listProductByFilter(Set<String> productIds, String brand, String model) {
         LambdaQueryWrapper<Product> wrapper = Wrappers.lambdaQuery(Product.class).in(Product::getId, productIds);
-        if (brand.isEmpty() && !model.isEmpty()) {
-            wrapper.eq(Product::getModel, model);
-        }
-        if (!brand.isEmpty() && model.isEmpty()) {
+
+        if (StringUtils.isNotBlank(brand)) {
             wrapper.eq(Product::getBrand, brand);
         }
-        if (!brand.isEmpty() && !model.isEmpty()) {
-            wrapper.eq(Product::getBrand, brand).eq(Product::getModel, model);
+
+        if (StringUtils.isNotBlank(model)) {
+            wrapper.eq(Product::getModel, model);
         }
         return productMapper.selectList(wrapper);
     }
