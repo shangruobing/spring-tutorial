@@ -7,6 +7,7 @@ import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 /**
@@ -40,6 +41,7 @@ public class EmployeeController {
 
     @PostMapping("/employee")
     public int add(@RequestBody Employee employee) {
+        employee.setLastLogin(LocalDateTime.now());
         return employeeService.saveEmployee(employee);
     }
 

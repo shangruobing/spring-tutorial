@@ -19,6 +19,7 @@ import java.util.Optional;
  * @author Ruobing Shang 2022-09-01 17:22
  */
 
+
 @RestControllerAdvice
 public class RestExceptionHandler {
     private final static Logger logger = LoggerFactory.getLogger(RestExceptionHandler.class);
