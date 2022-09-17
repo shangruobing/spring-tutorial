@@ -2,7 +2,7 @@ package com.infoweaver.springtutorial.controller;
 
 import com.infoweaver.springtutorial.entity.Receipt;
 import com.infoweaver.springtutorial.service.impl.ReceiptServiceImpl;
-import com.infoweaver.springtutorial.entity.vo.ReceiptVo;
+import com.infoweaver.springtutorial.vo.ReceiptVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,22 +47,22 @@ public class ReceiptController {
     }
 
     @GetMapping("/receipt-with-details/{id}")
-    public ReceiptVo getReceiptVoById(@PathVariable("id") String id) {
+    public ReceiptVO getReceiptVoById(@PathVariable("id") String id) {
         return receiptService.getReceiptVoById(id);
     }
 
     @GetMapping("/receipt-with-details-list/{status}")
-    public List<ReceiptVo> getReceiptVoByStatus(@PathVariable("status") Integer status) {
+    public List<ReceiptVO> getReceiptVoByStatus(@PathVariable("status") Integer status) {
         return receiptService.getReceiptVoByStatus(status);
     }
 
     @GetMapping("/receipt-with-details-list")
-    public List<ReceiptVo> selectAllReceiptInformation() {
+    public List<ReceiptVO> selectAllReceiptInformation() {
         return receiptService.listReceiptVos();
     }
 
     @PostMapping("/receipt-with-details")
-    public String addReceiptInformation(@RequestBody ReceiptVo receiptVo) {
+    public String addReceiptInformation(@RequestBody ReceiptVO receiptVo) {
         return receiptService.saveReceiptVo(receiptVo);
     }
 

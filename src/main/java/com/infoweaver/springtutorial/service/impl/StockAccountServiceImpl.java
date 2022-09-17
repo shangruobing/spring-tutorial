@@ -8,7 +8,7 @@ import com.infoweaver.springtutorial.entity.ReceiptDetail;
 import com.infoweaver.springtutorial.entity.StockAccount;
 import com.infoweaver.springtutorial.mapper.StockAccountMapper;
 import com.infoweaver.springtutorial.service.IStockAccountService;
-import com.infoweaver.springtutorial.entity.vo.StockAccountVo;
+import com.infoweaver.springtutorial.vo.StockAccountVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,29 +36,29 @@ public class StockAccountServiceImpl extends ServiceImpl<StockAccountMapper, Sto
     }
 
     @Override
-    public List<StockAccountVo> listStockAccounts(String brand, String type) {
+    public List<StockAccountVO> listStockAccounts(String brand, String type) {
         List<StockAccount> stockAccounts = stockAccountMapper.selectList(Wrappers.emptyWrapper());
-        List<StockAccountVo> stockAccountVos = stockAccounts.stream().map(StockAccountVo::new).collect(toList());
-        stockAccountVos = addProductName(stockAccountVos, brand, type);
-        return stockAccountVos;
+        List<StockAccountVO> stockAccountVOs = stockAccounts.stream().map(StockAccountVO::new).collect(toList());
+        stockAccountVOs = addProductName(stockAccountVOs, brand, type);
+        return stockAccountVOs;
     }
 
-    private List<StockAccountVo> addProductName(List<StockAccountVo> stockAccountVos, String brand, String type) {
-        Set<String> stockAccountIds = stockAccountVos.stream().map(StockAccountVo::getProductId).collect(toSet());
+    private List<StockAccountVO> addProductName(List<StockAccountVO> stockAccountVOs, String brand, String type) {
+        Set<String> stockAccountIds = stockAccountVOs.stream().map(StockAccountVO::getProductId).collect(toSet());
         List<Product> products = productService.listProductByFilter(stockAccountIds, brand, type);
         Set<String> productIds = products.stream().map(Product::getId).collect(toSet());
         Map<String, Product> hashMap = products.stream().collect(toMap(Product::getId, Product::new));
-        stockAccountVos = stockAccountVos.stream()
-                .filter(stockAccountVo -> productIds.contains(stockAccountVo.getProductId()))
+        stockAccountVOs = stockAccountVOs.stream()
+                .filter(stockAccountVO -> productIds.contains(stockAccountVO.getProductId()))
                 .collect(toList());
-        stockAccountVos.forEach(e -> e.setProduct(hashMap.get(e.getProductId())));
-        return stockAccountVos;
+        stockAccountVOs.forEach(e -> e.setProduct(hashMap.get(e.getProductId())));
+        return stockAccountVOs;
     }
 
     @Override
-    public StockAccountVo getStockAccountById(String id) {
+    public StockAccountVO getStockAccountById(String id) {
         StockAccount stockAccount = stockAccountMapper.selectById(id);
-        StockAccountVo stockAccountVo = Optional.ofNullable(stockAccount).map(StockAccountVo::new).orElse(null);
+        StockAccountVO stockAccountVo = Optional.ofNullable(stockAccount).map(StockAccountVO::new).orElse(null);
         Optional.ofNullable(stockAccountVo).ifPresent(e ->
                 stockAccountVo.setProduct(productService.getProductById(stockAccountVo.getProductId())));
         return stockAccountVo;

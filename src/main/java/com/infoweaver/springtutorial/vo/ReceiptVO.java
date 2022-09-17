@@ -1,4 +1,4 @@
-package com.infoweaver.springtutorial.entity.vo;
+package com.infoweaver.springtutorial.vo;
 
 /**
  * @author Ruobing Shang 2022-09-01 20:53
@@ -17,10 +17,10 @@ import java.util.List;
 @ToString(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReceiptVo extends Receipt {
+public class ReceiptVO extends Receipt {
     private List<ReceiptDetail> receiptDetails;
 
-    public ReceiptVo(Receipt receipt) {
+    public ReceiptVO(Receipt receipt) {
         super(receipt);
     }
 }

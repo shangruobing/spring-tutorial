@@ -3,7 +3,7 @@ package com.infoweaver.springtutorial.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.infoweaver.springtutorial.entity.ReceiptDetail;
 import com.infoweaver.springtutorial.entity.StockAccount;
-import com.infoweaver.springtutorial.entity.vo.StockAccountVo;
+import com.infoweaver.springtutorial.vo.StockAccountVO;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public interface IStockAccountService extends IService<StockAccount> {
      * @param type  type
      * @return StockAccount List
      */
-    List<StockAccountVo> listStockAccounts(String brand, String type);
+    List<StockAccountVO> listStockAccounts(String brand, String type);
 
     /**
      * Retrieve a StockAccount by id.
@@ -27,7 +27,7 @@ public interface IStockAccountService extends IService<StockAccount> {
      * @param id stockAccount id
      * @return a StockAccount instance
      */
-    StockAccountVo getStockAccountById(String id);
+    StockAccountVO getStockAccountById(String id);
 
     /**
      * Create a StockAccount instance.

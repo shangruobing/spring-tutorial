@@ -9,7 +9,7 @@ import com.infoweaver.springtutorial.entity.Receipt;
 import com.infoweaver.springtutorial.mapper.ReceiptMapper;
 import com.infoweaver.springtutorial.service.IReceiptService;
 import com.infoweaver.springtutorial.util.RandomGenerator;
-import com.infoweaver.springtutorial.entity.vo.ReceiptVo;
+import com.infoweaver.springtutorial.vo.ReceiptVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -74,49 +74,49 @@ public class ReceiptServiceImpl extends ServiceImpl<ReceiptMapper, Receipt> impl
     }
 
     @Override
-    public ReceiptVo getReceiptVoById(String id) {
+    public ReceiptVO getReceiptVoById(String id) {
         LambdaQueryWrapper<Receipt> wrapper = Wrappers.lambdaQuery(Receipt.class).eq(Receipt::getId, id);
-        ReceiptVo receiptVo = Optional.ofNullable(receiptMapper.selectOne(wrapper))
-                .map(ReceiptVo::new).orElse(null);
+        ReceiptVO receiptVo = Optional.ofNullable(receiptMapper.selectOne(wrapper))
+                .map(ReceiptVO::new).orElse(null);
         Optional.ofNullable(receiptVo).ifPresent(this::addReceiptDetails);
         return receiptVo;
     }
 
-    private void addReceiptDetails(ReceiptVo receiptVo) {
+    private void addReceiptDetails(ReceiptVO receiptVo) {
         List<ReceiptDetail> receiptDetails = receiptDetailService.listReceiptDetailsByReceiptId(receiptVo.getId());
         receiptVo.setReceiptDetails(receiptDetails);
     }
 
-    public List<ReceiptVo> getReceiptVoByStatus(Integer status) {
+    public List<ReceiptVO> getReceiptVoByStatus(Integer status) {
         LambdaQueryWrapper<Receipt> wrapper = Wrappers.lambdaQuery(Receipt.class).eq(Receipt::getStatus, status);
         List<Receipt> receiptList = receiptMapper.selectList(wrapper);
-        List<ReceiptVo> receiptVos = receiptList.stream().map(ReceiptVo::new).collect(toList());
-        if (receiptVos.size() > 0) {
-            addReceiptInfoList(receiptVos);
+        List<ReceiptVO> receiptVOs = receiptList.stream().map(ReceiptVO::new).collect(toList());
+        if (receiptVOs.size() > 0) {
+            addReceiptInfoList(receiptVOs);
         }
-        return receiptVos;
+        return receiptVOs;
     }
 
     @Override
-    public List<ReceiptVo> listReceiptVos() {
+    public List<ReceiptVO> listReceiptVos() {
         List<Receipt> receiptList = receiptMapper.selectList(Wrappers.emptyWrapper());
-        List<ReceiptVo> receiptVos = receiptList.stream().map(ReceiptVo::new).collect(toList());
-        if (receiptVos.size() > 0) {
-            addReceiptInfoList(receiptVos);
+        List<ReceiptVO> receiptVOs = receiptList.stream().map(ReceiptVO::new).collect(toList());
+        if (receiptVOs.size() > 0) {
+            addReceiptInfoList(receiptVOs);
         }
-        return receiptVos;
+        return receiptVOs;
     }
 
-    private void addReceiptInfoList(List<ReceiptVo> receiptVos) {
-        Set<String> receiptIds = receiptVos.stream().map(Receipt::getId).collect(toSet());
+    private void addReceiptInfoList(List<ReceiptVO> receiptVOs) {
+        Set<String> receiptIds = receiptVOs.stream().map(Receipt::getId).collect(toSet());
         List<ReceiptDetail> receiptDetails = receiptDetailService.listReceiptDetailsByReceiptIdSet(receiptIds);
         Map<String, List<ReceiptDetail>> hashMap = receiptDetails.stream()
                 .collect(groupingBy(ReceiptDetail::getReceiptId));
-        receiptVos.forEach(e -> e.setReceiptDetails(hashMap.get(e.getId())));
+        receiptVOs.forEach(e -> e.setReceiptDetails(hashMap.get(e.getId())));
     }
 
     @Override
-    public String saveReceiptVo(ReceiptVo receiptVo) {
+    public String saveReceiptVo(ReceiptVO receiptVo) {
         receiptVo.setId(RandomGenerator.getNumberString(20));
         receiptVo.setStatus(ReceiptStatus.NEW_ORDER.getCode());
         receiptVo.setDate(new Date(System.currentTimeMillis()));

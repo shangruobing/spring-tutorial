@@ -2,7 +2,7 @@ package com.infoweaver.springtutorial.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.infoweaver.springtutorial.entity.Receipt;
-import com.infoweaver.springtutorial.entity.vo.ReceiptVo;
+import com.infoweaver.springtutorial.vo.ReceiptVO;
 
 import java.util.List;
 
@@ -56,14 +56,14 @@ public interface IReceiptService extends IService<Receipt> {
      * @param id receipt id
      * @return a status
      */
-    ReceiptVo getReceiptVoById(String id);
+    ReceiptVO getReceiptVoById(String id);
 
     /**
      * Get all receipt instances include receipt details.
      *
      * @return all ReceiptVo
      */
-    List<ReceiptVo> listReceiptVos();
+    List<ReceiptVO> listReceiptVos();
 
     /**
      * Create a Receipt instance include receipt details.
@@ -71,7 +71,7 @@ public interface IReceiptService extends IService<Receipt> {
      * @param receiptVo receipt object include receipt details.
      * @return Receipt Id
      */
-    String saveReceiptVo(ReceiptVo receiptVo);
+    String saveReceiptVo(ReceiptVO receiptVo);
 
     /**
      * Payment with ReceiptId.

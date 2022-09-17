@@ -2,7 +2,7 @@ package com.infoweaver.springtutorial.controller;
 
 import com.infoweaver.springtutorial.entity.StockAccount;
 import com.infoweaver.springtutorial.service.impl.StockAccountServiceImpl;
-import com.infoweaver.springtutorial.entity.vo.StockAccountVo;
+import com.infoweaver.springtutorial.vo.StockAccountVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +22,7 @@ public class StockAccountController {
     }
 
     @GetMapping("/stock-account")
-    public List<StockAccountVo> selectAllStockAccount(
+    public List<StockAccountVO> selectAllStockAccount(
             @RequestParam(value = "brand", defaultValue = "", required = false) String brand,
             @RequestParam(value = "model", defaultValue = "", required = false) String model
     ) {
@@ -30,7 +30,7 @@ public class StockAccountController {
     }
 
     @GetMapping("/stock-account/{id}")
-    public StockAccountVo getStockAccountById(@PathVariable("id") String id) {
+    public StockAccountVO getStockAccountById(@PathVariable("id") String id) {
         return stockAccountService.getStockAccountById(id);
     }
 

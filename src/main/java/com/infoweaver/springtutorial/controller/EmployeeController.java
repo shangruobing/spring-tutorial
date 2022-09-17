@@ -35,8 +35,8 @@ public class EmployeeController {
 
     @GetMapping("/employee/{id}")
     public Employee getEmployeeById(@PathVariable("id") String id) throws NotFoundException {
-        return Optional.ofNullable(employeeService.getEmployeeById(id)).orElseThrow
-                (() -> new NotFoundException("Employee " + id + " NOT_FOUND"));
+        return Optional.ofNullable(employeeService.getEmployeeById(id))
+                .orElseThrow(() -> new NotFoundException("Employee " + id + " NOT_FOUND"));
     }
 
     @PostMapping("/employee")
