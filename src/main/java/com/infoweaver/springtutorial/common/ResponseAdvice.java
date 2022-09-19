@@ -25,7 +25,14 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
         /**
          * Avoid intercepting Swagger, making it unavailable.
          */
-        return !returnType.getDeclaringClass().getName().contains("springfox");
+        System.out.println("啊啊啊" + returnType.getDeclaringClass().getName());
+        if (returnType.getDeclaringClass().getName().contains("knife4j")) {
+            return false;
+        }
+        if (returnType.getDeclaringClass().getName().contains("springfox")) {
+            return false;
+        }
+        return true;
     }
 
     @Override
