@@ -24,10 +24,10 @@ public class ProductController {
 
     @GetMapping("/product")
     public Page<Map<String, Object>> selectAllProduct(
-            @RequestParam(value = "page", defaultValue = "1", required = false) Integer page,
+            @RequestParam(value = "page", defaultValue = "1", required = false) Integer current,
             @RequestParam(value = "size", defaultValue = "5", required = false) Integer size
     ) {
-        return productService.listProducts(page, size);
+        return productService.listProducts(current, size);
     }
 
     @GetMapping("/product/{id}")

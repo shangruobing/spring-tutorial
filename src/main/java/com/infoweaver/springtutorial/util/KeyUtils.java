@@ -6,7 +6,7 @@ import java.security.NoSuchAlgorithmException;
 /**
  * @author Ruobing Shang 2022-09-04 21:19
  */
-public class KeyGenerator {
+public class KeyUtils {
     public static String encryption(String key) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         byte[] shaBytes = md.digest(key.getBytes());
@@ -28,6 +28,5 @@ public class KeyGenerator {
         }
         return stringBuilder.toString();
     }
-
 
 }

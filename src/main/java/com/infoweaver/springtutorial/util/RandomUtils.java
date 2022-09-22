@@ -5,20 +5,20 @@ import java.util.Random;
 /**
  * @author Ruobing Shang 2022-09-02 15:42
  */
-public class RandomGenerator {
+public class RandomUtils {
     private static final Random RANDOM = new Random();
 
     public static String getNumberString(int length) {
         String str = "0123456789";
-        StringBuilder stringBuffer = new StringBuilder();
+        StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < length; i++) {
             int number = RANDOM.nextInt(10);
-            stringBuffer.append(str.charAt(number));
+            stringBuilder.append(str.charAt(number));
         }
-        return stringBuffer.toString();
+        return stringBuilder.toString();
     }
 
     public static void main(String[] args) {
-        System.out.println(RandomGenerator.getNumberString(20));
+        System.out.println(RandomUtils.getNumberString(20));
     }
 }

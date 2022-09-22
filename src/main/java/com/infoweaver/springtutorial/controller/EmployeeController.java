@@ -27,11 +27,10 @@ public class EmployeeController {
 
     @GetMapping("/employee")
     public Page<Employee> selectAllEmployee(
-            @RequestParam(value = "page", defaultValue = "1", required = false) Integer currentPage,
+            @RequestParam(value = "page", defaultValue = "1", required = false) Integer current,
             @RequestParam(value = "size", defaultValue = "10", required = false) Integer size
     ) {
-        Page<Employee> page = new Page<>(currentPage, size);
-        return employeeService.page(page);
+        return employeeService.page(new Page<>(current, size));
     }
 
     @GetMapping("/employee/{id}")

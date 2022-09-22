@@ -9,12 +9,11 @@
         <relativePath/>
     </parent>
 
-
     <groupId>com.infoweaver</groupId>
     <artifactId>SpringTutorial</artifactId>
-    <version>0.1.1-SNAPSHOT</version>
+    <version>0.1.2</version>
     <name>SpringTutorial</name>
-    <description>SpringTutorial</description>
+    <description>Spring's learning journey</description>
     <properties>
         <java.version>11</java.version>
     </properties>
@@ -68,7 +67,6 @@
             <scope>provided</scope>
         </dependency>
 
-
         <!--Java Json Web Token-->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
@@ -115,7 +113,6 @@
                     <fork>true</fork>
                 </configuration>
             </plugin>
-
         </plugins>
     </build>
 

@@ -27,9 +27,9 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
     }
 
     @Override
-    public Page<Map<String, Object>> listProducts(Integer currentPage, Integer size) {
-        Page<Map<String, Object>> page = new Page<>(currentPage, size);
-        return productMapper.selectMapsPage(page, null);
+    public Page<Map<String, Object>> listProducts(Integer current, Integer size) {
+        Page<Map<String, Object>> page = new Page<>(current, size);
+        return productMapper.selectMapsPage(page, Wrappers.emptyWrapper());
     }
 
     @Override
@@ -58,7 +58,6 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
         if (StringUtils.isNotBlank(brand)) {
             wrapper.eq(Product::getBrand, brand);
         }
-
         if (StringUtils.isNotBlank(model)) {
             wrapper.eq(Product::getModel, model);
         }
@@ -67,11 +66,11 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
 
     @Override
     public int saveProductBatch(List<Product> products) {
-        products.forEach(e -> {
-            if (Optional.ofNullable(productMapper.selectById(e.getId())).isEmpty()) {
-                productMapper.insert(e);
+        for (Product product : products) {
+            if (Optional.ofNullable(productMapper.selectById(product.getId())).isEmpty()) {
+                productMapper.insert(product);
             }
-        });
+        }
         return 1;
     }
 

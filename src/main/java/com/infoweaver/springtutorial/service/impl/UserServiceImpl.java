@@ -7,7 +7,7 @@ import com.infoweaver.springtutorial.entity.User;
 import com.infoweaver.springtutorial.mapper.UserMapper;
 import com.infoweaver.springtutorial.service.IUserService;
 import com.infoweaver.springtutorial.util.JwtAuthentication;
-import com.infoweaver.springtutorial.util.KeyGenerator;
+import com.infoweaver.springtutorial.util.KeyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +40,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Override
     public int saveUser(User user) throws NoSuchAlgorithmException {
-        user.setPassword(KeyGenerator.encryption(user.getPassword()));
+        user.setPassword(KeyUtils.encryption(user.getPassword()));
         return userMapper.insert(user);
     }
 
@@ -57,7 +57,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public Map<String, String> login(String username, String password) throws NoSuchAlgorithmException {
         LambdaQueryWrapper<User> wrapper = Wrappers.lambdaQuery(User.class);
-        wrapper.eq(User::getName, username).eq(User::getPassword, KeyGenerator.encryption(password));
+        wrapper.eq(User::getName, username).eq(User::getPassword, KeyUtils.encryption(password));
         User user = userMapper.selectOne(wrapper);
         return JwtAuthentication.createToken(user.getId(), username);
     }

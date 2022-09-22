@@ -1,5 +1,6 @@
 package com.infoweaver.springtutorial.common;
 
+import com.infoweaver.springtutorial.util.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,7 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,16 +25,10 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
     public boolean supports(@NotNull MethodParameter returnType,
                             @NotNull Class<? extends HttpMessageConverter<?>> converterType) {
         /**
-         * Avoid intercepting Swagger, making it unavailable.
+         * Avoid intercepting Swagger and Knife4j, making them unavailable.
          */
-        System.out.println("啊啊啊" + returnType.getDeclaringClass().getName());
-        if (returnType.getDeclaringClass().getName().contains("knife4j")) {
-            return false;
-        }
-        if (returnType.getDeclaringClass().getName().contains("springfox")) {
-            return false;
-        }
-        return true;
+        List<String> excludeList = List.of("springfox", "knife4j");
+        return StringUtils.isContains(returnType.getDeclaringClass().getName(), excludeList);
     }
 
     @Override
@@ -49,6 +45,7 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
         if (MYBATIS_PLUS_SUCCESS_STATUS.equals(body.toString())) {
             return Map.of("message", HttpStatus.OK.getReasonPhrase());
         }
+
         return body;
     }
 
