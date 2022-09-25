@@ -1,7 +1,9 @@
 package com.infoweaver.springtutorial.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.infoweaver.springtutorial.config.MybatisPlusRedisCache;
 import com.infoweaver.springtutorial.entity.StockAccount;
+import org.apache.ibatis.annotations.CacheNamespace;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -9,5 +11,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 
 @Mapper
+@CacheNamespace(implementation = MybatisPlusRedisCache.class, eviction = MybatisPlusRedisCache.class)
 public interface StockAccountMapper extends BaseMapper<StockAccount> {
 }

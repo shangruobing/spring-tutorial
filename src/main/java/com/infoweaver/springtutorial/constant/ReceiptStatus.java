@@ -1,9 +1,12 @@
 package com.infoweaver.springtutorial.constant;
 
+import lombok.Getter;
+
 /**
  * @author Ruobing Shang 2022-09-02 13:55
  */
 
+@Getter
 public enum ReceiptStatus {
     /**
      * Receipt Custom Status
@@ -19,13 +22,5 @@ public enum ReceiptStatus {
     ReceiptStatus(int code, String message) {
         this.code = code;
         this.message = message;
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public String getMessage() {
-        return message;
     }
 }

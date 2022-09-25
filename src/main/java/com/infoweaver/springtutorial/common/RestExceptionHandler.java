@@ -62,6 +62,19 @@ public class RestExceptionHandler {
                 .orElse(Status.HTTP_400_BAD_REQUEST.getMessage()));
     }
 
+
+    /**
+     * Handler NullPointerException
+     * such as, Response handler is a void method.
+     */
+    @ExceptionHandler(NullPointerException.class)
+    @ResponseStatus(HttpStatus.OK)
+    public Map<String, String> handleNullPointerException(Exception ex) {
+        log.debug("Error Message:" + ex.getMessage(), ex);
+        return Map.of("message", Optional.ofNullable(ex.getMessage())
+                .orElse(Status.HTTP_200_OK.getMessage()));
+    }
+
     /**
      * Global default exception handler.
      */
@@ -69,7 +82,6 @@ public class RestExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String, String> handleException(Exception ex) {
         log.debug("Error Message:" + ex.getMessage(), ex);
-        return Map.of("message", Optional.ofNullable(ex.getMessage())
-                .orElse(Status.HTTP_400_BAD_REQUEST.getMessage()));
+        return Map.of("message", Status.HTTP_400_BAD_REQUEST.getMessage());
     }
 }

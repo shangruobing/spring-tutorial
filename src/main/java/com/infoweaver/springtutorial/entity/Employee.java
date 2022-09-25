@@ -2,6 +2,7 @@ package com.infoweaver.springtutorial.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
@@ -23,7 +24,9 @@ public class Employee extends Model<Employee> {
     private String name;
     private String role;
     /**
-     * Use Annotation JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+     * Use Annotation @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+     * to avoid Redis persistence format error.
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime lastLogin;
 }

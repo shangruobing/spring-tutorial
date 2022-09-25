@@ -7,6 +7,10 @@ import java.util.List;
  */
 public class StringUtils {
 
+    public static boolean isBlank(String str) {
+        return str.isBlank();
+    }
+
     public static boolean isNotBlank(String str) {
         return !str.isBlank();
     }
@@ -22,6 +26,10 @@ public class StringUtils {
             }
         }
         return false;
+    }
+
+    public static boolean isNotContains(String str, List<String> list) {
+        return !isContains(str, list);
     }
 
 }

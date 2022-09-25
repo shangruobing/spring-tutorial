@@ -28,7 +28,7 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
          * Avoid intercepting Swagger and Knife4j, making them unavailable.
          */
         List<String> excludeList = List.of("springfox", "knife4j");
-        return StringUtils.isContains(returnType.getDeclaringClass().getName(), excludeList);
+        return StringUtils.isNotContains(returnType.getDeclaringClass().getName(), excludeList);
     }
 
     @Override
@@ -38,6 +38,7 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
                                   @NotNull Class<? extends HttpMessageConverter<?>> selectedConverterType,
                                   @NotNull ServerHttpRequest request,
                                   @NotNull ServerHttpResponse response) {
+
         if (body instanceof String) {
             return Map.of("message", body);
         }

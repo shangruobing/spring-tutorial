@@ -25,6 +25,11 @@ spring:
     resources:
       add-mappings: false
 
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    connect-timeout: 1000
+
 server:
   address: 0.0.0.0
   port: 8080
@@ -34,6 +39,7 @@ server:
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    cache-enabled: true
 
 logging:
   level:
