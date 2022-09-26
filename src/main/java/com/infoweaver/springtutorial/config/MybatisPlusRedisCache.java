@@ -12,7 +12,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  */
 public class MybatisPlusRedisCache implements Cache {
     private final ReadWriteLock readWriteLock = new ReentrantReadWriteLock(true);
-    private RedisTemplate<String, Object> redisTemplate;
+    private static RedisTemplate<String, Object> redisTemplate;
     private final String id;
 
     public MybatisPlusRedisCache(final String id) {
@@ -75,8 +75,14 @@ public class MybatisPlusRedisCache implements Cache {
         return this.readWriteLock;
     }
 
+    /**
+     * ERROR! The context of this bean cannot be updated when the context is updated!!!
+     *
+     * @return RedisTemplate
+     */
     @SuppressWarnings("unchecked")
     private static RedisTemplate<String, Object> getRedisTemplate() {
+        System.out.println("Redis's Application Context" + SpringUtils.getApplicationContext());
         return (RedisTemplate<String, Object>) SpringUtils.getBean("redisTemplate");
     }
 

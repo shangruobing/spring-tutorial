@@ -3,6 +3,7 @@ package com.infoweaver.springtutorial.common;
 import com.infoweaver.springtutorial.constant.Status;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.javassist.NotFoundException;
+import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -73,6 +74,22 @@ public class RestExceptionHandler {
         log.debug("Error Message:" + ex.getMessage(), ex);
         return Map.of("message", Optional.ofNullable(ex.getMessage())
                 .orElse(Status.HTTP_200_OK.getMessage()));
+    }
+
+    /**
+     * Handler MyBatisSystemException
+     * Please close spring-boot-devtools hot-reload when using redis,
+     * because the devtools will not update the context of redisTemplate,
+     * this will cause redisTemplate to use the closed ApplicationContext.
+     */
+    @ExceptionHandler(MyBatisSystemException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Map<String, String> handleMyBatisSystemException(Exception ex) {
+        String message = "Please close spring-boot-devtools hot-reload when using redis, " +
+                "because devtools will not update the context of redisTemplate, " +
+                "this will cause redisTemplate to use the closed ApplicationContext.";
+        log.debug("Error Message:" + ex.getMessage(), ex);
+        return Map.of("message", message);
     }
 
     /**
