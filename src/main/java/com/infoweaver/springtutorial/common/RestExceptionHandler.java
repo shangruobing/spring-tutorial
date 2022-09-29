@@ -80,19 +80,21 @@ public class RestExceptionHandler {
      * Handler MyBatisSystemException
      * Please close spring-boot-devtools hot-reload when using redis,
      * because the devtools will not update the context of redisTemplate,
-     * this will cause redisTemplate to use the closed ApplicationContext.
+     * this will cause redisTemplate to use the closed ApplicationContext,
+     * then will eventually result in a null pointer exception.
      */
     @ExceptionHandler(MyBatisSystemException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Map<String, String> handleMyBatisSystemException(Exception ex) {
         String message = "Please close spring-boot-devtools hot-reload when using redis, " +
                 "because devtools will not update the context of redisTemplate, " +
-                "this will cause redisTemplate to use the closed ApplicationContext.";
+                "this will cause redisTemplate to use the closed ApplicationContext, " +
+                "then will eventually result in a null pointer exception.";
         log.debug("Error Message:" + ex.getMessage(), ex);
         return Map.of("message", message);
     }
 
-    /**
+    /**p
      * Global default exception handler.
      */
     @ExceptionHandler(Exception.class)

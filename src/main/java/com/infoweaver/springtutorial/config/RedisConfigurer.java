@@ -19,6 +19,10 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  */
 @Configuration
 public class RedisConfigurer {
+
+    /**
+     * TODO: need a expired time settings.
+     */
     @Bean(value = "redisTemplate")
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
         // 配置redisTemplate

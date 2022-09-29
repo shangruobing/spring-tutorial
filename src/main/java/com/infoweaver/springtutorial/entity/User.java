@@ -2,7 +2,6 @@ package com.infoweaver.springtutorial.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 /**
@@ -20,6 +19,9 @@ public class User extends Model<User> {
     private String name;
     private Integer age;
     private String email;
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    /**
+     * use @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+     * lead to security authenticate fail.
+     */
     private String password;
 }

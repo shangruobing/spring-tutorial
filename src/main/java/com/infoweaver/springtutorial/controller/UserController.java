@@ -1,13 +1,13 @@
 package com.infoweaver.springtutorial.controller;
 
-import java.security.NoSuchAlgorithmException;
-import java.util.List;
-import java.util.Map;
-
 import com.infoweaver.springtutorial.entity.User;
 import com.infoweaver.springtutorial.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.NoSuchAlgorithmException;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Ruobing Shang 2022-09-01
@@ -47,8 +47,9 @@ public class UserController {
         return userService.removeUser(id);
     }
 
-    @PostMapping("/user/login")
-    public Map<String, String> login(@RequestBody User user) throws NoSuchAlgorithmException {
+    @Deprecated
+    @PostMapping("/user/old-login")
+    public Map<String, String> oldLogin(@RequestBody User user) throws NoSuchAlgorithmException {
         return userService.login(user.getName(), user.getPassword());
     }
 
