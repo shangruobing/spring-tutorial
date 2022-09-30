@@ -2,6 +2,7 @@ package com.infoweaver.springtutorial.security;
 
 import com.infoweaver.springtutorial.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,12 +24,17 @@ public class LoginController {
 
     @PostMapping("/user/login")
     public Map<String, String> login(@RequestBody User user) throws NoSuchAlgorithmException {
-        System.out.println("用户是"+user);
+        System.out.println("用户是" + user);
         return loginService.login(user);
     }
 
     @PostMapping("/user/logout")
     public Map<String, String> logout() {
         return loginService.logout();
+    }
+
+    @GetMapping("/user/settings")
+    public String getUserSettings() {
+        return "需要ADMIN权限才可以查看";
     }
 }

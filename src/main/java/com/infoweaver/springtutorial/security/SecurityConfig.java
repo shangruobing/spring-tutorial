@@ -13,20 +13,28 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 /**
  * @author Ruobing Shang 2022-09-28 8:09
- * TODO: class has been deprecated
  */
 
 @Configuration
 public class SecurityConfig {
     private final JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
     private final AuthenticationConfiguration authenticationConfiguration;
+    private final AuthenticationEntryPointImpl authenticationEntryPoint;
+    private final AccessDeniedHandlerImpl accessDeniedHandler;
 
 
     @Autowired
-    public SecurityConfig(JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter, AuthenticationConfiguration authenticationConfiguration) {
+    public SecurityConfig(JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter,
+                          AuthenticationConfiguration authenticationConfiguration,
+                          AuthenticationEntryPointImpl authenticationEntryPoint,
+                          AccessDeniedHandlerImpl accessDeniedHandler
+    ) {
         this.jwtAuthenticationTokenFilter = jwtAuthenticationTokenFilter;
         this.authenticationConfiguration = authenticationConfiguration;
+        this.authenticationEntryPoint = authenticationEntryPoint;
+        this.accessDeniedHandler = accessDeniedHandler;
     }
+
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -35,12 +43,17 @@ public class SecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/user/login").anonymous()
-                .antMatchers("/**").anonymous()
-                .antMatchers("/**").permitAll()
+                .antMatchers("/user/login/").anonymous()
+//                .antMatchers("/user/login").permitAll()
+//                .antMatchers("/**").anonymous()
+//                .antMatchers("/**").permitAll()
+                .antMatchers("/user/settings").authenticated()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint)
+                .accessDeniedHandler(accessDeniedHandler)
+                .and()
                 .build();
     }
 

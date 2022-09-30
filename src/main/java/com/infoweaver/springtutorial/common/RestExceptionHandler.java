@@ -94,7 +94,20 @@ public class RestExceptionHandler {
         return Map.of("message", message);
     }
 
-    /**p
+
+//    /**
+//     * seems not valid
+//     * Handler AuthenticationException
+//     */
+//    @ExceptionHandler(AuthenticationException.class)
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)
+//    public Map<String, String> handleAuthenticationException(Exception ex) {
+//        log.debug("Error Message:" + ex.getMessage(), ex);
+//        return Map.of("message", Optional.ofNullable(ex.getMessage())
+//                .orElse(Status.HTTP_400_BAD_REQUEST.getMessage()));
+//    }
+
+    /**
      * Global default exception handler.
      */
     @ExceptionHandler(Exception.class)

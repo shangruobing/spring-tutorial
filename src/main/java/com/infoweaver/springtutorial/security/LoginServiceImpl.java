@@ -32,8 +32,7 @@ public class LoginServiceImpl {
         System.out.println("user name" + user.getName());
         System.out.println("user password" + user.getPassword());
         System.out.println("user encryption" + KeyUtils.encryption(user.getPassword()));
-        UsernamePasswordAuthenticationToken token =
-                new UsernamePasswordAuthenticationToken(user.getName(), KeyUtils.encryption(user.getPassword()));
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user.getName(), user.getPassword());
         System.out.println("token " + token);
         Authentication authentication = authenticationManager.authenticate(token);
         System.out.println("authentication" + authentication);
