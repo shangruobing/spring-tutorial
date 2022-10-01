@@ -39,7 +39,6 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
-
         try {
             String userId = JwtAuthentication.parseAuth(token);
             LoginUser loginUser = (LoginUser) userDetailsService.loadUserById(userId);

@@ -94,7 +94,6 @@ public class RestExceptionHandler {
         return Map.of("message", message);
     }
 
-
 //    /**
 //     * seems not valid
 //     * Handler AuthenticationException

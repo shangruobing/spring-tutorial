@@ -57,5 +57,3 @@ public class MoneyAccountController {
         return moneyAccountService.sumMoneyAccountsByMonth(month);
     }
 }
-
-

@@ -16,7 +16,6 @@ public class JwtAuthentication {
     private final static long TOKEN_EXPIRATION_TIME = 24 * 60 * 60 * 1000L;
     private final static Key SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS512);
 
-
     public static Map<String, String> createToken(String userId, String username) {
         String token = Jwts.builder()
                 .setId(userId)
@@ -33,7 +32,10 @@ public class JwtAuthentication {
 
     public static String parseAuth(String token) throws AuthenticationException {
         try {
-            return Jwts.parserBuilder().setSigningKey(SECRET_KEY).build().parseClaimsJws(token).getBody().getId();
+            // Split Bearer Authorization
+            String[] charSequence = token.split(" ");
+            String auth = charSequence[charSequence.length - 1];
+            return Jwts.parserBuilder().setSigningKey(SECRET_KEY).build().parseClaimsJws(auth).getBody().getId();
         } catch (IllegalArgumentException e) {
             throw new AuthenticationException("User Authentication failed. A token is required.");
         } catch (ExpiredJwtException e) {

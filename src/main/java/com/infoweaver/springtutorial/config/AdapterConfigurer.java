@@ -12,7 +12,6 @@ import java.util.List;
 /**
  * @author Ruobing Shang 2022-09-02 0:05
  */
-
 @Configuration
 public class AdapterConfigurer implements WebMvcConfigurer {
     @Override

@@ -51,5 +51,3 @@ public class ReceiptDetailController {
         return receiptDetailService.saveBatch(receiptDetailList);
     }
 }
-
-

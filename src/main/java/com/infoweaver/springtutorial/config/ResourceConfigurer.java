@@ -7,13 +7,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 /**
  * @author Ruobing Shang 2022-09-04 20:57
  */
-
 @Configuration
 public class ResourceConfigurer implements WebMvcConfigurer {
     /**
      * ResourceHandlerRegistry
-     *
-     * @param registry ResourceHandlerRegistry
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
