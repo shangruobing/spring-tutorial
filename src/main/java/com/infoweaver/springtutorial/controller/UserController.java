@@ -1,5 +1,6 @@
 package com.infoweaver.springtutorial.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.infoweaver.springtutorial.entity.User;
 import com.infoweaver.springtutorial.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +24,13 @@ public class UserController {
     }
 
     @GetMapping("/user")
+    @JsonView(User.WithoutPassword.class)
     public List<User> selectAllUser() {
         return userService.listUsers();
     }
 
     @GetMapping("/user/{id}")
+    @JsonView(User.WithoutPassword.class)
     public User getUserById(@PathVariable("id") String id) {
         return userService.getUserById(id);
     }

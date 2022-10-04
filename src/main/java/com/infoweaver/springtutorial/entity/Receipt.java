@@ -32,6 +32,5 @@ public class Receipt extends Model<Receipt> {
         this.seller = receipt.getSeller();
         this.cashier = receipt.getCashier();
         this.status = receipt.getStatus();
-
     }
 }

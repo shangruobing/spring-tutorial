@@ -47,7 +47,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             filterChain.doFilter(request, response);
         } catch (AuthenticationException ex) {
-            log.info(ex.getMessage(), ex);
+            log.info(ex.getMessage());
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.writeValue(response.getOutputStream(), Map.of("message", ex.getMessage()));
         }

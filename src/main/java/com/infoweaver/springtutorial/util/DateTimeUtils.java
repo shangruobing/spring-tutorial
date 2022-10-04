@@ -3,13 +3,16 @@ package com.infoweaver.springtutorial.util;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * @author Ruobing Shang 2022-09-17 23:06
  */
 public class DateTimeUtils {
-    private static final String PATTERN_DATE = "yyyy-MM-dd";
-    private static final String PATTERN_DATE_TIME = "yyyy-MM-dd HH:mm:ss";
+    public static final String PATTERN_DATE = "yyyy-MM-dd";
+    public static final String PATTERN_DATE_TIME = "yyyy-MM-dd HH:mm:ss";
+    public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern(PATTERN_DATE);
+    public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(PATTERN_DATE_TIME);
 
     public static LocalDateTime getNowDateTime() {
         return LocalDateTime.now();
