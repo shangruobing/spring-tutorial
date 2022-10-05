@@ -20,8 +20,8 @@ public class RabbitController {
     }
 
     @PostMapping("/")
-    public void send(@RequestParam(
+    public boolean send(@RequestParam(
             value = "message", defaultValue = "This is a message.", required = false) String message) {
-        rabbitMqService.sendMessage(message);
+        return rabbitMqService.sendMessage(message);
     }
 }

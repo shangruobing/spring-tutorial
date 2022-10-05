@@ -1,7 +1,6 @@
 package com.infoweaver.springtutorial.common;
 
 import com.infoweaver.springtutorial.util.StringUtils;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,8 +21,8 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
     private static final String MYBATIS_PLUS_SUCCESS_STATUS = "1";
 
     @Override
-    public boolean supports(@NotNull MethodParameter returnType,
-                            @NotNull Class<? extends HttpMessageConverter<?>> converterType) {
+    public boolean supports(MethodParameter returnType,
+                            Class<? extends HttpMessageConverter<?>> converterType) {
         /**
          * Avoid intercepting Swagger and Knife4j, making them unavailable.
          */
@@ -33,11 +32,11 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
 
     @Override
     public Object beforeBodyWrite(Object body,
-                                  @NotNull MethodParameter returnType,
-                                  @NotNull MediaType selectedContentType,
-                                  @NotNull Class<? extends HttpMessageConverter<?>> selectedConverterType,
-                                  @NotNull ServerHttpRequest request,
-                                  @NotNull ServerHttpResponse response) {
+                                  MethodParameter returnType,
+                                  MediaType selectedContentType,
+                                  Class<? extends HttpMessageConverter<?>> selectedConverterType,
+                                  ServerHttpRequest request,
+                                  ServerHttpResponse response) {
 
         if (body instanceof String) {
             return Map.of("message", body);
@@ -45,6 +44,11 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
 
         if (MYBATIS_PLUS_SUCCESS_STATUS.equals(body.toString())) {
             return Map.of("message", HttpStatus.OK.getReasonPhrase());
+        }
+
+        if (body instanceof Boolean) {
+            String message = (Boolean) body ? HttpStatus.OK.getReasonPhrase() : HttpStatus.BAD_REQUEST.getReasonPhrase();
+            return Map.of("message", message);
         }
 
         return body;

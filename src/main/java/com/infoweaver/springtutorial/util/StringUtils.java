@@ -1,5 +1,6 @@
 package com.infoweaver.springtutorial.util;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
@@ -32,4 +33,7 @@ public class StringUtils {
         return !isContains(str, list);
     }
 
+    public static String bytesToString(byte[] bytes) {
+        return new String(bytes, StandardCharsets.UTF_8);
+    }
 }

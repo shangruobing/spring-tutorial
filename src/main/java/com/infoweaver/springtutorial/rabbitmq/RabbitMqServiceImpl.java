@@ -1,7 +1,6 @@
 package com.infoweaver.springtutorial.rabbitmq;
 
 import com.infoweaver.springtutorial.util.DateTimeUtils;
-import com.infoweaver.springtutorial.util.JacksonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +30,7 @@ public class RabbitMqServiceImpl implements RabbitMqService {
             messageBody.put("author", "Default User");
             messageBody.put("message", content);
             log.info("RabbitMQ Message: " + messageBody);
-            String message = JacksonUtils.toJSONString(messageBody);
-            rabbitTemplate.convertAndSend(RabbitMqConfig.EXCHANGE, RabbitMqConfig.ROUTING_KEY, message);
+            rabbitTemplate.convertAndSend(RabbitMqConfig.EXCHANGE, RabbitMqConfig.ROUTING_KEY, messageBody);
             return true;
         } catch (Exception e) {
             log.error(e.getMessage(), e);
