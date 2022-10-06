@@ -18,7 +18,7 @@ public class InterceptorConfigurer implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new JwtInterceptor())
                 .addPathPatterns("/**")
-                // Warning disable the JWT authentication.
+                // Warn: disable the JWT authentication.
                 .excludePathPatterns("/**")
                 .excludePathPatterns("/user")
                 .excludePathPatterns("/user/login");

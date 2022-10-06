@@ -21,7 +21,7 @@ public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
-        log.info("进入了AuthenticationEntryPoint");
+        log.info("Enter the AuthenticationEntryPoint");
         response.setStatus(Status.HTTP_401_UNAUTHORIZED.getCode());
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");

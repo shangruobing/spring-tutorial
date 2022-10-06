@@ -17,7 +17,6 @@ spring:
     log-request-details: true
     throw-exception-if-no-handler-found: true
 
-  # Console Colorful Output
   output:
     ansi:
       enabled: always
@@ -42,10 +41,13 @@ spring:
     protocol: smtp
     host: smtp.qq.com
     port: 587
-    username: 723636683@qq.com
-    password: hjqgzpzneiuvbebf
+#    username: ******
+#    password: ******
     test-connection: true
     default-encoding: UTF-8
+
+  profiles:
+    active: mail
 
 server:
   address: 0.0.0.0

@@ -21,7 +21,7 @@ public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException {
-        log.info("进入了AccessDeniedHandler");
+        log.info("Enter the AccessDeniedHandler");
         response.setStatus(Status.HTTP_403_FORBIDDEN.getCode());
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
@@ -29,5 +29,4 @@ public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
         log.info(accessDeniedException.getMessage(), accessDeniedException);
         objectMapper.writeValue(response.getOutputStream(), Map.of("message", accessDeniedException.getMessage()));
     }
-
 }

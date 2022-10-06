@@ -31,8 +31,8 @@ public class SwaggerConfigurer {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("1号手机店接口文档")
-                .description("MIS短学期Ⅲ接口文档")
+                .title("Spring学习文档")
+                .description("Spring全家桶学习接口文档")
                 .contact(new Contact("Shang Ruobing", "https://github.com/shangruobing/",
                         "shangruobing29@163.com"))
                 .version("1.0")

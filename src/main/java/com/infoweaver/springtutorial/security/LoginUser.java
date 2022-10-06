@@ -32,13 +32,11 @@ public class LoginUser implements UserDetails {
 
     @Override
     public String getPassword() {
-        System.out.println("从实体类得到密码" + user.getPassword());
         return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        System.out.println("从实体类得到名称" + user.getName());
         return user.getName();
     }
 
