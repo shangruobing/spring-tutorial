@@ -30,7 +30,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = Optional.ofNullable(userMapper.selectOne(wrapper)).orElseThrow(() ->
                 new UsernameNotFoundException(username + " NOT_FOUND")
         );
-        System.out.println("loadUserByUsername" + user);
         return new LoginUser(user);
     }
 

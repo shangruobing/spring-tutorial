@@ -28,5 +28,4 @@ public class MoneyTaking extends Model<MoneyTaking> {
     private BigDecimal totalPrice;
     private BigDecimal balance;
     private String note;
-
 }

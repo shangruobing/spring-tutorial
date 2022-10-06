@@ -32,7 +32,7 @@ public class JwtAuthentication {
 
     public static String parseAuth(String token) throws AuthenticationException {
         try {
-            // Split Bearer Authorization
+            // Split the Bearer Authorization.
             String[] charSequence = token.split(" ");
             String auth = charSequence[charSequence.length - 1];
             return Jwts.parserBuilder().setSigningKey(SECRET_KEY).build().parseClaimsJws(auth).getBody().getId();

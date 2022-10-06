@@ -22,7 +22,6 @@ public class SecurityConfig {
     private final AuthenticationEntryPointImpl authenticationEntryPoint;
     private final AccessDeniedHandlerImpl accessDeniedHandler;
 
-
     @Autowired
     public SecurityConfig(JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter,
                           AuthenticationConfiguration authenticationConfiguration,
@@ -35,7 +34,6 @@ public class SecurityConfig {
         this.accessDeniedHandler = accessDeniedHandler;
     }
 
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
@@ -44,8 +42,6 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/user/login/").anonymous()
-                // closed the login function.
-                .antMatchers("/**/").anonymous()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)

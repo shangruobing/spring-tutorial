@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
 /**
@@ -23,8 +22,7 @@ public class LoginController {
     }
 
     @PostMapping("/user/login")
-    public Map<String, String> login(@RequestBody User user) throws NoSuchAlgorithmException {
-        System.out.println("用户是" + user);
+    public Map<String, String> login(@RequestBody User user) {
         return loginService.login(user);
     }
 
@@ -33,8 +31,8 @@ public class LoginController {
         return loginService.logout();
     }
 
-    @GetMapping("/user/settings")
-    public String getUserSettings() {
-        return "需要ADMIN权限才可以查看";
+    @GetMapping("/user/admin")
+    public String testAdminPermission() {
+        return "You need Admin permission to retrieve it";
     }
 }

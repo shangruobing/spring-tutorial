@@ -24,7 +24,7 @@ import java.util.Map;
 @Slf4j
 @Component
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
-
+    private final static String AUTHORIZATION_HEADER = "Authorization";
     private final UserDetailsServiceImpl userDetailsService;
 
     @Autowired
@@ -34,7 +34,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String token = request.getHeader("Authorization");
+        String token = request.getHeader(AUTHORIZATION_HEADER);
         if (!StringUtils.hasText(token)) {
             filterChain.doFilter(request, response);
             return;
@@ -42,8 +42,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         try {
             String userId = JwtAuthentication.parseAuth(token);
             LoginUser loginUser = (LoginUser) userDetailsService.loadUserById(userId);
-            UsernamePasswordAuthenticationToken authenticationToken =
-                    new UsernamePasswordAuthenticationToken(loginUser, null, null);
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginUser, null, null);
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             filterChain.doFilter(request, response);
         } catch (AuthenticationException ex) {
