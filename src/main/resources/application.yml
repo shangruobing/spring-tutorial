@@ -38,6 +38,15 @@ spring:
     password: guest
     virtual-host: spring-boot
 
+  mail:
+    protocol: smtp
+    host: smtp.qq.com
+    port: 587
+    username: 723636683@qq.com
+    password: hjqgzpzneiuvbebf
+    test-connection: true
+    default-encoding: UTF-8
+
 server:
   address: 0.0.0.0
   port: 8080

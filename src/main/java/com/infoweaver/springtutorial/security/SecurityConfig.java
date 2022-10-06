@@ -44,7 +44,8 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/user/login/").anonymous()
-                .antMatchers("/rabbit/").anonymous()
+                // closed the login function.
+                .antMatchers("/**/").anonymous()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
