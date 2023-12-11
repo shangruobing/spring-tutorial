@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 /**
- * @author Ruobing Shang 2022-09-27 21:59
+ * @author Ruobing Shang 2023-10-24 08:34
  */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -26,17 +26,21 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        LambdaQueryWrapper<User> wrapper = Wrappers.lambdaQuery(User.class).eq(User::getName, username);
+        LambdaQueryWrapper<User> wrapper = Wrappers.lambdaQuery(User.class).eq(User::getPhone, username);
         User user = Optional.ofNullable(userMapper.selectOne(wrapper)).orElseThrow(() ->
                 new UsernameNotFoundException(username + " NOT_FOUND")
         );
-        return new LoginUser(user);
+        return convertUserToUserDetails(user);
     }
 
     public UserDetails loadUserById(String id) throws UsernameNotFoundException {
         User user = Optional.ofNullable(userMapper.selectById(id)).orElseThrow(() ->
                 new UsernameNotFoundException(id + " NOT_FOUND")
         );
-        return new LoginUser(user);
+        return convertUserToUserDetails(user);
+    }
+
+    private UserDetails convertUserToUserDetails(User user) {
+        return new LoginUserDetails(user);
     }
 }

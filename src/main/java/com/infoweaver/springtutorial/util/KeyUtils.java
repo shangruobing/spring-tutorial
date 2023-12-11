@@ -1,16 +1,33 @@
 package com.infoweaver.springtutorial.util;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * @author Ruobing Shang 2022-09-04 21:19
+ * @author Ruobing Shang 2023-09-28 16:56
  */
+@Slf4j
 public class KeyUtils {
-    public static String encryption(String key) throws NoSuchAlgorithmException {
-        MessageDigest md = MessageDigest.getInstance("SHA-256");
-        byte[] shaBytes = md.digest(key.getBytes());
-        return bytesToHexString(shaBytes);
+    public static String encryption(String key) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] shaBytes = md.digest(key.getBytes());
+            return bytesToHexString(shaBytes);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("NoSuchAlgorithmException SHA-256");
+        }
+    }
+
+    public static String decryption(String key) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] shaBytes = md.digest(key.getBytes());
+            return bytesToHexString(shaBytes);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("NoSuchAlgorithmException SHA-256");
+        }
     }
 
     private static String bytesToHexString(byte[] bytes) {
@@ -29,4 +46,7 @@ public class KeyUtils {
         return stringBuilder.toString();
     }
 
+    public static void main(String[] args) {
+        System.out.println(encryption("RaccoonHome"));
+    }
 }

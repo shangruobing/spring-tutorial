@@ -1,19 +1,23 @@
 package com.infoweaver.springtutorial.controller;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import com.infoweaver.springtutorial.entity.User;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.infoweaver.springtutorial.annotation.Debounce;
+import com.infoweaver.springtutorial.dto.UserDto;
+import com.infoweaver.springtutorial.dto.ValidatedGroup;
+import com.infoweaver.springtutorial.po.ExcelPrecheckResult;
 import com.infoweaver.springtutorial.service.impl.UserServiceImpl;
+import com.infoweaver.springtutorial.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.security.NoSuchAlgorithmException;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
 
 /**
- * @author Ruobing Shang 2022-09-01
+ * @author Ruobing Shang 2023-09-20 12:18
  */
-
 @RestController
 public class UserController {
     private final UserServiceImpl userService;
@@ -23,37 +27,44 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/user")
-    @JsonView(User.WithoutPassword.class)
-    public List<User> selectAllUser() {
-        return userService.listUsers();
+    @PostMapping("/user")
+    public IPage<UserVo> selectUser(@Validated @RequestBody UserDto userDto) {
+        return userService.listUsers(userDto);
     }
 
     @GetMapping("/user/{id}")
-    @JsonView(User.WithoutPassword.class)
-    public User getUserById(@PathVariable("id") String id) {
-        return userService.getUserById(id);
+    public UserVo getUser(@PathVariable Integer id) {
+        return userService.getUserVoById(id);
     }
 
-    @PostMapping("/user")
-    public int add(@RequestBody User user) throws NoSuchAlgorithmException {
-        return userService.saveUser(user);
+    @Debounce(1000)
+    @PostMapping("/user/add")
+    public UserVo addUser(@Validated({ValidatedGroup.Create.class}) @RequestBody UserDto userDto) {
+        return userService.addUser(userDto);
     }
 
+    @Debounce(1000)
     @PutMapping("/user")
-    public int update(@RequestBody User user) {
-        return userService.updateUser(user);
+    public UserVo updateUser(@Validated({ValidatedGroup.Update.class}) @RequestBody UserDto userDto) {
+        return userService.updateUser(userDto);
     }
 
-    @DeleteMapping("/user/{id}")
-    public int delete(@PathVariable("id") String id) {
-        return userService.removeUser(id);
+    @Debounce(1000)
+    @PostMapping("user/upload/precheck")
+    public ResponseEntity<ExcelPrecheckResult> precheckUploadUsers(@RequestParam(value = "file") MultipartFile file) {
+        return userService.precheckUploadUser(file);
     }
 
-    @Deprecated
-    @PostMapping("/user/old-login")
-    public Map<String, String> oldLogin(@RequestBody User user) throws NoSuchAlgorithmException {
-        return userService.login(user.getName(), user.getPassword());
+    @Debounce(1000)
+    @PostMapping("user/upload/batch-insert")
+    public String batchInsertUserWithExcel(@RequestParam(value = "file") MultipartFile file) {
+        return userService.batchInsertUserWithExcel(file);
+    }
+
+    @Debounce(1000)
+    @GetMapping("user/export")
+    public ResponseEntity<?> exportUser() {
+        return userService.exportUser();
     }
 
 }

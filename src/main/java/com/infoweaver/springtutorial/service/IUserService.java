@@ -1,64 +1,79 @@
 package com.infoweaver.springtutorial.service;
 
-import java.security.NoSuchAlgorithmException;
-import java.util.List;
-import java.util.Map;
-
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.infoweaver.springtutorial.entity.User;
+import com.infoweaver.springtutorial.vo.UserVo;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
 
 /**
- * @author Ruobing Shang 2022-09-01
+ * @author Ruobing Shang 2023-09-20 22:05
  */
-
 public interface IUserService extends IService<User> {
     /**
-     * Retrieve All User.
+     * 查询所有用户
      *
-     * @return User List
+     * @param userDto 查询条件
+     * @return 分页查询结果
      */
-    List<User> listUsers();
+    IPage<UserVo> listUsers(com.infoweaver.springtutorial.dto.UserDto userDto);
 
     /**
-     * Retrieve a User by id.
+     * 新增用户，注意是系统内新增，不是开放对外注册接口
      *
-     * @param id user id
-     * @return a User instance
+     * @param userDto 用户信息
+     * @return 用户Vo
      */
-    User getUserById(String id);
+    @Transactional(rollbackFor = Exception.class)
+    UserVo addUser(com.infoweaver.springtutorial.dto.UserDto userDto);
 
     /**
-     * Create a User instance.
+     * 更新用户信息
      *
-     * @param user user object
-     * @return a status code
-     * @throws NoSuchAlgorithmException No Algorithm
+     * @param userDto 用户
+     * @return 用户Vo
      */
-    int saveUser(User user) throws NoSuchAlgorithmException;
+    @Transactional(rollbackFor = Exception.class)
+    UserVo updateUser(com.infoweaver.springtutorial.dto.UserDto userDto);
 
     /**
-     * Update a user instance.
+     * 根据Id列表查询用户Vo
      *
-     * @param user user object
-     * @return a status code
+     * @param userIds 用户id列表
+     * @return 用户Vo列表
      */
-    int updateUser(User user);
+    List<UserVo> getUserVosByIds(Collection<? extends Serializable> userIds);
 
     /**
-     * Delete a user instance.
+     * 根据Id查询用户Vo
      *
-     * @param id user id
-     * @return a status code
+     * @param id 用户Id
+     * @return 用户Vo
      */
-    int removeUser(String id);
+    UserVo getUserVoById(Integer id);
+
+    UserVo getUserVoByPhone(String phone);
 
     /**
-     * User login
+     * 对上传的Excel进行预检
      *
-     * @param username username
-     * @param password password
-     * @throws NoSuchAlgorithmException No Algorithm
-     * @return auth
+     * @param file excel
+     * @return 预检结果
      */
-    Map<String, String> login(String username, String password) throws NoSuchAlgorithmException;
+    ResponseEntity<com.infoweaver.springtutorial.po.ExcelPrecheckResult> precheckUploadUser(MultipartFile file);
+
+    /**
+     * 批量插入用户
+     *
+     * @param file excel
+     * @return 消息
+     */
+    @Transactional(rollbackFor = Exception.class)
+    String batchInsertUserWithExcel(MultipartFile file);
 }

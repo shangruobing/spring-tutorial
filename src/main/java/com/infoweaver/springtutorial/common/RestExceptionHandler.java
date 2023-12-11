@@ -1,32 +1,41 @@
 package com.infoweaver.springtutorial.common;
 
 import com.infoweaver.springtutorial.constant.Status;
+import com.infoweaver.springtutorial.exception.CustomNoRollbackException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.javassist.NotFoundException;
-import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.jdbc.BadSqlGrammarException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
+import javax.security.sasl.AuthenticationException;
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.sql.SQLSyntaxErrorException;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
 /**
- * @author Ruobing Shang 2022-09-01 17:22
+ * @author Ruobing Shang 2023-09-24 20:34
  */
-
 @Slf4j
 @RestControllerAdvice
 public class RestExceptionHandler {
     /**
-     * Use @Slf4j annotation to replace this line code.
-     * private final static Logger log = LoggerFactory.getLogger(RestExceptionHandler.class);
+     * Custom exception handler.
      */
+    @ExceptionHandler({CustomNoRollbackException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> handleCustomNoRollbackException(Throwable ex) {
+        log.error(ex.getMessage());
+        return Map.of("message", ex.getMessage());
+    }
 
     /**
      * Not Found exception handler.
@@ -34,20 +43,59 @@ public class RestExceptionHandler {
     @ExceptionHandler({NoHandlerFoundException.class, NotFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Map<String, String> handleControllerException(Throwable ex) {
-        log.debug("Error Message:" + ex.getMessage(), ex);
+        log.error(ex.getMessage());
         return Map.of("message", ex.getMessage());
     }
 
     /**
+     * SQL Syntax exception handler.
+     */
+    @ExceptionHandler({SQLSyntaxErrorException.class, BadSqlGrammarException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> handleSqlSyntaxErrorException(Throwable ex) {
+        log.error(ex.getMessage());
+        return Map.of("message", "查询条件不正确");
+    }
+
+    /**
+     * SQLIntegrityConstraintViolationException
+     */
+    @ExceptionHandler({SQLIntegrityConstraintViolationException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> handleSqlIntegrityConstraintViolationException(Throwable ex) {
+        log.error(ex.getMessage());
+        return Map.of("message", "传入数据不正确");
+    }
+
+    /**
+     * Authentication exception handler.
+     */
+    @ExceptionHandler({AuthenticationException.class})
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public Map<String, String> handleAuthenticationException(Throwable ex) {
+        log.error(ex.getMessage());
+        return Map.of("message", ex.getMessage());
+    }
+
+    /**
+     * 使用Spring Security AccessDeniedHandlerImpl来处理403，这里直接抛出即可
+     */
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public void accessDeniedException(AccessDeniedException ex) throws AccessDeniedException {
+        log.error(ex.getMessage());
+        throw ex;
+    }
+
+    /**
      * Handler HttpMessageNotReadableException
-     * such as, request body is empty.
+     * such as, request body is empty or JSON parse error
      */
     @ExceptionHandler(HttpMessageNotReadableException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String, String> handleRequestException(HttpMessageNotReadableException ex) {
-        log.debug("Error Message:" + ex.getMessage(), ex);
-        return Map.of("message", Optional.ofNullable(ex.getMessage())
-                .orElse(Status.HTTP_400_BAD_REQUEST.getMessage()));
+        log.error(ex.getMessage());
+        return Map.of("message", Optional.ofNullable(ex.getMessage()).orElse("Required request body is missing"));
     }
 
     /**
@@ -57,10 +105,9 @@ public class RestExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String, String> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+        log.error(ex.getMessage());
         String message = Objects.requireNonNull(ex.getBindingResult().getFieldError()).getDefaultMessage();
-        log.debug("Error Message:" + ex.getMessage(), ex);
-        return Map.of("message", Optional.ofNullable(message)
-                .orElse(Status.HTTP_400_BAD_REQUEST.getMessage()));
+        return Map.of("message", Optional.ofNullable(message).orElse(Status.HTTP_400_BAD_REQUEST.getMessage()));
     }
 
     /**
@@ -68,29 +115,10 @@ public class RestExceptionHandler {
      * such as, Response handler is a void method.
      */
     @ExceptionHandler(NullPointerException.class)
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String, String> handleNullPointerException(Exception ex) {
-        log.debug("Error Message:" + ex.getMessage(), ex);
-        return Map.of("message", Optional.ofNullable(ex.getMessage())
-                .orElse(Status.HTTP_200_OK.getMessage()));
-    }
-
-    /**
-     * Handler MyBatisSystemException
-     * Please close spring-boot-devtools hot-reload when using redis,
-     * because the devtools will not update the context of redisTemplate,
-     * this will cause redisTemplate to use the closed ApplicationContext,
-     * then will eventually result in a null pointer exception.
-     */
-    @ExceptionHandler(MyBatisSystemException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Map<String, String> handleMyBatisSystemException(Exception ex) {
-        String message = "Please close spring-boot-devtools hot-reload when using redis, " +
-                "because devtools will not update the context of redisTemplate, " +
-                "this will cause redisTemplate to use the closed ApplicationContext, " +
-                "then will eventually result in a null pointer exception.";
-        log.debug("Error Message:" + ex.getMessage(), ex);
-        return Map.of("message", message);
+        log.error(ex.getMessage());
+        return Map.of("message", Optional.ofNullable(ex.getMessage()).orElse(Status.HTTP_400_BAD_REQUEST.getMessage()));
     }
 
     /**
@@ -99,7 +127,7 @@ public class RestExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String, String> handleException(Exception ex) {
-        log.debug("Error Message:" + ex.getMessage(), ex);
-        return Map.of("message", Status.HTTP_400_BAD_REQUEST.getMessage());
+        log.error(ex.getMessage());
+        return Map.of("message", Optional.ofNullable(ex.getMessage()).orElse(Status.HTTP_400_BAD_REQUEST.getMessage()));
     }
 }

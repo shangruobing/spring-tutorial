@@ -3,29 +3,30 @@ package com.infoweaver.springtutorial.security;
 import com.infoweaver.springtutorial.util.KeyUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.security.NoSuchAlgorithmException;
-
 /**
- * @author Ruobing Shang 2022-09-28 11:00
+ * @author Ruobing Shang 2023-10-24 08:32
  */
-
 public class CustomPasswordEncoder implements PasswordEncoder {
-
+    /**
+     * 自定义密码加密类
+     *
+     * @param rawPassword
+     * @return
+     */
     @Override
     public String encode(CharSequence rawPassword) {
-        try {
-            return KeyUtils.encryption(rawPassword.toString());
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
+        return KeyUtils.encryption(rawPassword.toString());
     }
 
+    /**
+     * 自定义密码匹配类
+     *
+     * @param rawPassword
+     * @param encodedPassword
+     * @return
+     */
     @Override
     public boolean matches(CharSequence rawPassword, String encodedPassword) {
-        try {
-            return encodedPassword.equals(KeyUtils.encryption(rawPassword.toString()));
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
+        return encodedPassword.equals(KeyUtils.encryption(rawPassword.toString()));
     }
 }

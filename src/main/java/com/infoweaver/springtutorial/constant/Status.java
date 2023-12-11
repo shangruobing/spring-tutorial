@@ -1,12 +1,10 @@
 package com.infoweaver.springtutorial.constant;
 
-
 import lombok.Getter;
 
 /**
- * @author Ruobing Shang 2022-09-01 17:23
+ * @author Ruobing Shang 2023-09-24 20:35
  */
-
 @Getter
 public enum Status {
     /**
@@ -21,7 +19,6 @@ public enum Status {
     HTTP_404_NOT_FOUND(404, "NOT_FOUND"),
     HTTP_405_METHOD_NOT_ALLOWED(405, "METHOD_NOT_ALLOWED"),
     HTTP_500_INTERNAL_SERVER_ERROR(500, "INTERNAL_SERVER_ERROR");
-
     private final int code;
     private final String message;
 
