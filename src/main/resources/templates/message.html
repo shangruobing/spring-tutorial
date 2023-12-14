@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8"/>
+  <title>操作状态</title>
+  <style>
+      body {
+          font-family: Arial, sans-serif;
+          text-align: center;
+          margin: 30% 10% 10%;
+      }
+
+      .container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+      }
+
+      .icon {
+          width: 300px;
+          height: 300px;
+          line-height: 300px;
+          font-size: 230px;
+          border-radius: 50%;
+      }
+
+      .success-icon {
+          color: #4caf50;
+          border: 12px solid #4caf50;
+      }
+
+      .error-icon {
+          color: #ff5733;
+          border: 12px solid #ff5733;
+      }
+
+      .message {
+          padding: 20px;
+          font-size: 60px;
+      }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div th:if="${state}" class="icon success-icon">✓</div>
+  <div th:unless="${state}" class="icon error-icon">×</div>
+  <div th:text="${message}" class="message"></div>
+</div>
+</body>
+</html>

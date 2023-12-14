@@ -1,6 +1,7 @@
 # Spring Framework 学习之旅
 
-这个仓库记录了我对Spring Framework的学习、开发以及理解。
+这个仓库记录了我对Spring Framework的学习、实践以及理解。
+> [Spring makes Java simple, modern, productive and reactive.](https://spring.io/])
 
 # 编写规范
 
@@ -20,10 +21,12 @@
 | mail       | 邮件类                       |   
 | mapper     | 数据库映射层，与数据库表进行映射取决于ORM框架  |   
 | po         | 普通对象                      |   
+| rabbitmq   | 消息队列                      |   
 | security   | 认证权限                      |   
 | service    | 服务层，该层只声明接口，impl层负责实现业务逻辑 |   
 | util       | 工具类，如字符串工具、日期工具           |   
 | vo         | 视图对象，返回给前端的JSON           |   
+| wechat     | 微信服务                      |   
 
 ## 对象分层
 
@@ -63,3 +66,37 @@
 
 - ServiceImp的外键必须添加为Vo且抽象成AddXXInfo方法
 - 涉及到跨层外键，如银行账户查用户再查公司，应该把查用户和查公司写入用户服务
+
+## RBAC权限管理
+
+基于角色的访问控制（Role-Based Access
+Control）基本思想为：将权限授予角色，再为用户指定角色，实现用户与权限的间接绑定。每一种角色包含一系列权限，一旦用户被分配了角色，用户就拥有该角色所对应的所有权限。
+
+- 一个用户可以包含多个角色，一个角色可以包含多种权限，为两组多对多关系
+
+- RBAC共需维护三张主表，分别为User、Role、Permission
+
+- 以及两张外键表User_Role和Role_Permission
+
+```mermaid
+
+erDiagram
+    User {
+        id int PK
+        name string
+    }
+
+    Role {
+        id int PK
+        name string
+    }
+
+    Permission {
+        id int PK
+        name string
+    }
+
+    User }|--|{ Role: Has
+    Role }|--|{ Permission: Has
+```
+

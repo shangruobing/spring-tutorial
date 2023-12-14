@@ -34,6 +34,25 @@ spring:
       connect-timeout: 1000
       password: 123456
 
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /spring-tutorial
+    listener:
+      simple:
+        prefetch: 1 # 每次只能处理一条消息，处理完后再接收下一条消息
+    connection-timeout: 1s
+    template:
+      retry:
+        enabled: true # 超时重试
+        initial-interval: 1000ms # 失败后初始等待事件
+        multiplier: 1 # 失败后下次等待时长倍数
+        max-attempts: 3 # 最大重试次数
+    publisher-confirm-type: none # 发布确认模式
+    publisher-returns: true
+
   servlet:
     multipart:
       enabled: true
