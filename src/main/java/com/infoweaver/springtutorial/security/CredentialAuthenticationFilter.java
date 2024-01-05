@@ -8,8 +8,10 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -26,6 +28,12 @@ import java.util.Map;
 @Component
 public class CredentialAuthenticationFilter extends OncePerRequestFilter {
     private final static String CREDENTIAL_HEADER = "Credential";
+    private final UserDetailsServiceImpl userDetailsService;
+
+    @Autowired
+    public CredentialAuthenticationFilter(UserDetailsServiceImpl userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -49,7 +57,8 @@ public class CredentialAuthenticationFilter extends OncePerRequestFilter {
             /**
              * 明细设置为密钥登录，方便后续根据上下文获取用户id
              */
-            authenticationToken.setDetails(1);
+            UserDetails loginUser = userDetailsService.loadUserById("1");
+            authenticationToken.setDetails(loginUser);
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             filterChain.doFilter(request, response);
         } catch (AuthenticationException ex) {

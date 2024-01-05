@@ -97,7 +97,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             /**
              * 明细设置为用户的id，方便后续根据上下文获取用户id
              */
-            authenticationToken.setDetails(currentUserId);
+            authenticationToken.setDetails(loginUser);
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             filterChain.doFilter(request, response);
         } catch (AuthenticationException ex) {

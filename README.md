@@ -22,6 +22,7 @@
 | mapper     | 数据库映射层，与数据库表进行映射取决于ORM框架  |   
 | po         | 普通对象                      |   
 | rabbitmq   | 消息队列                      |   
+| schedule   | 定时任务                      |   
 | security   | 认证权限                      |   
 | service    | 服务层，该层只声明接口，impl层负责实现业务逻辑 |   
 | util       | 工具类，如字符串工具、日期工具           |   
@@ -32,12 +33,12 @@
 
 | 名称     | 英文                    | 含义                 |
 |--------|-----------------------|--------------------|
-| DTO    | Data Transform Object | 数据传输对象，接收前端传入的JSON | 
-| Vo     | View Object           | 视图对象，返回给前端的JSON    |   
-| Entity | Entity                | 实体对象，对应数据库中的表      |   
-| Po     | Plain Object          | 普通对象               |   
-| Bo     | Business Object       | 业务对象，暂不涉及          |   
-| Do     | Domain Object         | 领域对象，暂不涉及          |   
+| Dto    | Data Transform Object | 数据传输对象，接收前端传入的JSON |
+| Vo     | View Object           | 视图对象，返回给前端的JSON    |
+| Entity | Entity                | 实体对象，对应数据库中的表      |
+| Po     | Plain Object          | 普通对象               |
+| Bo     | Business Object       | 业务对象，暂不涉及          |
+| Do     | Domain Object         | 领域对象，暂不涉及          |
 
 ## API接口设计规范
 

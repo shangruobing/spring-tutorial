@@ -6,9 +6,11 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
@@ -17,6 +19,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 /**
  * @author Ruobing Shang 2023-10-12 17:46
  */
+@Slf4j
 @Configuration
 public class RedisConfiguration {
     /**
@@ -27,6 +30,8 @@ public class RedisConfiguration {
      */
     @Bean(value = "redisTemplate")
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
+        LettuceConnectionFactory lettuceConnectionFactory = (LettuceConnectionFactory) redisConnectionFactory;
+        log.info("Redis Host: " + lettuceConnectionFactory.getStandaloneConfiguration().getHostName() + ":" + lettuceConnectionFactory.getStandaloneConfiguration().getPort());
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
         ObjectMapper objectMapper = new ObjectMapper();
