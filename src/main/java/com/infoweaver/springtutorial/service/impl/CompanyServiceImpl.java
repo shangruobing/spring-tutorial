@@ -50,7 +50,7 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, Company> impl
         Company company = new Company();
         company.setName(companyDto.getName())
                 .setType(companyDto.getType())
-                .setCreateUserId(SecurityUtils.getCurrentUserId());
+                .setCreateUserId(SecurityUtils.getCurrentUser().getId());
         companyMapper.insert(company);
         return new CompanyVo(company);
     }

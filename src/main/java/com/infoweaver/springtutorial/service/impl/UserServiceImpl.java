@@ -54,7 +54,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         Optional.ofNullable(userDto.getPhone()).ifPresent(phone -> wrapper.like(User::getPhone, phone));
         IPage<User> userPage = userMapper.selectPage(page, wrapper);
         IPage<UserVo> userVoPage = userPage.convert(UserVo::new);
-        if (userVoPage.getTotal() > 0) {
+        /**
+         * 根据当前查到的记录数判断是否需要添加外键信息
+         * 若不判断则会使用空[]进行in查询数据库导致错误
+         */
+        if (!userVoPage.getRecords().isEmpty()) {
             addCompanyInfo(userVoPage);
         }
         return userVoPage;
@@ -77,7 +81,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                 .setUnionId(userDto.getUnionId())
                 .setOpenId(userDto.getOpenId())
                 .setState(true)
-                .setCreateUserId(SecurityUtils.getCurrentUserId());
+                .setCreateUserId(SecurityUtils.getCurrentUser().getId());
         userMapper.insert(user);
         return convertUserEntityToUserVo(user);
     }
@@ -115,7 +119,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         /**
          * 条件构造器添加完成，开始更新
          */
-        existUser.setUpdateUserId(SecurityUtils.getCurrentUserId());
+        existUser.setUpdateUserId(SecurityUtils.getCurrentUser().getId());
         userMapper.updateById(existUser);
         /**
          * 更新完把该条记录查询并返回为Vo
@@ -210,7 +214,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         ExcelUploader<User> excelUploader = new ExcelUploader<>(User.class, file, getUploadRequiredColumns());
         List<User> userList = excelUploader.getEntityList()
                 .stream()
-                .peek(user -> user.setCreateUserId(SecurityUtils.getCurrentUserId()))
+                .peek(user -> user.setCreateUserId(SecurityUtils.getCurrentUser().getId()))
                 .collect(Collectors.toList());
         saveBatch(userList);
         return "ok";

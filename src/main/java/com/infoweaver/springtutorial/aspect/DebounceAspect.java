@@ -27,7 +27,7 @@ public class DebounceAspect {
     @Around("@annotation(debounce)")
     public Object debounce(ProceedingJoinPoint proceedingJoinPoint, Debounce debounce) throws Throwable {
         String method = proceedingJoinPoint.getSignature().getName();
-        Integer currentUserId = com.infoweaver.springtutorial.security.SecurityUtils.getCurrentUserId();
+        Integer currentUserId = com.infoweaver.springtutorial.security.SecurityUtils.getCurrentUser().getId();
         String cacheKey = "DEBOUNCE_USER_" + currentUserId +"_METHOD_"+ method;
         if (Optional.ofNullable(redisUtils.get(cacheKey)).isPresent()) {
             throw new RuntimeException("访问频率过高，请等待" + debounce.value() / 1000 + "秒后再访问");

@@ -86,7 +86,7 @@ mybatis-plus:
 
 logging:
   pattern:
-    dateformat: yyyy-MM-dd HH:mm
+    dateformat: yyyy-MM-dd HH:mm:ss
   level:
     web: debug
   file:
