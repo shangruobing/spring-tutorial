@@ -15,6 +15,7 @@
 | config     | 配置类，完成各种依赖的整合配置           |   
 | constant   | 枚举常量                      |   
 | controller | 控制器，负责为HTTP请求指定处理的服务      |   
+| cos        | 对象云存储服务                   |   
 | dto        | 数据传输对象，接受来自前端的JSON数据      |   
 | entity     | 实体，对应数据库中的表               |   
 | exception  | 异常类，如不回滚异常等               |   

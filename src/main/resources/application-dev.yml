@@ -4,29 +4,6 @@ server:
   port: 8080
 
 spring:
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
-    log-request-details: true
-    throw-exception-if-no-handler-found: true
-    converters:
-      preferred-json-mapper: jackson
-
-  # 若设置完后mybatis-plus返回时间依然带T，则需要自定义jackson关datetime的序列化与反序列化器
-  jackson:
-    date-format: yyyy-MM-dd HH:mm:ss
-    time-zone: GMT+8
-    mapper:
-      sort-properties-alphabetically: true
-
-  output:
-    ansi:
-      enabled: always
-
-  web:
-    resources:
-      add-mappings: false
-
   data:
     redis:
       host: 127.0.0.1
@@ -52,12 +29,6 @@ spring:
         max-attempts: 3 # 最大重试次数
     publisher-confirm-type: none # 发布确认模式
     publisher-returns: true
-
-  servlet:
-    multipart:
-      enabled: true
-      # 文件附件大小30MB
-      max-file-size: 30MB
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
