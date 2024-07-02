@@ -61,7 +61,8 @@ logging:
   level:
     web: debug
   file:
-    name: log/log.txt
+    path: logs
+    name: log
 
 springdoc:
   swagger-ui:

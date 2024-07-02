@@ -227,6 +227,9 @@ public class ExcelUploader<T> {
      */
     private List<ExcelUnmatchedColumn> getUnmatchedColumns(List<String> requiredColumnNames, List<String> uploadColumnNames) {
         List<ExcelUnmatchedColumn> unmatchedColumns = new ArrayList<>();
+        if (requiredColumnNames.size() != uploadColumnNames.size()) {
+            throw new RuntimeException("上传的文件列数与模板不匹配");
+        }
         for (int i = 0; i < requiredColumnNames.size(); i++) {
             if (!requiredColumnNames.get(i).equals(uploadColumnNames.get(i))) {
                 unmatchedColumns.add(new ExcelUnmatchedColumn(requiredColumnNames.get(i), uploadColumnNames.get(i)));

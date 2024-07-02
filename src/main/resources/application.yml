@@ -48,3 +48,8 @@ cos:
   secretKey: '####'
   bucketName: '####'
   region: '####'
+
+tms:
+  secretId: '####'
+  secretKey: '####'
+  bizType: '####'

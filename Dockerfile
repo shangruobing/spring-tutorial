@@ -1,4 +1,5 @@
-FROM bellsoft/liberica-runtime-container:jdk-all-17-slim-musl
+FROM bellsoft/liberica-runtime-container:jre-17-slim-musl
+
 RUN  ["mkdir","/upload","&&","mkdir","/template"]
 
 EXPOSE 8020

@@ -59,7 +59,8 @@ logging:
   level:
     web: info
   file:
-    name: log/log.txt
+    path: logs
+    name: log
 
 springdoc:
   swagger-ui:

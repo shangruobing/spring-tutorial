@@ -4,6 +4,8 @@ import com.infoweaver.springtutorial.constant.Status;
 import com.infoweaver.springtutorial.exception.CustomNoRollbackException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.javassist.NotFoundException;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.jdbc.BadSqlGrammarException;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.security.sasl.AuthenticationException;
+import java.sql.BatchUpdateException;
+import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.SQLSyntaxErrorException;
 import java.util.Map;
@@ -50,7 +54,14 @@ public class RestExceptionHandler {
     /**
      * SQL Syntax exception handler.
      */
-    @ExceptionHandler({SQLSyntaxErrorException.class, BadSqlGrammarException.class})
+    @ExceptionHandler({
+            SQLSyntaxErrorException.class,
+            BadSqlGrammarException.class,
+            SQLException.class,
+            BatchUpdateException.class,
+            DuplicateKeyException.class,
+            DataIntegrityViolationException.class
+    })
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String, String> handleSqlSyntaxErrorException(Throwable ex) {
         log.error(ex.getMessage());
