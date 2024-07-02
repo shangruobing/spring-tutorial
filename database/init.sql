@@ -57,6 +57,6 @@ BEGIN;
 INSERT INTO user (id, state, company_id, union_id, open_id, role, name, username, gender, phone, password, email,
                   join_time, last_login_time, deleted, create_time, update_time, create_user_id, update_user_id)
 VALUES (1, 1, 1, '', '', '管理员', 'RuobingShang', '', '男', '123456789',
-        '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'shangruobing29@gmailcom', '2023-11-15 07:00:00',
+        '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'shangruobing29@gmail.com', '2023-11-15 07:00:00',
         '2023-11-15 07:00:00', 0, '2023-11-15 07:00:00', '2023-11-15 07:00:00', null, null);
 COMMIT;

@@ -42,18 +42,7 @@ spring:
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-    # 是否使用三级缓存
-    cache-enabled: true
-    # 设置当查询结果值为null时，同样映射该查询字段给map
-    call-setters-on-nulls: true
-  global-config:
-    db-config:
-      id-type: auto
-      logic-delete-field: deleted
-      # 逻辑已删除
-      logic-delete-value: 1
-      # 逻辑未删除
-      logic-not-delete-value: 0
+
 
 logging:
   pattern:
@@ -63,6 +52,7 @@ logging:
   file:
     path: logs
     name: log
+
 
 springdoc:
   swagger-ui:

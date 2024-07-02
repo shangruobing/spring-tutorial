@@ -1,9 +1,9 @@
 date=$(date "+%Y%m%d")
-image_name="shangruobing/infoweaver:spring-tutorial-remote-$date"
+image_name="shangruobing/infoweaver:spring-tutorial-$date"
 
-container_name="spring-tutorial-remote-prod"
+container_name="spring-tutorial-prod"
 sudo docker rm -f $container_name
-#sudo docker rmi -f "$(sudo docker images -q "shangruobing/infoweaver:spring-tutorial-remote*")"
+#sudo docker rmi -f "$(sudo docker images -q "shangruobing/infoweaver:spring-tutorial*")"
 
 sudo docker pull "$image_name"
 

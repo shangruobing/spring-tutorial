@@ -43,12 +43,16 @@ sudo docker run -itd --name imagename -p 8080:8080 imagename:0.0.1
 ```shell
 # 登录后push到Dockerhub
 sudo docker login
-sudo docker tag imagename:0.0.1 shangruobing/infoweaver:imagename-remote-0.0.1
-sudo docker push shangruobing/infoweaver:imagename-remote-0.0.1
+sudo docker tag imagename:0.0.1 shangruobing/infoweaver:imagename-0.0.1
+sudo docker push shangruobing/infoweaver:imagename-0.0.1
 
 # 从Dockerhub下载image并运行
-sudo docker pull shangruobing/infoweaver:imagename-remote-0.0.1
-sudo docker run -itd --name imagename-remote-0.0.1 -p 8080:8080 shangruobing/infoweaver:imagename-remote-0.0.1
+sudo docker pull shangruobing/infoweaver:imagename-0.0.1
+sudo docker run -itd --name imagename-0.0.1 -p 8080:8080 shangruobing/infoweaver:imagename-0.0.1
+
+# 本地打包
+sudo docker save -o "infoweaver-spring-tutorial-$date".tar shangruobing/infoweaver:imagename-0.0.1
+sudo chmod 777  "infoweaver-spring-tutorial-$date".tar
 ```
 
 ### Common
