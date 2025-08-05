@@ -109,6 +109,10 @@ public class SecurityConfiguration {
                                 "/swagger-ui/**",
                                 "/v3/**"
                         ).permitAll()
+                        /**
+                         * 不进行权限控制
+                         */
+//                        .requestMatchers("*").permitAll()
                         .anyRequest().authenticated()
                 )
                 .build();
